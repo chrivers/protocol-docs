@@ -3756,8 +3756,7 @@
           <section id="object-anomaly">
             <h3>Anomaly</h3>
             <p>
-              New as of v.2.1.5. Previously, anomalies were handled by the “other” property
-              structure.
+              New as of v.2.1.5. Previously, anomalies were handled by the “other” property structure.
             </p>
             <dl>
               <dt>Bit field (1 byte)</dt>
@@ -3767,9 +3766,7 @@
               <dt>Upgrade (bit 1.4, enum Upgrade as u32)</dt>
               <dd>
                 <p>
-                  Note that only the values 0x00 through 0x07 have been observed,
-                  as the built-in mission types do not put other upgrade types in
-                  anomaly pickups.
+                  Note that only the values 0x00 through 0x07 have been observed, as the built-in mission types do not put other upgrade types in anomaly pickups.
                 </p>
               </dd>
               <dt>__unknown_1 (bit 1.5, u32)</dt>
@@ -3785,31 +3782,25 @@
               <dt>Name (bit 1.1, string)</dt>
               <dd>
                 <p>
-                  The name assigned to this base. In standard, non-custom
-                  scenarios, base names will be unique, but there is no
-                  guarantee that the same will be true in custom scenarios.
+                  The name assigned to this base. In standard, non-custom scenarios, base names will be unique, but there is no guarantee that the same will be true in custom scenarios.
                 </p>
               </dd>
               <dt>Front Shields (bit 1.2, float)</dt>
               <dd>
                 <p>
-                  The current strength of the base's shields.
+                  The current strength of the base&#x27;s shields.
                 </p>
               </dd>
               <dt>Rear Shields (bit 1.3, float)</dt>
               <dd>
                 <p>
-                  Bases only have one shield, but all shielded objects in
-                  Artemis are encoded with front and rear shields. This value is
-                  therefore meaningless and should be ignored.
+                  Bases only have one shield, but all shielded objects in Artemis are encoded with front and rear shields. This value is therefore meaningless and should be ignored.
                 </p>
               </dd>
               <dt>Index (bit 1.4, u32)</dt>
               <dd>
                 <p>
-                  The index of this base. Each base will have a unique index
-                  from 0 to (number of bases-1). In a standard solo game, DS1 is
-                  0, DS2 is 1, etc.
+                  The index of this base. Each base will have a unique index from 0 to (number of bases-1). In a standard solo game, DS1 is 0, DS2 is 1, etc.
                 </p>
               </dd>
               <dt>Vessel Type Id (bit 1.5, u32)</dt>
@@ -3821,19 +3812,19 @@
               <dt>X Coordinate (bit 1.6, float)</dt>
               <dd>
                 <p>
-                  The base's location along the X-axis.
+                  The base&#x27;s location along the X-axis.
                 </p>
               </dd>
               <dt>Y Coordinate (bit 1.7, float)</dt>
               <dd>
                 <p>
-                  The base's location along the Y-axis.
+                  The base&#x27;s location along the Y-axis.
                 </p>
               </dd>
               <dt>Z Coordinate (bit 1.8, float)</dt>
               <dd>
                 <p>
-                  The base's location along the Z-axis.
+                  The base&#x27;s location along the Z-axis.
                 </p>
               </dd>
               <dt>__unknown_1 (bit 2.1, u32)</dt>
@@ -3848,11 +3839,7 @@
           <section id="object-creature">
             <h3>Creature</h3>
             <p>
-              Note that wrecks are also considered creatures, for some
-              reason. This structure is new as of v2.1.5. Previously, the only
-              type of creature was the classic space monster, which was handled
-              by the “other” property structure, and space whales had their own
-              structure.
+              Note that wrecks are also considered creatures, for some reason. This structure is new as of v2.1.5. Previously, the only type of creature was the classic space monster, which was handled by the “other” property structure, and space whales had their own structure.
             </p>
             <dl>
               <dt>Bit field (3 bytes)</dt>
@@ -3877,32 +3864,31 @@
               <dt>Name (bit 1.4, string)</dt>
               <dd>
                 <p>
-                  The creature's name
+                  The creature&#x27;s name
                 </p>
               </dd>
               <dt>Heading (bit 1.5, float)</dt>
               <dd>
                 <p>
-                  The creature's current heading.
+                  The creature&#x27;s current heading.
                 </p>
               </dd>
               <dt>Pitch (bit 1.6, float)</dt>
               <dd>
                 <p>
-                  The creature's current pitch.
+                  The creature&#x27;s current pitch.
                 </p>
               </dd>
               <dt>Roll (bit 1.7, float)</dt>
               <dd>
                 <p>
-                  The creature's current roll.
+                  The creature&#x27;s current roll.
                 </p>
               </dd>
               <dt>Creature Type Id (bit 1.8, enum CreatureType as u32)</dt>
               <dd>
                 <p>
-                  The type of creature.
-                  FIXME: size?
+                  The type of creature. FIXME: size?
                 </p>
               </dd>
               <dt>__unknown_1 (bit 2.1, u32)</dt>
@@ -3947,41 +3933,26 @@
           <section id="object-engineering-console">
             <h3>Engineering Console</h3>
             <p>
-              Each byte of the field represents a category of values:
-              
-              Heat levels
-              Energy allocations
-              Coolant allocations
+              Each byte of the field represents a category of values:  Heat levels Energy allocations Coolant allocations
             </p>
             <dl>
               <dt>Bit field (4 bytes)</dt>
               <dt>Heat (float array (length 8))</dt>
               <dd>
                 <p>
-                  The bits in each byte represent the ship systems, in the order
-                  specified in the ship system enumeration. So for example, if
-                  the first bit field is 0x01, it means that this packet will
-                  contain a single heat level value (beams).
+                  The bits in each byte represent the ship systems, in the order specified in the ship system enumeration. So for example, if the first bit field is 0x01, it means that this packet will contain a single heat level value (beams).
                 </p>
               </dd>
               <dt>Energy (float array (length 8))</dt>
               <dd>
                 <p>
-                  The heat level for each system, as a value between 0 (no heat)
-                  and 1 (maximum heat). Reaching maximum heat for a system will
-                  cause an explosion, which will damage a system node of that
-                  type and release some of the heat.
+                  The heat level for each system, as a value between 0 (no heat) and 1 (maximum heat). Reaching maximum heat for a system will cause an explosion, which will damage a system node of that type and release some of the heat.
                 </p>
               </dd>
               <dt>Coolant (u8 array (length 8))</dt>
               <dd>
                 <p>
-                  The energy allocation for each system, as a value between 0
-                  (no energy allocated) and 1 (maximum possible energy
-                  allocation). In the UI, this is expressed as a percentage
-                  between 0% and 300%, so the nominal allocation level (100%) is
-                  represented by a value of 0.3333....
-                  The units of coolant allocated to each system.
+                  The energy allocation for each system, as a value between 0 (no energy allocated) and 1 (maximum possible energy allocation). In the UI, this is expressed as a percentage between 0% and 300%, so the nominal allocation level (100%) is represented by a value of 0.3333....
                 </p>
               </dd>
             </dl>
@@ -3990,27 +3961,26 @@
           <section id="object-generic-mesh">
             <h3>Generic Mesh</h3>
             <p>
-              These are arbitrary 3D objects to display in the game world. Players and enemies
-              don't interact with these objects; they are just decoration.
+              These are arbitrary 3D objects to display in the game world. Players and enemies don&#x27;t interact with these objects; they are just decoration.
             </p>
             <dl>
               <dt>Bit field (4 bytes)</dt>
               <dt>X Coordinate (bit 1.1, float)</dt>
               <dd>
                 <p>
-                  The object's location on the X axis.
+                  The object&#x27;s location on the X axis.
                 </p>
               </dd>
               <dt>Y Coordinate (bit 1.2, float)</dt>
               <dd>
                 <p>
-                  The object's location on the Y axis.
+                  The object&#x27;s location on the Y axis.
                 </p>
               </dd>
               <dt>Z Coordinate (bit 1.3, float)</dt>
               <dd>
                 <p>
-                  The object's location on the Z axis.
+                  The object&#x27;s location on the Z axis.
                 </p>
               </dd>
               <dt>__unknown_1 (bit 1.4, u32)</dt>
@@ -4035,8 +4005,7 @@
               <dt>Texture File (bit 2.5, string)</dt>
               <dd>
                 <p>
-                  The name of the file containing the texture to apply to the mesh. Note that this uses the
-                  same bit as the mesh name, and that bit 2.5 is unused.
+                  The name of the file containing the texture to apply to the mesh. Note that this uses the same bit as the mesh name, and that bit 2.5 is unused.
                 </p>
               </dd>
               <dt>__unknown_8 (bit 2.6, u32)</dt>
@@ -4117,7 +4086,7 @@
               <dt>Name (bit 1.1, string)</dt>
               <dd>
                 <p>
-                  The ship's name.
+                  The ship&#x27;s name.
                 </p>
               </dd>
               <dt>Throttle (bit 1.2, float)</dt>
@@ -4135,29 +4104,25 @@
               <dt>Max Impulse (bit 1.4, float)</dt>
               <dd>
                 <p>
-                  The ship's maximum possible speed at impulse.
+                  The ship&#x27;s maximum possible speed at impulse.
                 </p>
               </dd>
               <dt>Max Turn Rate (bit 1.5, float)</dt>
               <dd>
                 <p>
-                  The ship's maximum possible turning speed.
+                  The ship&#x27;s maximum possible turning speed.
                 </p>
               </dd>
               <dt>Enemy (bit 1.6, u32)</dt>
               <dd>
                 <p>
-                  In single-bridge games, as well as multi-bridge co-op games
-                  this value will be true if the ship is hostile and false if it
-                  is friendly. In PvP and scripted games, this field is always
-                  true, regardless of whether the NPC is hostile or not.
+                  In single-bridge games, as well as multi-bridge co-op games this value will be true if the ship is hostile and false if it is friendly. In PvP and scripted games, this field is always true, regardless of whether the NPC is hostile or not.
                 </p>
               </dd>
               <dt>Vessel Type Id (bit 1.7, u32)</dt>
               <dd>
                 <p>
-                  The ID corresponding to the <vessel> entry in vesselData.xml that describes the vessel
-                  type for this ship.
+                  The ID corresponding to the &lt;vessel&gt; entry in vesselData.xml that describes the vessel type for this ship.
                 </p>
               </dd>
               <dt>X Coordinate (bit 1.8, float)</dt>
@@ -4182,35 +4147,26 @@
               <dt>Fleet Number (bit 3.6, u8)</dt>
               <dd>
                 <p>
-                  The number of the fleet to which this ship belongs. For custom
-                  missions, this is specified in the mission file.
+                  The number of the fleet to which this ship belongs. For custom missions, this is specified in the mission file.
                 </p>
               </dd>
               <dt>Elite Abilities (bit 3.7, EliteAbilities as u32)</dt>
               <dd>
                 <p>
-                  The elite abilites posessed by this ship. The value in this
-                  field is only meaningful if the ship's faction has the “elite”
-                  attribute, as specified in vesselData.xml. Other ships should
-                  ignore this value even if it is present, as they cannot have
-                  elite abilities.
+                  The elite abilites posessed by this ship. The value in this field is only meaningful if the ship&#x27;s faction has the “elite” attribute, as specified in vesselData.xml. Other ships should ignore this value even if it is present, as they cannot have elite abilities.
                 </p>
               </dd>
               <dt>Active Elite Abilities (bit 3.8, EliteAbilities as u32)</dt>
               <dd>
                 <p>
-                  The elite abilites posessed by this ship that are currently in
-                  use. As with the previous field, this field should be ignored
-                  if the ship can't have elite abilities, even if it is present.
+                  The elite abilites posessed by this ship that are currently in use. As with the previous field, this field should be ignored if the ship can&#x27;t have elite abilities, even if it is present.
                 </p>
               </dd>
               <dt>Scan Level (bit 4.1, u32)</dt>
               <dt>Side (bit 4.2, u32)</dt>
               <dd>
                 <p>
-                  This field appears to contain a different value for each side in
-                  the conflict. Ships with the same value will presumably be
-                  friendly to each other.
+                  This field appears to contain a different value for each side in the conflict. Ships with the same value will presumably be friendly to each other.
                 </p>
               </dd>
               <dt>__unknown_3 (bit 4.3, i32)</dt>
@@ -4229,21 +4185,13 @@
               <dt>System Damage (float array (length 8))</dt>
               <dd>
                 <p>
-                  Damage to various ship systems, in the order specified in the
-                  enumeration. A system with a damage value of 0.0 is undamaged;
-                  a higher value (up to 1.0) means the system is damaged. In the
-                  stock client, damaged systems on NPC vessels can be seen via
-                  the science console. Barring further damage or actions by a
-                  custom script, damage values gradually decrease as the ship is
-                  repaired, until they return to 0.0.
+                  Damage to various ship systems, in the order specified in the enumeration. A system with a damage value of 0.0 is undamaged; a higher value (up to 1.0) means the system is damaged. In the stock client, damaged systems on NPC vessels can be seen via the science console. Barring further damage or actions by a custom script, damage values gradually decrease as the ship is repaired, until they return to 0.0.
                 </p>
               </dd>
               <dt>Beam Resistance (float array (length 5))</dt>
               <dd>
                 <p>
-                  The ship's resistance to the five beam frequencies. Higher
-                  values indicate greater resistance to beams tuned to the
-                  corresponding frequency.
+                  The ship&#x27;s resistance to the five beam frequencies. Higher values indicate greater resistance to beams tuned to the corresponding frequency.
                 </p>
               </dd>
             </dl>
@@ -4265,16 +4213,13 @@
               <dt>Impulse (bit 1.2, float)</dt>
               <dd>
                 <p>
-                  Current impulse power for this ship. Values range from 0.0
-                  (all stop) to 1.0 (full speed) inclusive.
+                  Current impulse power for this ship. Values range from 0.0 (all stop) to 1.0 (full speed) inclusive.
                 </p>
               </dd>
               <dt>Rudder (bit 1.3, float)</dt>
               <dd>
                 <p>
-                  Values range from 0.0 to 1.0 inclusive, with 0.0 meaning hard
-                  to port (left), 0.5 meaning rudder amidships (straight), and
-                  1.0 meaning hard to starboard (right).
+                  Values range from 0.0 to 1.0 inclusive, with 0.0 meaning hard to port (left), 0.5 meaning rudder amidships (straight), and 1.0 meaning hard to starboard (right).
                 </p>
               </dd>
               <dt>Top Speed (bit 1.4, float)</dt>
@@ -4288,54 +4233,43 @@
               <dt>X Coordinate (bit 2.4, float)</dt>
               <dd>
                 <p>
-                  The ship's location on the X axis.
+                  The ship&#x27;s location on the X axis.
                 </p>
               </dd>
               <dt>Y Coordinate (bit 2.5, float)</dt>
               <dd>
                 <p>
-                  The ship's location on the Y axis.
+                  The ship&#x27;s location on the Y axis.
                 </p>
               </dd>
               <dt>Z Coordinate (bit 2.6, float)</dt>
               <dd>
                 <p>
-                  The ship's location on the Z axis.
+                  The ship&#x27;s location on the Z axis.
                 </p>
               </dd>
               <dt>Pitch (bit 2.7, float)</dt>
               <dd>
                 <p>
-                  (values still uncertain) Values range from -1.0 to 1.0
-                  inclusive, where -1.0 means the port (left) side points
-                  straight “up” and 1.0 means it points straight “down.”
+                  (values still uncertain) Values range from -1.0 to 1.0 inclusive, where -1.0 means the port (left) side points straight “up” and 1.0 means it points straight “down.”
                 </p>
               </dd>
               <dt>Roll (bit 2.8, float)</dt>
               <dd>
                 <p>
-                  (values still uncertain) Values range from -1.0 to 1.0
-                  inclusive, where -1.0 means straight “up” and 1.0 means
-                  straight “down.”
+                  (values still uncertain) Values range from -1.0 to 1.0 inclusive, where -1.0 means straight “up” and 1.0 means straight “down.”
                 </p>
               </dd>
               <dt>Heading (bit 3.1, float)</dt>
               <dd>
                 <p>
-                  A value from pi to negative pi. A value of pi corresponds to a
-                  heading of 0° (or “north”). The ship turns to port (left) as
-                  the value decreases. A value of 0.0 corresponds to a heading
-                  of 180° (or “south”).
+                  A value from pi to negative pi. A value of pi corresponds to a heading of 0° (or “north”). The ship turns to port (left) as the value decreases. A value of 0.0 corresponds to a heading of 180° (or “south”).
                 </p>
               </dd>
               <dt>Velocity (bit 3.2, float)</dt>
               <dd>
                 <p>
-                  FIXME: copy pasta
-                  A value from pi to negative pi. A value of pi corresponds to a
-                  heading of 0° (or “north”). The ship turns to port (left) as
-                  the value decreases. A value of 0.0 corresponds to a heading
-                  of 180° (or “south”).
+                  FIXME: copy pasta A value from pi to negative pi. A value of pi corresponds to a heading of 0° (or “north”). The ship turns to port (left) as the value decreases. A value of 0.0 corresponds to a heading of 180° (or “south”).
                 </p>
               </dd>
               <dt>__unknown_2 (bit 3.3, u16)</dt>
@@ -4343,11 +4277,7 @@
               <dt>Front Shields (bit 3.5, float)</dt>
               <dd>
                 <p>
-                  Current strength of forward shield. A value greater than 0.0
-                  indicates that this shield is up, while a value of 0.0 or less
-                  means it's down. If enemy fire penetrates the shield, this
-                  value can go negative; it will climb back towards 0.0 as the
-                  shield recovers.
+                  Current strength of forward shield. A value greater than 0.0 indicates that this shield is up, while a value of 0.0 or less means it&#x27;s down. If enemy fire penetrates the shield, this value can go negative; it will climb back towards 0.0 as the shield recovers.
                 </p>
               </dd>
               <dt>Front Shields Max (bit 3.6, float)</dt>
@@ -4359,11 +4289,7 @@
               <dt>Rear Shields (bit 3.7, float)</dt>
               <dd>
                 <p>
-                  Current strength of rear shield. A value greater than 0.0
-                  indicates that this shield is up, while a value of 0.0 or less
-                  means it's down. If enemy fire penetrates the shield, this
-                  value can go negative; it will climb back towards 0.0 as the
-                  shield recovers.
+                  Current strength of rear shield. A value greater than 0.0 indicates that this shield is up, while a value of 0.0 or less means it&#x27;s down. If enemy fire penetrates the shield, this value can go negative; it will climb back towards 0.0 as the shield recovers.
                 </p>
               </dd>
               <dt>Rear Shields Max (bit 3.8, float)</dt>
@@ -4375,11 +4301,7 @@
               <dt>Last Docked Base (bit 4.1, u32)</dt>
               <dd>
                 <p>
-                  The ID of the base that most recently initiated docking with
-                  the ship. This field updates when a base's tractor beam
-                  latches onto the ship. Undocking does not change this field;
-                  to detect undocking, watch for the ship's impulse (bit 1.2) or
-                  warp factor (bit 1.7) fields to go above zero.
+                  The ID of the base that most recently initiated docking with the ship. This field updates when a base&#x27;s tractor beam latches onto the ship. Undocking does not change this field; to detect undocking, watch for the ship&#x27;s impulse (bit 1.2) or warp factor (bit 1.7) fields to go above zero.
                 </p>
               </dd>
               <dt>Alert Status (bit 4.2, enum AlertStatus as u8)</dt>
@@ -4387,7 +4309,7 @@
               <dt>Main Screen View (bit 4.4, enum MainScreenView as u8)</dt>
               <dd>
                 <p>
-                  The view currently displayed on the ship's main screen.
+                  The view currently displayed on the ship&#x27;s main screen.
                 </p>
               </dd>
               <dt>Beam Frequency (bit 4.5, enum BeamFrequency as u8)</dt>
@@ -4429,8 +4351,7 @@
               <dt>Science Scan Progress (bit 5.3, float)</dt>
               <dd>
                 <p>
-                  A value from 0.0 to 1.0 inclusive indicating the current progress of the active science
-                  scan.
+                  A value from 0.0 to 1.0 inclusive indicating the current progress of the active science scan.
                 </p>
               </dd>
               <dt>Reverse (bit 5.4, bool8)</dt>
@@ -4461,15 +4382,13 @@
               <dt>Capital Ship Id (bit 6.1, u32)</dt>
               <dd>
                 <p>
-                  The object ID of the associated capital ship, if this ship is a fighter.
-                  new as of v2.3.0
+                  The object ID of the associated capital ship, if this ship is a fighter. new as of v2.3.0
                 </p>
               </dd>
               <dt>Accent Color (bit 6.2, u32)</dt>
               <dd>
                 <p>
-                  The accent color of the ship.
-                  new as of v2.4.0
+                  The accent color of the ship. new as of v2.4.0
                 </p>
               </dd>
               <dt>__unknown_8 (bit 6.3, u32)</dt>
@@ -4484,16 +4403,7 @@
           <section id="object-player-ship-upgrades">
             <h3>Player Ship Upgrades</h3>
             <p>
-              New as of v2.1.5. Indicates how many of each upgrade the player ship
-              has on board, which ones are active, and how many seconds are left
-              of each type of activation.
-              There are 28 upgrade types available, each of which are described in
-              this packet type. First, every upgrade is described with an 8-bit
-              boolean value. If this value is true, the upgrade is currently
-              activated. Secondly, every upgrade is described with a i8 (signed
-              8-bit integer), that determines how many of that type of upgrade the
-              ship has available. Finally, every upgrade is described with a u16,
-              that detmines how many more seconds the upgrade is active for.
+              New as of v2.1.5. Indicates how many of each upgrade the player ship has on board, which ones are active, and how many seconds are left of each type of activation. There are 28 upgrade types available, each of which are described in this packet type. First, every upgrade is described with an 8-bit boolean value. If this value is true, the upgrade is currently activated. Secondly, every upgrade is described with a i8 (signed 8-bit integer), that determines how many of that type of upgrade the ship has available. Finally, every upgrade is described with a u16, that determines how many more seconds the upgrade is active for.
             </p>
             <dl>
               <dt>Activation flags (bits 1.1-4.4, bool8)</dt>
@@ -4593,19 +4503,19 @@
               <dt>X Coordinate (bit 1.1, float)</dt>
               <dd>
                 <p>
-                  The torpedo's location on the X axis.
+                  The torpedo&#x27;s location on the X axis.
                 </p>
               </dd>
               <dt>Y Coordinate (bit 1.2, float)</dt>
               <dd>
                 <p>
-                  The torpedo's location on the Y axis.
+                  The torpedo&#x27;s location on the Y axis.
                 </p>
               </dd>
               <dt>Z Coordinate (bit 1.3, float)</dt>
               <dd>
                 <p>
-                  The torpedo's location on the Z axis.
+                  The torpedo&#x27;s location on the Z axis.
                 </p>
               </dd>
               <dt>__unknown_2 (bit 1.4, float)</dt>
