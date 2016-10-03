@@ -3760,7 +3760,7 @@ ${present_name(field.name)} (bit ${index_to_bit(index)}, ${present_type(field.ty
             by the Artemis server.
           </p>
 
-          % for obj in [objects.get(name) for name in ["Anomaly", "Base", "Creature", "Drone", "EngineeringConsole", "GenericMesh", "Nebula", "NpcShip", "PlayerShip", "PlayerShipUpgrades", "Torpedo", "WeaponsConsole", "Whale", "Other"]]:
+          % for obj in objects:
           <section id="object-${camelcase_to_id(obj.name)}">
             <h3>${camelcase_to_name(obj.name)}</h3>
             % if obj.comment:
