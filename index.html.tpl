@@ -1,3 +1,19 @@
+<%def name="present_type(type)">\
+% if type.name == "enum":
+enum ${type[1].name} as ${type[0].name}\
+% elif type.name in ("u8", "u16", "u32"):
+${type.name}\
+% elif type.name == "f32":
+float\
+% elif type.name == "string":
+string\
+% else:
+${type}\
+% endif
+</%def>
+<%def name="present_property(field, index)">\
+${field.name} (bit ${index // 8 + 1}.${index % 8 + 1}, ${present_type(field.type)})\
+</%def>
 <!DOCTYPE html>
 <html>
   <head>
@@ -3705,93 +3721,38 @@
             by the Artemis server.
           </p>
 
-          <section id="object-anomaly">
-            <h3>Anomaly</h3>
+          % for obj in [objects.get("Anomaly"), objects.get("Base")]:
+          <section id="object-${obj.name.lower()}">
+            <h3>${obj.name}</h3>
+            % if obj.comment:
             <p>
-              New as of v.2.1.5. Previously, anomalies were handled by the
-              <a href="#object-other">&ldquo;other&rdquo;</a> property structure.
+              % for line in util.format_comment(obj.comment, indent="", width=80):
+              ${line}
+              % endfor
             </p>
+            % endif
             <dl>
+              % if int(obj.arg) == 1:
               <dt>Bit field (1 byte)</dt>
-              <dt>X coordinate (byte 1.1, float)</dt>
-              <dt>Y coordinate (byte 1.2, float)</dt>
-              <dt>Z coordinate (byte 1.3, float)</dt>
-              <dt><a href="#enum-upgrade">Upgrade</a> (byte 1.4, enum, int)</dt>
+              % else:
+              <dt>Bit field (${obj.arg} bytes)</dt>
+              % endif
+              % for field in obj.fields:
+              <dt>${present_property(field, loop.index)}</dt>
+              % if field.comment:
               <dd>
                 <p>
-                  Note that only the values <code>0x00</code> through <code>0x07</code> have been
-                  observed, as the built-in mission types do not put other upgrade types in anomaly
-                  pickups.
+                  % for line in util.format_comment(field.comment, indent="", width=80):
+                  ${line}
+                  % endfor
                 </p>
               </dd>
+              % endif
+              % endfor
             </dl>
           </section>
 
-          <section id="object-base">
-            <h3>Base</h3>
-            <dl>
-              <dt>Bit field (2 bytes)</dt>
-              <dt>Name (bit 1.1, string)</dt>
-              <dd>
-                <p>
-                  The name assigned to this base. In standard, non-custom scenarios, base names will
-                  be unique, but there is no guarantee that the same will be true in custom
-                  scenarios.
-                </p>
-              </dd>
-              <dt>Shields (bit 1.2, float)</dt>
-              <dd>
-                <p>
-                  The current strength of the base's shields.
-                </p>
-              </dd>
-              <dt>Aft shields (unused) (bit 1.3, float)</dt>
-              <dd>
-                <p>
-                  Bases only have one shield, but all shielded objects in Artemis are encoded with
-                  fore and aft shields. This value is therefore meaningless and should be ignored.
-                </p>
-              </dd>
-              <dt>Index (bit 1.4, int)</dt>
-              <dd>
-                <p>
-                  The index of this base. Each base will have a unique index from 0 to (<em>number
-                  of bases</em>-1). In a standard solo game, DS1 is 0, DS2 is 1, etc.
-                </p>
-              </dd>
-              <dt>Vessel type (bit 1.5, int)</dt>
-              <dd>
-                <p>
-                  The vessel type ID, as found in <code>vesselData.xml</code>.
-                </p>
-              </dd>
-              <dt>X coordinate (bit 1.6, float)</dt>
-              <dd>
-                <p>
-                  The base's location along the X-axis.
-                </p>
-              </dd>
-              <dt>Y coordinate (bit 1.7, float)</dt>
-              <dd>
-                <p>
-                  The base's location along the Y-axis.
-                </p>
-              </dd>
-              <dt>Z coordinate (bit 1.8, float)</dt>
-              <dd>
-                <p>
-                  The base's location along the Z-axis.
-                </p>
-              </dd>
-            </dl>
-            <dt>Unknown (bit 2.1, 4 bytes)</dt>
-            <dt>Unknown (bit 2.2, 4 bytes)</dt>
-            <dt>Unknown (bit 2.3, 4 bytes)</dt>
-            <dt>Unknown (bit 2.4, 4 bytes)</dt>
-            <dt>Unknown (bit 2.5, byte)</dt>
-            <dt>Unknown (bit 2.6, byte)</dt>
-          </section>
-
+          % endfor
           <section id="object-creature">
             <h3>Creature</h3>
             <p>
