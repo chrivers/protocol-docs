@@ -3313,13 +3313,13 @@
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x13</code>.
                   </p>
                 </dd>
-                <dt>Target ID (int)</dt>
+                <dt>Target Id (i32)</dt>
                 <dd>
                   <p>
                     The object ID for the target to be scanned.
@@ -3335,13 +3335,13 @@
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x10</code>.
                   </p>
                 </dd>
-                <dt>Target ID (int)</dt>
+                <dt>Target Id (i32)</dt>
                 <dd>
                   <p>
                     The object ID for the new target, or 1 if the target has been cleared.
@@ -3357,13 +3357,13 @@
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x0b</code>.
                   </p>
                 </dd>
-                <dt><a href="#enum-beam-frequency">Beam frequency</a> (int, enumeration)</dt>
+                <dt>Beam Frequency (enum BeamFrequency as u32)</dt>
                 <dd>
                   <p>
                     The new beam frequency.
@@ -3375,25 +3375,23 @@
               <h3>SetConsolePacket</h3>
               <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x0e</code> [from <span>client</span>]</div>
               <p>
-                Sets whether or not this client will use a particular console. A single client may
-                use multiple consoles, and some consoles allow multiple clients to use them. Clients
-                should send <a href="#setshippacket">SetShipPacket</a> before sending this one.
+                Sets whether or not this client will use a particular console. A single client may use multiple consoles, and some consoles allow multiple clients to use them. Clients should send SetShipPacket before sending this one.
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x0e</code>.
                   </p>
                 </dd>
-                <dt><a href="#enum-console-type">Console type</a> (int, enumeration)</dt>
+                <dt>Console Type (enum ConsoleType as u32)</dt>
                 <dd>
                   <p>
                     The console whose status is being updated.
                   </p>
                 </dd>
-                <dt>Selected (boolean, 4 bytes)</dt>
+                <dt>Selected (bool32)</dt>
                 <dd>
                   <p>
                     True if this client is using the indicated console, false otherwise.
@@ -3409,13 +3407,13 @@
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x01</code>.
                   </p>
                 </dd>
-                <dt><a href="#enum-main-screen-view">Main screen view</a> (int, enumeration)</dt>
+                <dt>Main Screen View (enum MainScreenView as u32)</dt>
                 <dd>
                   <p>
                     The view to display on the main screen.
@@ -3427,18 +3425,17 @@
               <h3>SetShipPacket</h3>
               <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x0d</code> [from <span>client</span>]</div>
               <p>
-                Sets which ship the client will be on. This should be sent before
-                <a href="#setconsolepacket">SetConsolePacket</a>.
+                Sets which ship the client will be on. This should be sent before SetConsolePacket.
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x0d</code>.
                   </p>
                 </dd>
-                <dt>Ship index (int)</dt>
+                <dt>Ship Index (i32)</dt>
                 <dd>
                   <p>
                     The index of the desired ship; valid values are 0 through 7 inclusive.
@@ -3446,42 +3443,46 @@
                 </dd>
               </dl>
             </section>
-            <section id="setshipsettingspacket">
-              <h3>SetShipSettingsPacket</h3>
+            <section id="setshipsettingsv211packet">
+              <h3>SetShipSettingsV211Packet</h3>
               <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x16</code> [from <span>client</span>]</div>
               <p>
-                Sets the name, ship type and drive type for the currently-selected ship.
+                Sets the name, ship type and drive type for the currently-selected ship. (version 2.1.0 up to 2.3.0)
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x16</code>.
                   </p>
                 </dd>
-                <dt><a href="#enum-drive-type">Drive type</a> (int, enumeration)</dt>
+                <dt>Ship (Type<struct>)</dt>
                 <dd>
                   <p>
-                    The desired drive type.
+                    
                   </p>
                 </dd>
-                <dt>Vessel ID (int)</dt>
+              </dl>
+            </section>
+            <section id="setshipsettingsv240packet">
+              <h3>SetShipSettingsV240Packet</h3>
+              <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x17</code> [from <span>client</span>]</div>
+              <p>
+                Sets the name, ship type and drive type for the currently-selected ship. (version 2.4.0+)
+              </p>
+              <h4>Payload</h4>
+              <dl>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
-                    The ID of the desired type of vessel, as given in <code>vesselData.xml</code>.
+                    Always <code>0x17</code>.
                   </p>
                 </dd>
-                <dt>Unknown (int)</dt>
+                <dt>Ship (Type<struct>)</dt>
                 <dd>
                   <p>
-                    Always seems to be 1.
-                  </p>
-                </dd>
-                <dt>Name (string)</dt>
-                <dd>
-                  <p>
-                    The ship's name.
+                    
                   </p>
                 </dd>
               </dl>
@@ -3494,13 +3495,13 @@
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x02</code>.
                   </p>
                 </dd>
-                <dt>Target ID (int)</dt>
+                <dt>Target Id (i32)</dt>
                 <dd>
                   <p>
                     The object ID for the new target, or 1 if the target has been cleared.
@@ -3512,30 +3513,20 @@
               <h3>SkyboxPacket</h3>
               <div class="pkt-props">Type: <code>0xf754c8fe</code>:<code>0x09</code> [from <span>server</span>]</div>
               <p>
-                Sent to change the displayed skybox image on the client. The server will send this
-                packet at the start of a mission. The server will also send it any time a custom
-                script instructs it to do so, but instead of sending the skybox index specified by
-                the script, it will always send <code>0x0a</code> instead. This may be a bug in the
-                Artemis server.
+                Sent to change the displayed skybox image on the client. The server will send this packet at the start of a mission. The server will also send it any time a custom script instructs it to do so, but instead of sending the skybox index specified by the script, it will always send &lt;code&gt;0x0a&lt;/code&gt; instead. This may be a bug in the Artemis server.
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x09</code>.
                   </p>
                 </dd>
-                <dt>Skybox ID (int)</dt>
+                <dt>Skybox Id (i32)</dt>
                 <dd>
                   <p>
-                    The number of the skybox image to load on the client. Under the Artemis install
-                    directory is an "art" folder; this folder contains a bunch of subfolders whose
-                    names start with "sb" followed by a two-digit decimal value. This value is the
-                    skybox ID, and each folder contains image files for a single skybox. The stock
-                    install of Artemis has skybox images for IDs 00 through 05 and 10 through 29. It
-                    is presumed but not yet confirmed that other skybox IDs will work if a
-                    corresponding folder is created and contains the appropriate files.
+                    The number of the skybox image to load on the client. Under the Artemis install directory is an &quot;art&quot; folder; this folder contains a bunch of subfolders whose names start with &quot;sb&quot; followed by a two- digit decimal value. This value is the skybox ID, and each folder contains image files for a single skybox. The stock install of Artemis has skybox images for IDs 00 through 05 and 10 through 29. It is presumed but not yet confirmed that other skybox IDs will work if a corresponding folder is created and contains the appropriate files.
                   </p>
                 </dd>
               </dl>
@@ -3548,7 +3539,7 @@
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x03</code>.
@@ -3557,7 +3548,7 @@
                 <dt>Filename (string)</dt>
                 <dd>
                   <p>
-                    Path to the file to play the sound effect from, e.g "dat/enemy-explode.wav".
+                    Path to the file to play the sound effect from, e.g &quot;dat/enemy-explode.wav&quot;.
                   </p>
                 </dd>
               </dl>
