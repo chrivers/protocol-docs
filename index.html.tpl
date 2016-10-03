@@ -3291,61 +3291,7 @@ ${present_name(field.name)} (${present_type(field.type)})\
               </dl>
             </section>
           </section>
-          <section id="pkt-r">
-            <h3>R</h3>
-            <section id="readypacket">
-              <h3>ReadyPacket</h3>
-              <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x0f</code> [from <span>client</span>]</div>
-              <p>
-                Sent by the client when they click the &ldquo;Ready&rdquo; button to indicate that
-                it is ready to join the game. The client must select at least one station before
-                sending this packet. When a game ends, the stock client typically sends this packet
-                again immediately, on the assumption that they will play again with the same
-                console(s).
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x0f</code>.
-                  </p>
-                </dd>
-                <dt>Unknown (int)</dt>
-                <dd>
-                  <p>
-                    Always 0.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-            <section id="requestenggridupdate">
-              <h3>RequestEngGridUpdate</h3>
-              <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x19</code> [from <span>client</span>]</div>
-              <p>
-                Sent from the engineering station, to request a full
-                update for all values. This causes the server to send
-                a full update, instead of the normal update type where
-                only changes are sent.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x19</code>.
-                  </p>
-                </dd>
-                <dt>Unknown (int)</dt>
-                <dd>
-                  <p>
-                    Always 0.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-          </section>
-          % for prefix in ["S", "T", "U", "V", "W"]:
+          % for prefix in ["R", "S", "T", "U", "V", "W"]:
           <section id="pkt-${prefix.lower()}">
             <h3>${prefix}</h3>
             % for packet, packet_id in packets_by_prefix(prefix):
