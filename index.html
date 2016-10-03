@@ -2894,34 +2894,28 @@
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Audio ID (int)</dt>
+                <dt>Audio Id (i32)</dt>
                 <dd>
                   <p>
                     The ID for this audio message.
                   </p>
                 </dd>
-                <dt><a href="#enum-audio-mode">Audio mode</a> (int, enumeration)</dt>
+                <dt>Audio Mode (enum AudioMode as u32)</dt>
                 <dd>
                   <p>
-                    &ldquo;Incoming&rdquo; means that the communications officer is to be notified
-                    that an audio message is available, and offered the option to play or dismiss
-                    it. &ldquo;Playing&rdquo; is given in response to the communications officer
-                    giving the instruction to play the message, and notifies them that the message
-                    is now being played by the main screen. In the stock client, this results in the
-                    &ldquo;Play&rdquo; button changing to &ldquo;REPlay.&rdquo; (sic)
+                    “Incoming” means that the communications officer is to be notified that an audio message is available, and offered the option to play or dismiss it. “Playing” is given in response to the communications officer giving the instruction to play the message, and notifies them that the message is now being played by the main screen. In the stock client, this results in the “Play” button changing to “REPlay.” (sic)
                   </p>
                 </dd>
-                <dt>Title (string, incoming mode only)</dt>
+                <dt>Title (Type<option>)</dt>
                 <dd>
                   <p>
-                    Title of the incoming message. This should be displayed to the COMMs officer.
+                    Title of the incoming message. This should be displayed to the COMMs officer. (incoming mode only)
                   </p>
                 </dd>
-                <dt>File (string, incoming mode only)</dt>
+                <dt>File (Type<option>)</dt>
                 <dd>
                   <p>
-                    The filename for the audio clip. The client doesn't need to do anything with
-                    this string; as the audio is played by the server.
+                    The filename for the audio clip. The client doesn&#x27;t need to do anything with this string; as the audio is played by the server. (incoming mode only)
                   </p>
                 </dd>
               </dl>
@@ -2930,30 +2924,26 @@
               <h3>IntelPacket</h3>
               <div class="pkt-props">Type: <code>0xee665279</code> [from <span>server</span>]</div>
               <p>
-                Contains intel about another ship. Intel on allied ships (and biomechs, for some
-                reason) is sent right away. Intel for enemy ships is sent after undergoing a level 2
-                scan. Theoretically, the intel should only need to be sent once, but the game
-                re-transmits known intel periodically.
+                Contains intel about another ship. Intel on allied ships (and biomechs, for some reason) is sent right away. Intel for enemy ships is sent after undergoing a level 2 scan. Theoretically, the intel should only need to be sent once, but the game re-transmits known intel periodically.
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Object ID (int)</dt>
+                <dt>Object Id (u32)</dt>
                 <dd>
                   <p>
                     The ID of the ship to which this intel pertains.
                   </p>
                 </dd>
-                <dt>Unknown (byte)</dt>
+                <dt>__unknown_1 (u8)</dt>
                 <dd>
                   <p>
-                    A value of <code>0x03</code> has been observed in single-bridge scenarios.
+                    Values of 0 and 1 have been observed
                   </p>
                 </dd>
                 <dt>Intel (string)</dt>
                 <dd>
                   <p>
-                    The intel message about the ship. This is displayed to the science officer when
-                    selecting this ship.
+                    The intel message about the ship. This is displayed to the science officer when selecting this ship.
                   </p>
                 </dd>
               </dl>
