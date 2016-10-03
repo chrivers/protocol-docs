@@ -3129,39 +3129,9 @@ ${present_name(field.name)} (${present_type(field.type)})\
               </dl>
             </section>
           </section>
-          <section id="pkt-l">
-            <h3>L</h3>
-            <section id="loadtubepacket">
-              <h3>LoadTubePacket</h3>
-              <div class="pkt-props">Type: <code>0x69cc01d9</code>:<code>0x02</code> [from <span>client</span>]</div>
-              <p>
-                Loads a tube with a particular type of ordnance.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x02</code>.
-                  </p>
-                </dd>
-                <dt>Tube index (int)</dt>
-                <dd>
-                  <p>
-                    Indicates which tube is to be loaded.
-                  </p>
-                </dd>
-                <dt><a href="#enum-ordnance-type">Ordnance type</a> (int, enumeration)</dt>
-                <dd>
-                  <p>
-                    The type of ordnance to load into the tube.
-                  </p>
-                </dd>
-                <dt>Unknown (int)</dt>
-                <dt>Unknown (int)</dt>
-              </dl>
-            </section>
-          </section>
+          % for prefix in ["L"]:
+${section(prefix)}\
+          % endfor
           <section id="pkt-o">
             <h3>O</h3>
             <section id="objectupdatepacket">
