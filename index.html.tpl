@@ -3755,7 +3755,7 @@ ${present_name(field.name)} (bit ${index_to_bit(index)}, ${present_type(field.ty
             by the Artemis server.
           </p>
 
-          % for obj in [objects.get(name) for name in ["Anomaly", "Base", "Creature", "Drone", "EngineeringConsole", "GenericMesh", "Nebula", "NpcShip", "PlayerShip", "PlayerShipUpgrades"]]:
+          % for obj in [objects.get(name) for name in ["Anomaly", "Base", "Creature", "Drone", "EngineeringConsole", "GenericMesh", "Nebula", "NpcShip", "PlayerShip", "PlayerShipUpgrades", "Torpedo"]]:
           <section id="object-${camelcase_to_id(obj.name)}">
             <h3>${camelcase_to_name(obj.name)}</h3>
             % if obj.comment:
@@ -3802,42 +3802,6 @@ ${present_name(field.name)} (bit ${index_to_bit(index)}, ${present_type(field.ty
           </section>
 
           % endfor
-          <section id="object-torpedo">
-            <h3>Torpedo</h3>
-            <dl>
-              <dt>Bit field (1 byte)</dt>
-              <dt>Unknown (byte)</dt>
-              <dt>X coordinate (bit 1.1, float)</dt>
-              <dd>
-                <p>
-                  The torpedo's location on the X axis.
-                </p>
-              </dd>
-              <dt>Y coordinate (bit 1.2, float)</dt>
-              <dd>
-                <p>
-                  The torpedo's location on the Y axis.
-                </p>
-              </dd>
-              <dt>Z coordinate (bit 1.3, float)</dt>
-              <dd>
-                <p>
-                  The torpedo's location on the Z axis.
-                </p>
-              </dd>
-              <dt>Unknown (bit 1.4, float?)</dt>
-              <dd>
-                <p>
-                  Appears to range from -1.0 to 1.0.
-                </p>
-              </dd>
-              <dt>Unknown (bit 1.5, float)</dt>
-              <dt>Unknown (bit 1.6, float)</dt>
-              <dt>Unknown (bit 1.7, int)</dt>
-              <dt>Unknown (bit 1.8, int)</dt>
-            </dl>
-          </section>
-
           <section id="object-weapons-console">
             <h3>Weapons Console</h3>
             <p>
