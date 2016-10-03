@@ -3750,7 +3750,7 @@ ${present_name(field.name)} (bit ${index // 8 + 1}.${index % 8 + 1}, ${present_t
             by the Artemis server.
           </p>
 
-          % for obj in [objects.get(name) for name in ["Anomaly", "Base", "Creature", "Drone", "EngineeringConsole"]]:
+          % for obj in [objects.get(name) for name in ["Anomaly", "Base", "Creature", "Drone", "EngineeringConsole", "GenericMesh"]]:
           <section id="object-${camelcase_to_id(obj.name)}">
             <h3>${camelcase_to_name(obj.name)}</h3>
             % if obj.comment:
@@ -3782,74 +3782,6 @@ ${present_name(field.name)} (bit ${index // 8 + 1}.${index % 8 + 1}, ${present_t
           </section>
 
           % endfor
-          <section id="object-generic-mesh">
-            <h3>Generic Mesh</h3>
-            <p>
-              These are arbitrary 3D objects to display in the game world. Players and enemies don't
-              interact with these objects; they are just decoration.
-            </p>
-            <dl>
-              <dt>Bit field (4 bytes)</dt>
-              <dt>X coordinate (bit 1.1, float)</dt>
-              <dd>
-                <p>
-                  The object's location on the X axis.
-                </p>
-              </dd>
-              <dt>Y coordinate (bit 1.2, float)</dt>
-              <dd>
-                <p>
-                  The object's location on the Y axis.
-                </p>
-              </dd>
-              <dt>Z coordinate (bit 1.3, float)</dt>
-              <dd>
-                <p>
-                  The object's location on the Z axis.
-                </p>
-              </dd>
-              <dt>Unknown (bit 1.4, int)</dt>
-              <dt>Unknown (bit 1.5, int)</dt>
-              <dt>Unknown (bit 1.6, long)</dt>
-              <dt>Unknown (bit 1.7, int)</dt>
-              <dt>Unknown (bit 1.8, int)</dt>
-              <dt>Unknown (bit 2.1, int)</dt>
-              <dt>Unknown (bit 2.2, long)</dt>
-              <dt>Name (bit 2.3, string)</dt>
-              <dd>
-                <p>
-                  The name of this object.
-                </p>
-              </dd>
-              <dt>Mesh file (bit 2.4, string)</dt>
-              <dd>
-                <p>
-                  The name of the file containing the 3D mesh data.
-                </p>
-              </dd>
-              <dt>Texture file (bit 2.4, string)</dt>
-              <dd>
-                <p>
-                  The name of the file containing the texture to apply to the mesh. Note that this
-                  uses the same bit as the mesh name, and that bit 2.5 is unused.
-                </p>
-              </dd>
-              <dt>Unknown (bit 2.6, int)</dt>
-              <dt>Unknown (bit 2.7, short)</dt>
-              <dt>Unknown (bit 2.8, byte)</dt>
-              <dt>Red color channel (bit 3.1, float)</dt>
-              <dt>Green color channel (bit 3.2, float)</dt>
-              <dt>Blue color channel (bit 3.3, float)</dt>
-              <dt>Fore shields (bit 3.4, float)</dt>
-              <dt>Aft shields (bit 3.5, float)</dt>
-              <dt>Unknown (bit 3.6, int)</dt>
-              <dt>Unknown (bit 3.7, int)</dt>
-              <dt>Unknown (bit 3.8, int)</dt>
-              <dt>Unknown (bit 4.1, int)</dt>
-              <dt>Unknown (bit 4.2, int)</dt>
-            </dl>
-          </section>
-
           <section id="object-nebula">
             <h3>Nebula</h3>
             <dl>

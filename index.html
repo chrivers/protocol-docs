@@ -3990,68 +3990,93 @@
           <section id="object-generic-mesh">
             <h3>Generic Mesh</h3>
             <p>
-              These are arbitrary 3D objects to display in the game world. Players and enemies don't
-              interact with these objects; they are just decoration.
+              These are arbitrary 3D objects to display in the game world. Players and enemies
+              don't interact with these objects; they are just decoration.
             </p>
             <dl>
               <dt>Bit field (4 bytes)</dt>
-              <dt>X coordinate (bit 1.1, float)</dt>
+              <dt>X Coordinate (bit 1.1, float)</dt>
               <dd>
                 <p>
                   The object's location on the X axis.
                 </p>
               </dd>
-              <dt>Y coordinate (bit 1.2, float)</dt>
+              <dt>Y Coordinate (bit 1.2, float)</dt>
               <dd>
                 <p>
                   The object's location on the Y axis.
                 </p>
               </dd>
-              <dt>Z coordinate (bit 1.3, float)</dt>
+              <dt>Z Coordinate (bit 1.3, float)</dt>
               <dd>
                 <p>
                   The object's location on the Z axis.
                 </p>
               </dd>
-              <dt>Unknown (bit 1.4, int)</dt>
-              <dt>Unknown (bit 1.5, int)</dt>
-              <dt>Unknown (bit 1.6, long)</dt>
-              <dt>Unknown (bit 1.7, int)</dt>
-              <dt>Unknown (bit 1.8, int)</dt>
-              <dt>Unknown (bit 2.1, int)</dt>
-              <dt>Unknown (bit 2.2, long)</dt>
+              <dt>__unknown_1 (bit 1.4, u32)</dt>
+              <dt>__unknown_2 (bit 1.5, u32)</dt>
+              <dt>__unknown_3 (bit 1.6, u64)</dt>
+              <dt>__unknown_4 (bit 1.7, u32)</dt>
+              <dt>__unknown_5 (bit 1.8, u32)</dt>
+              <dt>__unknown_6 (bit 2.1, u32)</dt>
+              <dt>__unknown_7 (bit 2.2, u64)</dt>
               <dt>Name (bit 2.3, string)</dt>
               <dd>
                 <p>
                   The name of this object.
                 </p>
               </dd>
-              <dt>Mesh file (bit 2.4, string)</dt>
+              <dt>Mesh File (bit 2.4, string)</dt>
               <dd>
                 <p>
                   The name of the file containing the 3D mesh data.
                 </p>
               </dd>
-              <dt>Texture file (bit 2.4, string)</dt>
+              <dt>Texture File (bit 2.5, string)</dt>
               <dd>
                 <p>
-                  The name of the file containing the texture to apply to the mesh. Note that this
-                  uses the same bit as the mesh name, and that bit 2.5 is unused.
+                  The name of the file containing the texture to apply to the mesh. Note that this uses the
+                  same bit as the mesh name, and that bit 2.5 is unused.
                 </p>
               </dd>
-              <dt>Unknown (bit 2.6, int)</dt>
-              <dt>Unknown (bit 2.7, short)</dt>
-              <dt>Unknown (bit 2.8, byte)</dt>
-              <dt>Red color channel (bit 3.1, float)</dt>
-              <dt>Green color channel (bit 3.2, float)</dt>
-              <dt>Blue color channel (bit 3.3, float)</dt>
-              <dt>Fore shields (bit 3.4, float)</dt>
-              <dt>Aft shields (bit 3.5, float)</dt>
-              <dt>Unknown (bit 3.6, int)</dt>
-              <dt>Unknown (bit 3.7, int)</dt>
-              <dt>Unknown (bit 3.8, int)</dt>
-              <dt>Unknown (bit 4.1, int)</dt>
-              <dt>Unknown (bit 4.2, int)</dt>
+              <dt>__unknown_8 (bit 2.6, u32)</dt>
+              <dt>__unknown_9 (bit 2.7, u16)</dt>
+              <dt>__unknown_10 (bit 2.8, u8)</dt>
+              <dt>R Color (bit 3.1, float)</dt>
+              <dd>
+                <p>
+                  Red color channel (bit 3.1, float)
+                </p>
+              </dd>
+              <dt>G Color (bit 3.2, float)</dt>
+              <dd>
+                <p>
+                  Green color channel (bit 3.2, float)
+                </p>
+              </dd>
+              <dt>B Color (bit 3.3, float)</dt>
+              <dd>
+                <p>
+                  Blue color channel (bit 3.3, float)
+                </p>
+              </dd>
+              <dt>Front Shields (bit 3.4, float)</dt>
+              <dd>
+                <p>
+                  Front shields (bit 3.4, float)
+                </p>
+              </dd>
+              <dt>Rear Shields (bit 3.5, float)</dt>
+              <dd>
+                <p>
+                  Rear shields (bit 3.5, float)
+                </p>
+              </dd>
+              <dt>__unknown_11 (bit 3.6, u32)</dt>
+              <dt>__unknown_12 (bit 3.7, u32)</dt>
+              <dt>__unknown_13 (bit 3.8, u32)</dt>
+              <dt>__unknown_14 (bit 4.1, u32)</dt>
+              <dt>__unknown_15 (bit 4.2, u32)</dt>
             </dl>
           </section>
 
