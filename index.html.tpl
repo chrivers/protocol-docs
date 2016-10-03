@@ -3034,42 +3034,7 @@ ${present_name(field.name)} (${present_type(field.type)})\
               </dl>
             </section>
           </section>
-          <section id="pkt-j">
-            <h3>J</h3>
-            <section id="jumpstatusbeginpacket">
-              <h3>JumpStatusBeginPacket</h3>
-              <div class="pkt-props">Type: <code>0xf754c8fe</code>:<code>0x0c</code> [from <span>server</span>]</div>
-              <p>
-                Notifies the client that a jump has started.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x0c</code>.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-            <section id="jumpstatusendpacket">
-              <h3>JumpStatusEndPacket</h3>
-              <div class="pkt-props">Type: <code>0xf754c8fe</code>:<code>0x0d</code> [from <span>server</span>]</div>
-              <p>
-                Notifies the client that a jump has completed.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x0d</code>.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-          </section>
-          % for prefix in ["K", "L"]:
+          % for prefix in ["J", "K", "L"]:
 ${section(prefix)}\
           % endfor
           <section id="pkt-o">
