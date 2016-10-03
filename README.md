@@ -41,6 +41,4 @@ $ make
 
 ## Online version ##
 
-https://artemis-nerds.github.io/protocol-docs/](httpshttps://artemis-nerds.github.io/protocol-docs
-
-View the documentation at [https://chrivers.github.io/protocol-docs/](https://chrivers.github.io/protocol-docs/).
+View the documentation online at [https://chrivers.github.io/protocol-docs/](https://chrivers.github.io/protocol-docs/).
