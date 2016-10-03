@@ -1,7 +1,7 @@
 <%def name="present_type(type)">\
 % if type.name == "enum":
 enum ${type[1].name} as ${type[0].name}\
-% elif type.name in ("u8", "u16", "u32"):
+% elif type.name in ("u8", "u16", "u32", "u64", "i8", "i16", "i32", "i64"):
 ${type.name}\
 % elif type.name == "f32":
 float\
@@ -3728,7 +3728,7 @@ ${present_name(field.name)} (bit ${index // 8 + 1}.${index % 8 + 1}, ${present_t
             by the Artemis server.
           </p>
 
-          % for obj in [objects.get("Anomaly"), objects.get("Base")]:
+          % for obj in [objects.get(name) for name in ["Anomaly", "Base", "Creature"]]:
           <section id="object-${obj.name.lower()}">
             <h3>${obj.name}</h3>
             % if obj.comment:
@@ -3749,7 +3749,7 @@ ${present_name(field.name)} (bit ${index // 8 + 1}.${index % 8 + 1}, ${present_t
               % if field.comment:
               <dd>
                 <p>
-                  % for line in util.format_comment(field.comment, indent="", width=80):
+                  % for line in util.format_comment(field.comment, indent="", width=90):
                   ${line}
                   % endfor
                 </p>
@@ -3760,73 +3760,6 @@ ${present_name(field.name)} (bit ${index // 8 + 1}.${index % 8 + 1}, ${present_t
           </section>
 
           % endfor
-          <section id="object-creature">
-            <h3>Creature</h3>
-            <p>
-              Note that wrecks are also considered creatures, for some reason. This structure is new
-              as of v2.1.5. Previously, the only type of creature was the classic space monster,
-              which was handled by the <a href="#object-other">&ldquo;other&rdquo;</a> property
-              structure, and <a href="#object-whale">space whales</a> had their own structure.
-            </p>
-            <dl>
-              <dt>Bit field (2 bytes)</dt>
-              <dt>X (bit 1.1, float)</dt>
-              <dd>
-                <p>
-                  The X coordinate of this creature.
-                </p>
-              </dd>
-              <dt>Y (bit 1.2, float)</dt>
-              <dd>
-                <p>
-                  The Y coordinate of this creature.
-                </p>
-              </dd>
-              <dt>Z (bit 1.3, float)</dt>
-              <dd>
-                <p>
-                  The Z coordinate of this creature.
-                </p>
-              </dd>
-              <dt>Name (bit 1.4, string)</dt>
-              <dd>
-                <p>
-                  The name of the creature.
-                </p>
-              </dd>
-              <dt>Heading (bit 1.5, float)</dt>
-              <dd>
-                <p>
-                  The creature's current heading.
-                </p>
-              </dd>
-              <dt>Pitch (bit 1.6, float)</dt>
-              <dd>
-                <p>
-                  The creature's current pitch.
-                </p>
-              </dd>
-              <dt>Roll (bit 1.7, float)</dt>
-              <dd>
-                <p>
-                  The creature's current roll.
-                </p>
-              </dd>
-              <dt><a href="#enum-creature-type">Creature type</a> (bit 1.8, enum)</dt>
-              <dd>
-                <p>
-                  The type of creature.
-                </p>
-              </dd>
-              <dt>Unknown (bit 2.1, 4 bytes)</dt>
-              <dt>Unknown (bit 2.2, 4 bytes)</dt>
-              <dt>Unknown (bit 2.3, 4 bytes)</dt>
-              <dt>Unknown (bit 2.4, 4 bytes)</dt>
-              <dt>Unknown (bit 2.5, 4 bytes)</dt>
-              <dt>Unknown (bit 2.6, 4 bytes)</dt>
-            </dl>
-          </section>
-
           <section id="object-drone">
             <h3>Drone</h3>
             <dl>
