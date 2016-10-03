@@ -4533,46 +4533,42 @@
 
           <section id="object-weapons-console">
             <h3>Weapons Console</h3>
-            <p>
-              Note: The plasma shock torpedo type was added in v.2.1.5. It was inserted at bit 1.5,
-              and all subsequent bits were shifted by one bit. Before this addition, the bit field
-              was only three bytes long instead of four.
-            </p>
             <dl>
               <dt>Bit field (4 bytes)</dt>
-              <dt>Ordnance counts (bits 1.1-1.5, byte array)</dt>
+              <dt>Homing (bit 1.1, u8)</dt>
+              <dt>Nukes (bit 1.2, u8)</dt>
+              <dt>Mines (bit 1.3, u8)</dt>
+              <dt>Emps (bit 1.4, u8)</dt>
+              <dt>Plasma (bit 1.5, u8)</dt>
               <dd>
                 <p>
-                  This array contains up to five byte elements. Each element gives how many of a
-                  particular ordinance are stored on the ship, in the following order: homing
-                  missiles, nukes, mines, EMPs, plasma shocks.
+                  The plasma shock torpedo type was added in v.2.1.5. It was inserted at bit 1.5, and all subsequent bits were shifted by one bit. Before this addition, the bit field was only three bytes long instead of four.
                 </p>
               </dd>
-              <dt>Unknown (bit 1.6, byte)</dt>
-              <dt>Tube (un)load times (bits 1.7-2.4, float array)</dt>
+              <dt> Unknown (bit 1.6, u8)</dt>
               <dd>
                 <p>
-                  This array contains up to six float elements. Each element gives the (un)load
-                  time for the corresponding tube. This field should be ignored (even when
-                  present) if the tube's status is not loading or unloading.
+                  Unknown (bit 1.6, byte)
                 </p>
               </dd>
-              <dt><a href="#enum-tube-status">Tube status</a> (bits 2.5-3.2, byte array)</dt>
+              <dt>Tube Times (float array (length 6))</dt>
               <dd>
                 <p>
-                  This array contains up to six byte elements. Each element indicates the
-                  occupation status of each tube.
+                  This array contains up to six float elements. Each element gives the (un)load time for the corresponding tube. This field should be ignored (even when present) if the tube&#x27;s status is not loading or unloading.
                 </p>
               </dd>
-              <dt><a href="#enum-ordnance-type">Ordnance type</a> (bits 3.3-3.8, byte array)
+              <dt>Tube Status (enum TubeStatus as u8 array (length 6))</dt>
               <dd>
                 <p>
-                  This array contains up to six byte elements. Each element indicates the type of
-                  ordnance in each tube. If the tube's status is unloaded, the tube is empty, and
-                  this field should be ignored even when present.
+                  This array contains up to six byte elements. Each element indicates the occupation status of each tube.
                 </p>
               </dd>
-              <dt>Unused (bits 4.1-4.8)</dt>
+              <dt>Ordnance Type (enum OrdnanceType as u8 array (length 6))</dt>
+              <dd>
+                <p>
+                  This array contains up to six byte elements. Each element indicates the type of ordnance in each tube. If the tube&#x27;s status is unloaded, the tube is empty, and this field should be ignored even when present.
+                </p>
+              </dd>
             </dl>
           </section>
 

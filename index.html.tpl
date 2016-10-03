@@ -3760,7 +3760,7 @@ ${present_name(field.name)} (bit ${index_to_bit(index)}, ${present_type(field.ty
             by the Artemis server.
           </p>
 
-          % for obj in [objects.get(name) for name in ["Anomaly", "Base", "Creature", "Drone", "EngineeringConsole", "GenericMesh", "Nebula", "NpcShip", "PlayerShip", "PlayerShipUpgrades", "Torpedo"]]:
+          % for obj in [objects.get(name) for name in ["Anomaly", "Base", "Creature", "Drone", "EngineeringConsole", "GenericMesh", "Nebula", "NpcShip", "PlayerShip", "PlayerShipUpgrades", "Torpedo", "WeaponsConsole"]]:
           <section id="object-${camelcase_to_id(obj.name)}">
             <h3>${camelcase_to_name(obj.name)}</h3>
             % if obj.comment:
@@ -3803,51 +3803,6 @@ ${present_name(field.name)} (bit ${index_to_bit(index)}, ${present_type(field.ty
           </section>
 
           % endfor
-          <section id="object-weapons-console">
-            <h3>Weapons Console</h3>
-            <p>
-              Note: The plasma shock torpedo type was added in v.2.1.5. It was inserted at bit 1.5,
-              and all subsequent bits were shifted by one bit. Before this addition, the bit field
-              was only three bytes long instead of four.
-            </p>
-            <dl>
-              <dt>Bit field (4 bytes)</dt>
-              <dt>Ordnance counts (bits 1.1-1.5, byte array)</dt>
-              <dd>
-                <p>
-                  This array contains up to five byte elements. Each element gives how many of a
-                  particular ordinance are stored on the ship, in the following order: homing
-                  missiles, nukes, mines, EMPs, plasma shocks.
-                </p>
-              </dd>
-              <dt>Unknown (bit 1.6, byte)</dt>
-              <dt>Tube (un)load times (bits 1.7-2.4, float array)</dt>
-              <dd>
-                <p>
-                  This array contains up to six float elements. Each element gives the (un)load
-                  time for the corresponding tube. This field should be ignored (even when
-                  present) if the tube's status is not loading or unloading.
-                </p>
-              </dd>
-              <dt><a href="#enum-tube-status">Tube status</a> (bits 2.5-3.2, byte array)</dt>
-              <dd>
-                <p>
-                  This array contains up to six byte elements. Each element indicates the
-                  occupation status of each tube.
-                </p>
-              </dd>
-              <dt><a href="#enum-ordnance-type">Ordnance type</a> (bits 3.3-3.8, byte array)
-              <dd>
-                <p>
-                  This array contains up to six byte elements. Each element indicates the type of
-                  ordnance in each tube. If the tube's status is unloaded, the tube is empty, and
-                  this field should be ignored even when present.
-                </p>
-              </dd>
-              <dt>Unused (bits 4.1-4.8)</dt>
-            </dl>
-          </section>
-
           <section id="object-whale">
             <h3><del>Whale</del></h3>
             <p>
