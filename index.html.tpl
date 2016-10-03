@@ -876,38 +876,12 @@
             <h3>Ship System</h3>
             <table>
               <tbody>
+                % for item in enums.get("ShipSystem").fields:
                 <tr>
-                  <td><code>0x00</code></td>
-                  <td>beams</td>
+                  <td><code>${item.aligned_hex_value}</code></td>
+                  <td>${item.name}</td>
                 </tr>
-                <tr>
-                  <td><code>0x01</code></td>
-                  <td>torpedoes</td>
-                </tr>
-                <tr>
-                  <td><code>0x02</code></td>
-                  <td>sensors</td>
-                </tr>
-                <tr>
-                  <td><code>0x03</code></td>
-                  <td>maneuvering</td>
-                </tr>
-                <tr>
-                  <td><code>0x04</code></td>
-                  <td>impulse</td>
-                </tr>
-                <tr>
-                  <td><code>0x05</code></td>
-                  <td>warp/jump drive</td>
-                </tr>
-                <tr>
-                  <td><code>0x06</code></td>
-                  <td>fore shields</td>
-                </tr>
-                <tr>
-                  <td><code>0x07</code></td>
-                  <td>aft shields</td>
-                </tr>
+                % endfor
               </tbody>
             </table>
           </section>
