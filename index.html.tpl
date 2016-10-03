@@ -90,7 +90,7 @@ ${type}\
 % if name.startswith("__"):
 ${name}\
 % else:
-${name.replace("_", " ").title()}\
+${name.replace("_", " ").title().strip()}\
 % endif
 </%def>\
 <%def name="present_property(field, index)">\
@@ -3736,47 +3736,10 @@ ${present_name(field.name)} (${present_type(field.type)})\
               </dl>
             </section>
           </section>
-          <section id="pkt-v">
-            <h3>V</h3>
-            <section id="versionpacket">
-              <h3>VersionPacket</h3>
-              <div class="pkt-props">Type: <code>0xe548e74a</code> [from <span>server</span>]</div>
-              <p>
-                Gives the server version number. This packet is sent immediately after the
-                <a href="#welcomepacket">WelcomePacket</a>.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Unknown (int)</dt>
-                <dd>
-                  <p>
-                    The value of this field can vary, even when connecting to the same version of
-                    the server.
-                  </p>
-                </dd>
-                <dt>Version (deprecated since v2.1) (float)</dt>
-                <dd>
-                  <p>
-                    The version of Artemis running on the server. If the client doesn't support the
-                    given version, it should disconnect. This field is deprecated as of v2.1; it is
-                    still sent by the server, but client should ignore its value unless there are no
-                    more bytes after it in the packet.
-                  </p>
-                </dd>
-                <dt>Version (since v2.1) (3 ints)</dt>
-                <dd>
-                  These three int values constitute the major, minor and patch version numbers. For
-                  example, v2.1.1 will transmit <code>02000000 01000000 01000000</code> (interpreted
-                  2 1 1) for this field. If the client doesn't support the given version, it should
-                  disconnect. The version specified in this field supersedes any specified in the
-                  legacy version field.
-                </dd>
-              </dl>
-            </section>
-          </section>
-          <section id="pkt-w">
-            <h3>W</h3>
-            % for packet in packets_by_prefix("W"):
+          % for prefix in ["V", "W"]:
+          <section id="pkt-${prefix.lower()}">
+            <h3>${prefix}</h3>
+            % for packet in packets_by_prefix(prefix):
             <section id="${packet.name.lower()}packet">
               <h3>${packet.name}Packet</h3>
               <div class="pkt-props">Type: ${get_packet_id(packet)} [from <span>${get_origin(packet)}</span>]</div>
@@ -3797,6 +3760,7 @@ ${present_name(field.name)} (${present_type(field.type)})\
             </section>
             % endfor
           </section>
+          % endfor
         </section>
 
         <section id="object-properties">

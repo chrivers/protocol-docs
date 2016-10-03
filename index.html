@@ -3685,34 +3685,27 @@
               <h3>VersionPacket</h3>
               <div class="pkt-props">Type: <code>0xe548e74a</code> [from <span>server</span>]</div>
               <p>
-                Gives the server version number. This packet is sent immediately after the
-                <a href="#welcomepacket">WelcomePacket</a>.
+                Gives the server version number. This packet is sent immediately after the WelcomePacket
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Unknown (int)</dt>
+                <dt>__unknown_1 (u32)</dt>
                 <dd>
                   <p>
-                    The value of this field can vary, even when connecting to the same version of
-                    the server.
+                    Unknown function, but has been observed to follow the cycle &quot;ec f0 e8 d4 d8 dc e0 e4&quot;
                   </p>
                 </dd>
-                <dt>Version (deprecated since v2.1) (float)</dt>
+                <dt>Old Version (float)</dt>
                 <dd>
                   <p>
-                    The version of Artemis running on the server. If the client doesn't support the
-                    given version, it should disconnect. This field is deprecated as of v2.1; it is
-                    still sent by the server, but client should ignore its value unless there are no
-                    more bytes after it in the packet.
+                    The version of Artemis running on the server. If the client doesn&#x27;t support the given version, it should disconnect. This field is deprecated as of v2.1; it is still sent by the server, but client should ignore its value unless there are no more bytes after it in the packet.
                   </p>
                 </dd>
-                <dt>Version (since v2.1) (3 ints)</dt>
+                <dt>Version (u32 array (length 3))</dt>
                 <dd>
-                  These three int values constitute the major, minor and patch version numbers. For
-                  example, v2.1.1 will transmit <code>02000000 01000000 01000000</code> (interpreted
-                  2 1 1) for this field. If the client doesn't support the given version, it should
-                  disconnect. The version specified in this field supersedes any specified in the
-                  legacy version field.
+                  <p>
+                    These three int values constitute the major, minor and patch version numbers. For example, v2.1.1 will transmit 02000000 01000000 01000000 (interpreted 2 1 1) for this field. If the client doesn&#x27;t support the given version, it should disconnect. The version specified in this field supersedes any specified in the legacy version field.  It has been officially confirmed that the schema is &lt;major&gt;.&lt;network&gt;.&lt;minor&gt;. In other words, the 2 first digits should uniquely identify any protocol version.
+                  </p>
                 </dd>
               </dl>
             </section>
@@ -4540,7 +4533,7 @@
                   The plasma shock torpedo type was added in v.2.1.5. It was inserted at bit 1.5, and all subsequent bits were shifted by one bit. Before this addition, the bit field was only three bytes long instead of four.
                 </p>
               </dd>
-              <dt> Unknown (bit 1.6, u8)</dt>
+              <dt>Unknown (bit 1.6, u8)</dt>
               <dd>
                 <p>
                   Unknown (bit 1.6, byte)
