@@ -3180,13 +3180,13 @@
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x04</code>.
                   </p>
                 </dd>
-                <dt>Paused (boolean, 4 bytes)</dt>
+                <dt>Paused (bool32)</dt>
                 <dd>
                   <p>
                     True if the simulation is paused; false otherwise.
@@ -3202,13 +3202,13 @@
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x12</code>.
                   </p>
                 </dd>
-                <dt><a href="#enum-perspective">Perspective</a> (int, enumeration)</dt>
+                <dt>Perspective (enum Perspective as u32)</dt>
                 <dd>
                   <p>
                     The current main screen perspective.
@@ -3220,30 +3220,26 @@
               <h3>PlayerShipDamagePacket</h3>
               <div class="pkt-props">Type: <code>0xf754c8fe</code>:<code>0x05</code> [from <span>server</span>]</div>
               <p>
-                Appears to be sent when the player ship is hit by enemy fire. Has been observed when
-                fired upon by enemy beams. Information about this packet is still uncertain and the
-                documentation for it should not be considered reliable at this time.
+                Appears to be sent when the player ship is hit by enemy fire. Has been observed when fired upon by enemy beams. Information about this packet is still uncertain and the documentation for it should not be considered reliable at this time.
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x05</code>.
                   </p>
                 </dd>
-                <dt>Unknown (int)</dt>
+                <dt>__unknown_1 (u32)</dt>
                 <dd>
                   <p>
                     Value of 1 observed.
                   </p>
                 </dd>
-                <dt>Unknown (float?)</dt>
+                <dt>__unknown_2 (float)</dt>
                 <dd>
                   <p>
-                    Appears to have values of 1.0 or less for hits against shields, and values
-                    greater than 1.0 and less than or equal to 2.0 for hits that pass through the
-                    shields and strike the hull.
+                    Appears to have values of 1.0 or less for hits against shields, and values greater than 1.0 and less than or equal to 2.0 for hits that pass through the shields and strike the hull.
                   </p>
                 </dd>
               </dl>
