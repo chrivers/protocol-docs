@@ -3760,7 +3760,7 @@ ${present_name(field.name)} (bit ${index_to_bit(index)}, ${present_type(field.ty
             by the Artemis server.
           </p>
 
-          % for obj in [objects.get(name) for name in ["Anomaly", "Base", "Creature", "Drone", "EngineeringConsole", "GenericMesh", "Nebula", "NpcShip", "PlayerShip", "PlayerShipUpgrades", "Torpedo", "WeaponsConsole"]]:
+          % for obj in [objects.get(name) for name in ["Anomaly", "Base", "Creature", "Drone", "EngineeringConsole", "GenericMesh", "Nebula", "NpcShip", "PlayerShip", "PlayerShipUpgrades", "Torpedo", "WeaponsConsole", "Whale"]]:
           <section id="object-${camelcase_to_id(obj.name)}">
             <h3>${camelcase_to_name(obj.name)}</h3>
             % if obj.comment:
@@ -3803,51 +3803,6 @@ ${present_name(field.name)} (bit ${index_to_bit(index)}, ${present_type(field.ty
           </section>
 
           % endfor
-          <section id="object-whale">
-            <h3><del>Whale</del></h3>
-            <p>
-              This type became obsolete starting v2.1.5, when whales were folded into the new
-              creature object type.
-            </p>
-            <dl>
-              <dt>Bit field (2 bytes)</dt>
-              <dt>Name (bit 1.1, string)</dt>
-              <dd>
-                <p>
-                  Always &ldquo;WHALE&rdquo; in non-custom missions.
-                </p>
-              </dd>
-              <dt>Unknown (bit 1.2, int)</dt>
-              <dt>Unknown (bit 1.3, int)</dt>
-              <dt>X coordinate (bit 1.4, float)</dt>
-              <dt>Y coordinate (bit 1.5, float)</dt>
-              <dt>Z coordinate (bit 1.6, float)</dt>
-              <dt>Pitch (bit 1.7, float)</dt>
-              <dt>Roll (bit 1.8, float)</dt>
-              <dt>Heading (bit 2.1, float)</dt>
-              <dt>Unknown (bit 2.2, float)</dt>
-              <dt>Unknown (bit 2.3, float)</dt>
-              <dd>
-                <p>
-                  Values range from 0.0 to 1.0.
-                </p>
-              </dd>
-              <dt>Unknown (bit 2.4, float)</dt>
-              <dd>
-                <p>
-                  Values range up to 1.0. Lowest value seen so far is approximately 0.855, minimum
-                  <em>might</em> be 0.0.
-                </p>
-              </dd>
-              <dt>Unknown (bit 2.5, float)</dt>
-              <dd>
-                <p>
-                  Observed ranges have been from about 0.5 to 1.36.
-                </p>
-              </dd>
-            </dl>
-          </section>
-
           <section id="object-other">
             <h3>Other Objects</h3>
             <p>
