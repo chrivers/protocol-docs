@@ -3750,7 +3750,7 @@ ${present_name(field.name)} (bit ${index // 8 + 1}.${index % 8 + 1}, ${present_t
             by the Artemis server.
           </p>
 
-          % for obj in [objects.get(name) for name in ["Anomaly", "Base", "Creature", "Drone", "EngineeringConsole", "GenericMesh"]]:
+          % for obj in [objects.get(name) for name in ["Anomaly", "Base", "Creature", "Drone", "EngineeringConsole", "GenericMesh", "Nebula"]]:
           <section id="object-${camelcase_to_id(obj.name)}">
             <h3>${camelcase_to_name(obj.name)}</h3>
             % if obj.comment:
@@ -3782,21 +3782,6 @@ ${present_name(field.name)} (bit ${index // 8 + 1}.${index % 8 + 1}, ${present_t
           </section>
 
           % endfor
-          <section id="object-nebula">
-            <h3>Nebula</h3>
-            <dl>
-              <dt>Bit field (1 bytes)</dt>
-              <dt>X coordinate (bit 1.1, float)</dt>
-              <dt>Y coordinate (bit 1.2, float)</dt>
-              <dt>Z coordinate (bit 1.3, float)</dt>
-              <dt>Red color channel (bit 1.4, float)</dt>
-              <dt>Green color channel (bit 1.5, float)</dt>
-              <dt>Blue color channel (bit 1.6, float)</dt>
-              <dt>Unused? (bit 1.7, int)</dt>
-              <dt>Unused? (bit 1.8, int)</dt>
-            </dl>
-          </section>
-
           <section id="object-npc-ship">
             <h3>NPC Ship</h3>
             <dl>
