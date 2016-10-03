@@ -1,5 +1,7 @@
 <%
 import re
+import html
+
 re_camel_case = re.compile(r'(((?<=[a-z])[A-Z])|([A-Z](?![A-Z]|$)))')
 
 def split_camelcase(value):
@@ -15,6 +17,9 @@ def camelcase_to_name(value):
 
 def index_to_bit(index):
     return "%d.%d" % (index // 8 + 1, index % 8 + 1)
+
+def format_comment(lines):
+    return " ".join([html.escape(line) for line in util.format_comment(lines, indent="", width=80)])
 
 %>\
 <%def name="present_type(type)">\
@@ -3760,9 +3765,7 @@ ${present_name(field.name)} (bit ${index_to_bit(index)}, ${present_type(field.ty
             <h3>${camelcase_to_name(obj.name)}</h3>
             % if obj.comment:
             <p>
-              % for line in util.format_comment(obj.comment, indent="", width=80):
-              ${line}
-              % endfor
+              ${format_comment(obj.comment)}
             </p>
             % endif
             <dl>
@@ -3790,9 +3793,7 @@ ${present_name(field.name)} (bit ${index_to_bit(index)}, ${present_type(field.ty
               % if field.comment:
               <dd>
                 <p>
-                  % for line in util.format_comment(field.comment, indent="", width=90):
-                  ${line}
-                  % endfor
+                  ${format_comment(field.comment)}
                 </p>
               </dd>
               % endif
