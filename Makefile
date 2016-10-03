@@ -1,5 +1,5 @@
 diff:
 	@transwarp -D isolinear-chips/protocol
 
-build:
+gen:
 	@transwarp -D isolinear-chips/protocol -u

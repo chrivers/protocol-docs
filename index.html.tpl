@@ -3728,7 +3728,7 @@ ${present_name(field.name)} (bit ${index // 8 + 1}.${index % 8 + 1}, ${present_t
             by the Artemis server.
           </p>
 
-          % for obj in [objects.get(name) for name in ["Anomaly", "Base", "Creature"]]:
+          % for obj in [objects.get(name) for name in ["Anomaly", "Base", "Creature", "Drone"]]:
           <section id="object-${obj.name.lower()}">
             <h3>${obj.name}</h3>
             % if obj.comment:
@@ -3760,34 +3760,6 @@ ${present_name(field.name)} (bit ${index // 8 + 1}.${index % 8 + 1}, ${present_t
           </section>
 
           % endfor
-          <section id="object-drone">
-            <h3>Drone</h3>
-            <dl>
-              <dt>Bit field (2 bytes)</dt>
-              <dt>Unknown (bit 1.1, int)</dt>
-              <dt>X coordinate (bit 1.2, float)</dt>
-              <dt>Unknown (bit 1.3 float)</dt>
-              <dd>
-                <p>
-                  Values observed range from approximately -0.01 to 53.7. Might be related to
-                  pitch/yaw.
-                </p>
-              </dd>
-              <dt>Z coordinate (bit 1.4, float)</dt>
-              <dt>Unknown (bit 1.5 float)</dt>
-              <dd>
-                <p>
-                  Perhaps related to pitch/yaw.
-                </p>
-              </dd>
-              <dt>Y coordinate (bit 1.6, float)</dt>
-              <dt>Heading (bit 1.7, float)</dt>
-              <dt>Unknown (bit 1.8, int)</dt>
-              <dt>Unknown (bit 2.1, float?, v2.1.5+)</dt>
-              <dt>Unused? (bits 2.2-2.8)</dt>
-            </dl>
-          </section>
-
           <section id="object-engineering-console">
             <h3>Engineering Console</h3>
             <dl>
