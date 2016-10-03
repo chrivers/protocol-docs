@@ -710,34 +710,12 @@
             <h3>Main Screen View</h3>
             <table>
               <tbody>
+                % for enum in enums.get("MainScreenView").fields:
                 <tr>
-                  <td><code>0x00</code></td>
-                  <td>forward</td>
+                  <td><code>${enum.aligned_hex_value}</code></td>
+                  <td>${enum.name}</td>
                 </tr>
-                <tr>
-                  <td><code>0x01</code></td>
-                  <td>port</td>
-                </tr>
-                <tr>
-                  <td><code>0x02</code></td>
-                  <td>starboard</td>
-                </tr>
-                <tr>
-                  <td><code>0x03</code></td>
-                  <td>aft</td>
-                </tr>
-                <tr>
-                  <td><code>0x04</code></td>
-                  <td>tactical</td>
-                </tr>
-                <tr>
-                  <td><code>0x05</code></td>
-                  <td>long range</td>
-                </tr>
-                <tr>
-                  <td><code>0x06</code></td>
-                  <td>status</td>
-                </tr>
+                % endfor
               </tbody>
             </table>
           </section>
