@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -3763,10 +3761,10 @@
             </p>
             <dl>
               <dt>Bit field (1 byte)</dt>
-              <dt>x_coordinate (bit 1.1, float)</dt>
-              <dt>y_coordinate (bit 1.2, float)</dt>
-              <dt>z_coordinate (bit 1.3, float)</dt>
-              <dt>upgrade (bit 1.4, enum Upgrade as u32)</dt>
+              <dt>X Coordinate (bit 1.1, float)</dt>
+              <dt>Y Coordinate (bit 1.2, float)</dt>
+              <dt>Z Coordinate (bit 1.3, float)</dt>
+              <dt>Upgrade (bit 1.4, enum Upgrade as u32)</dt>
               <dd>
                 <p>
                   Note that only the values 0x00 through 0x07 have been observed,
@@ -3784,7 +3782,7 @@
             <h3>Base</h3>
             <dl>
               <dt>Bit field (2 bytes)</dt>
-              <dt>name (bit 1.1, string)</dt>
+              <dt>Name (bit 1.1, string)</dt>
               <dd>
                 <p>
                   The name assigned to this base. In standard, non-custom
@@ -3792,13 +3790,13 @@
                   guarantee that the same will be true in custom scenarios.
                 </p>
               </dd>
-              <dt>front_shields (bit 1.2, float)</dt>
+              <dt>Front Shields (bit 1.2, float)</dt>
               <dd>
                 <p>
                   The current strength of the base's shields.
                 </p>
               </dd>
-              <dt>rear_shields (bit 1.3, float)</dt>
+              <dt>Rear Shields (bit 1.3, float)</dt>
               <dd>
                 <p>
                   Bases only have one shield, but all shielded objects in
@@ -3806,7 +3804,7 @@
                   therefore meaningless and should be ignored.
                 </p>
               </dd>
-              <dt>index (bit 1.4, u32)</dt>
+              <dt>Index (bit 1.4, u32)</dt>
               <dd>
                 <p>
                   The index of this base. Each base will have a unique index
@@ -3814,25 +3812,25 @@
                   0, DS2 is 1, etc.
                 </p>
               </dd>
-              <dt>vessel_type_id (bit 1.5, u32)</dt>
+              <dt>Vessel Type Id (bit 1.5, u32)</dt>
               <dd>
                 <p>
                   The vessel type ID, as found in vesselData.xml.
                 </p>
               </dd>
-              <dt>x_coordinate (bit 1.6, float)</dt>
+              <dt>X Coordinate (bit 1.6, float)</dt>
               <dd>
                 <p>
                   The base's location along the X-axis.
                 </p>
               </dd>
-              <dt>y_coordinate (bit 1.7, float)</dt>
+              <dt>Y Coordinate (bit 1.7, float)</dt>
               <dd>
                 <p>
                   The base's location along the Y-axis.
                 </p>
               </dd>
-              <dt>z_coordinate (bit 1.8, float)</dt>
+              <dt>Z Coordinate (bit 1.8, float)</dt>
               <dd>
                 <p>
                   The base's location along the Z-axis.

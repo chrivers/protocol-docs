@@ -10,10 +10,17 @@ string\
 % else:
 ${type}\
 % endif
-</%def>
+</%def>\
+<%def name="present_name(name)">\
+% if name.startswith("__"):
+${name}\
+% else:
+${name.replace("_", " ").title()}\
+% endif
+</%def>\
 <%def name="present_property(field, index)">\
-${field.name} (bit ${index // 8 + 1}.${index % 8 + 1}, ${present_type(field.type)})\
-</%def>
+${present_name(field.name)} (bit ${index // 8 + 1}.${index % 8 + 1}, ${present_type(field.type)})\
+</%def>\
 <!DOCTYPE html>
 <html>
   <head>
