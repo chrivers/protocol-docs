@@ -88,6 +88,39 @@ ${present_name(field.name)} (bit ${index_to_bit(index)}, ${present_type(field.ty
 <%def name="present_field(field)">\
 ${present_name(field.name)} (${present_type(field.type)})\
 </%def>\
+<%def name="section(prefix)">\
+          <section id="pkt-${prefix.lower()}">
+            <h3>${prefix}</h3>
+            % for packet, packet_id in packets_by_prefix(prefix):
+            <section id="${packet.name.lower()}packet">
+              <h3>${packet.name}Packet</h3>
+              <div class="pkt-props">Type: ${format_packet_id(packet_id)} [from <span>${packet_id[4]}</span>]</div>
+              <p>
+                ${format_comment(packet.comment)}
+              </p>
+              <h4>Payload</h4>
+              <dl>
+              % if packet_id[2]:
+                <dt>Subtype (${packet_id[3]})</dt>
+                <dd>
+                  <p>
+                    Always <code>${packet_id[2]}</code>.
+                  </p>
+                </dd>
+              % endif
+              % for field in packet.fields:
+                <dt>${present_field(field)}</dt>
+                <dd>
+                  <p>
+                    ${format_comment(field.comment)}
+                  </p>
+                </dd>
+              % endfor
+              </dl>
+            </section>
+            % endfor
+          </section>
+</%def>\
 <!DOCTYPE html>
 <html>
   <head>
@@ -3213,37 +3246,7 @@ ${present_name(field.name)} (${present_type(field.type)})\
             </section>
           </section>
           % for prefix in ["P", "R", "S", "T", "U", "V", "W"]:
-          <section id="pkt-${prefix.lower()}">
-            <h3>${prefix}</h3>
-            % for packet, packet_id in packets_by_prefix(prefix):
-            <section id="${packet.name.lower()}packet">
-              <h3>${packet.name}Packet</h3>
-              <div class="pkt-props">Type: ${format_packet_id(packet_id)} [from <span>${packet_id[4]}</span>]</div>
-              <p>
-                ${format_comment(packet.comment)}
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                % if packet_id[2]:
-                <dt>Subtype (${packet_id[3]})</dt>
-                <dd>
-                  <p>
-                    Always <code>${packet_id[2]}</code>.
-                  </p>
-                </dd>
-                % endif
-                % for field in packet.fields:
-                <dt>${present_field(field)}</dt>
-                <dd>
-                  <p>
-                    ${format_comment(field.comment)}
-                  </p>
-                </dd>
-                % endfor
-              </dl>
-            </section>
-            % endfor
-          </section>
+${section(prefix)}\
           % endfor
         </section>
 
