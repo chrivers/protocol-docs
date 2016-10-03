@@ -4,6 +4,21 @@ import html
 
 re_camel_case = re.compile(r'(((?<=[a-z])[A-Z])|([A-Z](?![A-Z]|$)))')
 
+def visit(parser, res):
+    frametypes = enums.get("FrameType")
+    for field in parser.fields:
+        type_id = frametypes.fields.get(field.name).aligned_hex_value
+        if field.type.name == "struct":
+            res[field.type[0].name] = (field.type, type_id, None, None)
+        elif field.type.name == "parser":
+            prs = parsers.get(field.type[0].name)
+            for fld in prs.fields:
+                res[fld.type[0].name] = (fld.type, type_id, fld.name, prs.arg)
+
+packet_ids = dict()
+visit(parsers.get("ClientParser"), packet_ids)
+visit(parsers.get("ServerParser"), packet_ids)
+
 def split_camelcase(value):
     """Splits CamelCase and converts to lower case. Also strips leading
     and trailing whitespace."""
@@ -21,6 +36,36 @@ def index_to_bit(index):
 def format_comment(lines):
     return " ".join([html.escape(line) for line in util.format_comment(lines, indent="", width=80)])
 
+def packets_by_prefix(letter):
+    for pkt in packets:
+        for case in pkt.fields:
+            if case.name.startswith(letter):
+                yield case
+
+def get_server_packet(name):
+    return packet_ids.get("ServerPacket::%s" % name, None)
+
+def get_client_packet(name):
+    return packet_ids.get("ClientPacket::%s" % name)
+
+def format_type_id(pkt):
+    major, minor = pkt[1], pkt[2]
+    if minor:
+        return "<code>%s</code>.<code>%s</code>" % (major, minor)
+    else:
+        return "<code>%s</code>" % major
+
+def get_packet_id(packet):
+    pkt = get_server_packet(packet.name)
+    if pkt:
+        return format_type_id(pkt)
+
+def get_origin(packet):
+    if get_server_packet(packet.name):
+        return "server"
+    if get_client_packet(packet.name):
+        return "client"
+
 %>\
 <%def name="present_type(type)">\
 % if type.name == "enum":
@@ -31,6 +76,8 @@ ${type.name}\
 float\
 % elif type.name == "string":
 string\
+% elif type.name == "ascii_string":
+ascii string\
 % elif type.name == "sizedarray":
 ${present_type(type[0])} array (length ${type[1].name})\
 % elif type.name == "bitflags":
@@ -52,6 +99,9 @@ ${present_name(field.name)} (${present_type(field.type)})\
 % else:
 ${present_name(field.name)} (bit ${index_to_bit(index)}, ${present_type(field.type)})\
 % endif
+</%def>\
+<%def name="present_field(field)">\
+${present_name(field.name)} (${present_type(field.type)})\
 </%def>\
 <!DOCTYPE html>
 <html>
@@ -3726,27 +3776,26 @@ ${present_name(field.name)} (bit ${index_to_bit(index)}, ${present_type(field.ty
           </section>
           <section id="pkt-w">
             <h3>W</h3>
-            <section id="welcomepacket">
-              <h3>WelcomePacket</h3>
-              <div class="pkt-props">Type: <code>0x6d04b3da</code> [from <span>server</span>]</div>
+            % for packet in packets_by_prefix("W"):
+            <section id="${packet.name.lower()}packet">
+              <h3>${packet.name}Packet</h3>
+              <div class="pkt-props">Type: ${get_packet_id(packet)} [from <span>${get_origin(packet)}</span>]</div>
               <p>
-                Indicates a successful connection to the Artemis server. This is the first packet
-                sent upon connection.
+                ${format_comment(packet.comment)}
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Welcome message (string)</dt>
+                % for field in packet.fields:
+                <dt>${present_field(field)}</dt>
                 <dd>
                   <p>
-                    Unlike all other strings in Artemis packets, this one is encoded in plain ASCII,
-                    so each character is one byte, not two. Also, the given length for the string
-                    does not include a terminating null. Currently, it says, "You have connected to
-                    Thom Robertson's Artemis Bridge Simulator. Please connect with an authorized
-                    game client."
+                    ${format_comment(field.comment)}
                   </p>
                 </dd>
+                % endfor
               </dl>
             </section>
+            % endfor
           </section>
         </section>
 

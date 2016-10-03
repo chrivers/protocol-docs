@@ -3723,19 +3723,14 @@
               <h3>WelcomePacket</h3>
               <div class="pkt-props">Type: <code>0x6d04b3da</code> [from <span>server</span>]</div>
               <p>
-                Indicates a successful connection to the Artemis server. This is the first packet
-                sent upon connection.
+                Indicates a successful connection to the Artemis server. This is the first packet sent upon connection.
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Welcome message (string)</dt>
+                <dt>Welcome Message (ascii string)</dt>
                 <dd>
                   <p>
-                    Unlike all other strings in Artemis packets, this one is encoded in plain ASCII,
-                    so each character is one byte, not two. Also, the given length for the string
-                    does not include a terminating null. Currently, it says, "You have connected to
-                    Thom Robertson's Artemis Bridge Simulator. Please connect with an authorized
-                    game client."
+                    Unlike all other strings in Artemis packets, this one is encoded in plain ASCII, so each character is one byte, not two. Also, the given length for the string does not include a terminating null. Currently, it says, &quot;You have connected to Thom Robertson&#x27;s Artemis Bridge Simulator. Please connect with an authorized game client.&quot;
                   </p>
                 </dd>
               </dl>
