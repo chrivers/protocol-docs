@@ -34,7 +34,8 @@ $ make
 [*] Diffing 1 of 1 templates
 [*]   index.html                       unchanged (updating timestamp)
 
-# now that the timestamp is updated, you should see now changes:
+# now that the timestamp is updated, you should see no changes:
+$ make
 [*] All templates up-to-date
 ```
 
