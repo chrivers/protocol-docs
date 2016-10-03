@@ -1,3 +1,4 @@
 [submodule "isolinear-chips"]
 	path = isolinear-chips
 	url = git@github.com:chrivers/isolinear-chips.git
+	branch = htmldocs
