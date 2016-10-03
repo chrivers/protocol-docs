@@ -2710,31 +2710,26 @@
               <h3>HelmJumpPacket</h3>
               <div class="pkt-props">Type: <code>0x0351a5ac</code>:<code>0x05</code> [from <span>client</span>]</div>
               <p>
-                Initiates a jump. Note that the stock client
-                <a href="https://en.wikipedia.org/wiki/Big_red_button#Molly-guard" target="_new">&ldquo;molly-guards&rdquo;</a>
-                jumps, asking for confirmation from helm. This packet isn't sent until helm confirms the jump.
+                Initiates a jump. Note that the stock client molly-guards jumps, asking for confirmation from helm. This packet isn&#x27;t sent until helm confirms the jump.
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
-                    Always <code>0x04</code>.
+                    Always <code>0x05</code>.
                   </p>
                 </dd>
                 <dt>Bearing (float)</dt>
                 <dd>
                   <p>
-                    The direction to jump, expressed as a value between 0.0 and 1.0 inclusive. To
-                    compute this value, take the desired bearing in degrees and divide by 360.
+                    The direction to jump, expressed as a value between 0.0 and 1.0 inclusive. To compute this value, take the desired bearing in degrees and divide by 360.
                   </p>
                 </dd>
                 <dt>Distance (float)</dt>
                 <dd>
                   <p>
-                    The distance to jump, expressed as a value between 0.0 and 1.0 inclusive. To
-                    compute this value, take the desired distance in &#x3BC;ls and divide by 50 (the
-                    maximum jump distance).
+                    The distance to jump, expressed as a value between 0.0 and 1.0 inclusive. To compute this value, take the desired distance in μls and divide by 50 (the maximum jump distance).
                   </p>
                 </dd>
               </dl>
@@ -2747,16 +2742,16 @@
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x07</code>.
                   </p>
                 </dd>
-                <dt>Unused (int)</dt>
+                <dt>__unknown_1 (u32)</dt>
                 <dd>
                   <p>
-                    Always <code>0x00</code>.
+                    Always 0x00.
                   </p>
                 </dd>
               </dl>
@@ -2769,7 +2764,7 @@
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x00</code>.
@@ -2778,9 +2773,7 @@
                 <dt>Throttle (float)</dt>
                 <dd>
                   <p>
-                    Any value between 0.0 and 1.0 inclusive, where 0.0 is no throttle and 1.0 is
-                    full throttle. Actual velocity will depend on the ship's maximum velocity and
-                    the power allocated to impulse by engineering.
+                    Any value between 0.0 and 1.0 inclusive, where 0.0 is no throttle and 1.0 is full throttle. Actual velocity will depend on the ship&#x27;s maximum velocity and the power allocated to impulse by engineering.
                   </p>
                 </dd>
               </dl>
@@ -2789,15 +2782,11 @@
               <h3>HelmSetPitchPacket</h3>
               <div class="pkt-props">Type: <code>0x0351a5ac</code>:<code>0x02</code> [from <span>client</span>]</div>
               <p>
-                Sets the desired pitch for the player ship. This differs from
-                <a href="#climbdivepacket">ClimbDivePacket</a> in that it sets a precise pitch value
-                for the ship instead of just indicating a direction to change pitch. The
-                circumstances in which one type of packet might be sent versus the other are not
-                fully understood at this time.
+                Sets the desired pitch for the player ship. This differs from ClimbDivePacket in that it sets a precise pitch value for the ship instead of just indicating a direction to change pitch. The circumstances in which one type of packet might be sent versus the other are not fully understood at this time.
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x02</code>.
@@ -2806,21 +2795,20 @@
                 <dt>Pitch (float)</dt>
                 <dd>
                   <p>
-                    Any value between -1.0 and 1.0 inclusive, where 0.0 is level, -1.0 is a hard
-                    climb, and 1.0 is a hard dive.
+                    Any value between -1.0 and 1.0 inclusive, where 0.0 is level, -1.0 is a hard climb, and 1.0 is a hard dive.
                   </p>
                 </dd>
               </dl>
             </section>
             <section id="helmsetsteeringpacket">
               <h3>HelmSetSteeringPacket</h3>
-              <div class="pkt-props">Type: <code>0x0351a5ac</code>:<code>0x01 </code> [from <span>client</span>]</div>
+              <div class="pkt-props">Type: <code>0x0351a5ac</code>:<code>0x01</code> [from <span>client</span>]</div>
               <p>
-                Sets the position of the ship's &ldquo;rudder&rdquo;, controlling its turn rate.
+                Sets the position of the ship&#x27;s &quot;rudder&quot;, controlling its turn rate.
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x01</code>.
@@ -2829,10 +2817,7 @@
                 <dt>Rudder (float)</dt>
                 <dd>
                   <p>
-                    Any value between 0.0 and 1.0 inclusive, where 0.0 is hard to port (left), 0.5
-                    is rudder amidships (straight), and 1.0 is a hard to starboard (right). Actual
-                    turn rate will depend on the ship's maximum turn rate and the power allocated
-                    to maneuvering by engineering.
+                    Any value between 0.0 and 1.0 inclusive, where 0.0 is hard to port (left), 0.5 is rudder amidships (straight), and 1.0 is a hard to starboard (right). Actual turn rate will depend on the ship&#x27;s maximum turn rate and the power allocated to maneuvering by engineering.
                   </p>
                 </dd>
               </dl>
@@ -2841,22 +2826,20 @@
               <h3>HelmSetWarpPacket</h3>
               <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x00</code> [from <span>client</span>]</div>
               <p>
-                Sets the ship's warp factor. Actual velocity will depend on the power allocated to
-                warp by engineering.
+                Sets the ship&#x27;s warp factor. Actual velocity will depend on the power allocated to warp by engineering.
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x00</code>.
                   </p>
                 </dd>
-                <dt>Warp factor (int)</dt>
+                <dt>Warp Factor (i32)</dt>
                 <dd>
                   <p>
-                    The desired warp factor, from 0 to 4 inclusive. Warp 0 means to drop out of warp
-                    and move on impulse only.
+                    The desired warp factor, from 0 to 4 inclusive. Warp 0 means to drop out of warp and move on impulse only.
                   </p>
                 </dd>
               </dl>
@@ -2869,18 +2852,28 @@
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x18</code>.
                   </p>
                 </dd>
-                <dt>Unused (int)</dt>
+                <dt>__unused_1 (u32)</dt>
                 <dd>
                   <p>
-                    Always <code>0x00</code>.
+                    Always 0x00.
                   </p>
                 </dd>
+              </dl>
+            </section>
+            <section id="heartbeatpacket">
+              <h3>HeartbeatPacket</h3>
+              <div class="pkt-props">Type: <code>0xf5821226</code> [from <span>server</span>]</div>
+              <p>
+                
+              </p>
+              <h4>Payload</h4>
+              <dl>
               </dl>
             </section>
           </section>
