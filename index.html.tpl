@@ -4,24 +4,23 @@ import html
 
 re_camel_case = re.compile(r'(((?<=[a-z])[A-Z])|([A-Z](?![A-Z]|$)))')
 
-def visit(parser, res):
+def visit(parser, res, origin):
     frametypes = enums.get("FrameType")
     for field in parser.fields:
         type_id = frametypes.fields.get(field.name).aligned_hex_value
         if field.type.name == "struct":
-            res[field.type[0].name] = (field.type, type_id, None, None)
+            res[field.type[0].name] = (field.type, type_id, None, None, origin)
         elif field.type.name == "parser":
             prs = parsers.get(field.type[0].name)
             for fld in prs.fields:
-                res[fld.type[0].name] = (fld.type, type_id, fld.name, prs.arg)
+                res[fld.type[0].name] = (fld.type, type_id, fld.name, prs.arg, origin)
 
 packet_ids = dict()
-visit(parsers.get("ClientParser"), packet_ids)
-visit(parsers.get("ServerParser"), packet_ids)
+visit(parsers.get("ClientParser"), packet_ids, "client")
+visit(parsers.get("ServerParser"), packet_ids, "server")
 
 def split_camelcase(value):
-    """Splits CamelCase and converts to lower case. Also strips leading
-    and trailing whitespace."""
+    """Splits CamelCase. Also strips leading and trailing whitespace."""
     return re_camel_case.sub(r' \1', value).strip().split()
 
 def camelcase_to_id(value):
@@ -40,31 +39,17 @@ def packets_by_prefix(letter):
     for pkt in packets:
         for case in pkt.fields:
             if case.name.startswith(letter):
-                yield case
+                yield case, get_packet(case.name)
 
-def get_server_packet(name):
-    return packet_ids.get("ServerPacket::%s" % name, None)
+def get_packet(name):
+    return packet_ids.get("ServerPacket::%s" % name) or packet_ids.get("ClientPacket::%s" % name)
 
-def get_client_packet(name):
-    return packet_ids.get("ClientPacket::%s" % name)
-
-def format_type_id(pkt):
-    major, minor = pkt[1], pkt[2]
+def format_packet_id(packet_id):
+    major, minor = packet_id[1], packet_id[2]
     if minor:
-        return "<code>%s</code>.<code>%s</code>" % (major, minor)
+        return "<code>%s</code>:<code>%s</code>" % (major, minor)
     else:
         return "<code>%s</code>" % major
-
-def get_packet_id(packet):
-    pkt = get_server_packet(packet.name)
-    if pkt:
-        return format_type_id(pkt)
-
-def get_origin(packet):
-    if get_server_packet(packet.name):
-        return "server"
-    if get_client_packet(packet.name):
-        return "client"
 
 %>\
 <%def name="present_type(type)">\
@@ -3711,43 +3696,26 @@ ${present_name(field.name)} (${present_type(field.type)})\
               </dl>
             </section>
           </section>
-          <section id="pkt-u">
-            <h3>U</h3>
-            <section id="unloadtubepacket">
-              <h3>UnloadTubePacket</h3>
-              <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x09</code> [from <span>client</span>]</div>
-              <p>
-                Removes whatever ordnance is loaded in a tube.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x09</code>.
-                  </p>
-                </dd>
-                <dt>Tube index (int)</dt>
-                <dd>
-                  <p>
-                    Index of the tube to unload.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-          </section>
-          % for prefix in ["V", "W"]:
+          % for prefix in ["U", "V", "W"]:
           <section id="pkt-${prefix.lower()}">
             <h3>${prefix}</h3>
-            % for packet in packets_by_prefix(prefix):
+            % for packet, packet_id in packets_by_prefix(prefix):
             <section id="${packet.name.lower()}packet">
               <h3>${packet.name}Packet</h3>
-              <div class="pkt-props">Type: ${get_packet_id(packet)} [from <span>${get_origin(packet)}</span>]</div>
+              <div class="pkt-props">Type: ${format_packet_id(packet_id)} [from <span>${packet_id[4]}</span>]</div>
               <p>
                 ${format_comment(packet.comment)}
               </p>
               <h4>Payload</h4>
               <dl>
+                % if packet_id[2]:
+                <dt>Subtype (${packet_id[3]})</dt>
+                <dd>
+                  <p>
+                    Always <code>${packet_id[2]}</code>.
+                  </p>
+                </dd>
+                % endif
                 % for field in packet.fields:
                 <dt>${present_field(field)}</dt>
                 <dd>
