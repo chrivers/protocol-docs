@@ -89,8 +89,8 @@ ${present_name(field.name)} (bit ${index_to_bit(index)}, ${present_type(field.ty
 ${present_name(field.name)} (${present_type(field.type)})\
 </%def>\
 <%def name="section(prefix)">\
-          <section id="pkt-${prefix.lower()}">
-            <h3>${prefix}</h3>
+          <section id="pkt-${prefix[:1].lower()}">
+            <h3>${prefix[:1]}</h3>
             % for packet, packet_id in packets_by_prefix(prefix):
             <section id="${packet.name.lower()}packet">
               <h3>${packet.name}Packet</h3>
@@ -3069,67 +3069,7 @@ ${present_name(field.name)} (${present_type(field.type)})\
               </dl>
             </section>
           </section>
-          <section id="pkt-k">
-            <h3>K</h3>
-            <section id="keycapturetogglepacket">
-              <h3>KeyCaptureTogglePacket</h3>
-              <div class="pkt-props">Type: <code>0xf754c8fe</code>:<code>0x11</code> [from <span>server</span>]</div>
-              <p>
-                Sent to all consoles when key capture is enabled or disabled for any console.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x11</code>.
-                  </p>
-                </dd>
-                <dt>Capture (boolean, 1 byte)</dt>
-                <dd>
-                  <p>
-                    Whether this console should capture keystrokes or not. Note that because this
-                    packet is sent to all consoles when the capture status of any console is
-                    changed, a console may get a KeyCaptureTogglePacket telling it to do what it's
-                    already doing; this is normal.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-            <section id="keystrokepacket">
-              <h3>KeystrokePacket</h3>
-              <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x14</code> [from <span>client</span>]</div>
-              <p>
-                Informs the server that the player at this console pressed a particular key. This is
-                used for custom mission scripts to allow keystrokes to trigger events. This packet
-                should only be sent when keystroke capture is enabled for the console in question.
-                Keystroke capture is always enabled for the game master console; other consoles
-                require the script to
-                <a href="#keycapturetogglepacket">activate keystroke capture</a>
-                first.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (byte)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x14</code>.
-                  </p>
-                </dd>
-                <dt>Key code (int)</dt>
-                <dd>
-                  <p>
-                    The code identifying the key that was pressed. Microsoft has
-                    <a href="http://msdn.microsoft.com/en-us/library/aa243025.aspx" target="_new">a good reference page</a>
-                    that documents the key codes. Many languages have constants for these values.
-                    For example: in Java, they are defined in the
-                    <a href="http://docs.oracle.com/javase/6/docs/api/java/awt/event/KeyEvent.html" target="_new">KeyEvent class</a>.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-          </section>
-          % for prefix in ["L"]:
+          % for prefix in ["K", "L"]:
 ${section(prefix)}\
           % endfor
           <section id="pkt-o">
