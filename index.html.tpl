@@ -17,7 +17,7 @@ def camelcase_to_name(value):
 <%def name="present_type(type)">\
 % if type.name == "enum":
 enum ${type[1].name} as ${type[0].name}\
-% elif type.name in ("u8", "u16", "u32", "u64", "i8", "i16", "i32", "i64"):
+% elif type.name in ("u8", "u16", "u32", "u64", "i8", "i16", "i32", "i64", "bool8", "bool16", "bool32"):
 ${type.name}\
 % elif type.name == "f32":
 float\
@@ -25,6 +25,8 @@ float\
 string\
 % elif type.name == "sizedarray":
 ${present_type(type[0])} array (length ${type[1].name})\
+% elif type.name == "bitflags":
+${type[1].name} as ${type[0].name}\
 % else:
 ${type}\
 % endif
@@ -3750,7 +3752,7 @@ ${present_name(field.name)} (bit ${index // 8 + 1}.${index % 8 + 1}, ${present_t
             by the Artemis server.
           </p>
 
-          % for obj in [objects.get(name) for name in ["Anomaly", "Base", "Creature", "Drone", "EngineeringConsole", "GenericMesh", "Nebula"]]:
+          % for obj in [objects.get(name) for name in ["Anomaly", "Base", "Creature", "Drone", "EngineeringConsole", "GenericMesh", "Nebula", "NpcShip"]]:
           <section id="object-${camelcase_to_id(obj.name)}">
             <h3>${camelcase_to_name(obj.name)}</h3>
             % if obj.comment:
@@ -3782,142 +3784,6 @@ ${present_name(field.name)} (bit ${index // 8 + 1}.${index % 8 + 1}, ${present_t
           </section>
 
           % endfor
-          <section id="object-npc-ship">
-            <h3>NPC Ship</h3>
-            <dl>
-              <dt>Bit field (6 bytes)</dt>
-              <dt>Name (bit 1.1, string)</dt>
-              <dd>
-                <p>
-                  The ship's name.
-                </p>
-              </dd>
-              <dt>Throttle (bit 1.2, float)</dt>
-              <dd>
-                <p>
-                  Values range from 0.0 for all stop to 1.0 for full speed.
-                </p>
-              </dd>
-              <dt>Rudder (bit 1.3, float)</dt>
-              <dd>
-                <p>
-                  Values range from 0.0 for hard to port (left), to 1.0 for hard to starboard
-                  (right).
-                </p>
-              </dd>
-              <dt>Max impulse (bit 1.4, float)</dt>
-              <dd>
-                <p>
-                  The ship's maximum possible speed at impulse.
-                </p>
-              </dd>
-              <dt>Max turn rate (bit 1.5, float)</dt>
-              <dd>
-                <p>
-                  The ship's maximum possible turning speed.
-                </p>
-              </dd>
-              <dt>Enemy? (bit 1.6, boolean, 4 bytes)</dt>
-              <dd>
-                <p>
-                  In single-bridge games, as well as multi-bridge co-op games, this value will be
-                  true if the ship is hostile and false if it is friendly. In PvP and scripted
-                  games, this field is always true, regardless of whether the NPC is hostile or
-                  not.
-                </p>
-              </dd>
-              <dt>Vessel type (bit 1.7, int)</dt>
-              <dd>
-                <p>
-                  The ID corresponding to the <code>&lt;vessel&gt;</code> entry in
-                  <code>vesselData.xml</code> that describes the vessel type for this ship.
-                </p>
-              </dd>
-              <dt>X coordinate (bit 1.8, float)</dt>
-              <dt>Y coordinate (bit 2.1, float)</dt>
-              <dt>Z coordinate (bit 2.2, float)</dt>
-              <dt>Pitch (bit 2.3, float)</dt>
-              <dt>Roll (bit 2.4, float)</dt>
-              <dt>Heading (bit 2.5, float)</dt>
-              <dt>Velocity (bit 2.6, float)</dt>
-              <dt>Surrendered (bit 2.7, boolean, 1 byte)</dt>
-              <dd>
-                <p>
-                  True if this ship has surrendered; false otherwise.
-                </p>
-              </dd>
-              <dt>Unknown (bit 2.8, short)</dt>
-              <dt>Forward shields (bit 3.1, float)</dt>
-              <dt>Forward shields max (bit 3.2, float)</dt>
-              <dt>Aft shields (bit 3.3, float)</dt>
-              <dt>Aft shields (bit 3.4, float)</dt>
-              <dt>Unknown (bit 3.5, short)</dt>
-              <dt>Fleet number (bit 3.6, byte)</dt>
-              <dd>
-                <p>
-                  The number of the fleet to which this ship belongs. For custom missions, this is
-                  specified in the mission file.
-                </p>
-              </dd>
-              <dt><a href="#enum-special-ability">Special abilities</a> (bit 3.7, bit field, 4 bytes)</dt>
-              <dd>
-                <p>
-                  The special abilites posessed by this ship. The value in this field is only
-                  meaningful if the ship's faction has the &ldquo;special&rdquo; attribute, as
-                  specified in <code>vesselData.xml</code>. Other ships should ignore this value
-                  even if it is present, as they cannot have special abilities.
-                </p>
-              </dd>
-              <dt>Active <a href="#enum-special-ability">speciall abilities</a> (bit 3.8, bit field, 4 bytes)</dt>
-              <dd>
-                <p>
-                  The special abilites posessed by this ship that are currently in use. As with the
-                  previous field, this field should be ignored if the ship can't have special
-                  abilities, even if it is present.
-                </p>
-              </dd>
-              <dt>Scan level? (bit 4.1, int)</dt>
-              <dt>Side? (bit 4.2, int)</dt>
-              <dd>
-                <p>
-                  This field appears to contain a different value for each side in the conflict.
-                  Ships with the same value will presumably be friendly to each other.
-                </p>
-              </dd>
-            </dl>
-            <dt>Unknown (bit 4.3, int)</dt>
-            <dt>Unknown (bit 4.4, byte)</dt>
-            <dt>Unknown (bit 4.5, byte)</dt>
-            <dt>Unknown (bit 4.6, byte)</dt>
-            <dt>Unknown (bit 4.7, byte)</dt>
-            <dt>Unknown (bit 4.8, float)</dt>
-            <dd>
-              <p>
-                Values of 0.0 and -100000.0 have been observed.
-              </p>
-            </dd>
-            <dt>Unknown (bit 5.1, int)</dt>
-            <dt>Unknown (bit 5.2, int)</dt>
-            <dt><a href="#enum-ship-system">Ship system</a> damage (bit 5.3 - 6.2, float array)</dt>
-            <dd>
-              <p>
-                Damage to various ship systems, in the order specified in the enumeration. A
-                system with a damage value of 0.0 is undamaged; a higher value (up to 1.0) means
-                the system is damaged. In the stock client, damaged systems on NPC vessels can be
-                seen via the science console. Barring further damage or actions by a custom
-                script, damage values gradually decrease as the ship is repaired, until they
-                return to 0.0.
-              </p>
-            </dd>
-            <dt><a href="#enum-beam-frequency">Beam frequency</a> resistance (bit 6.3 - 6.7, float array)</dt>
-            <dd>
-              <p>
-                The ship's resistance to the five beam frequencies. Higher values indicate greater
-                resistance to beams tuned to the corresponding frequency.
-              </p>
-            </dd>
-          </section>
-
           <section id="object-player-ship">
             <h3>Player Ship</h3>
             <dt>Bit field (6 bytes, 5 bytes before v2.3.0)</dt>

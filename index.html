@@ -4111,7 +4111,7 @@
           </section>
 
           <section id="object-npc-ship">
-            <h3>NPC Ship</h3>
+            <h3>Npc Ship</h3>
             <dl>
               <dt>Bit field (6 bytes)</dt>
               <dt>Name (bit 1.1, string)</dt>
@@ -4129,121 +4129,124 @@
               <dt>Rudder (bit 1.3, float)</dt>
               <dd>
                 <p>
-                  Values range from 0.0 for hard to port (left), to 1.0 for hard to starboard
-                  (right).
+                  Values range from 0.0 for hard to port (left), to 1.0 for hard to starboard (right).
                 </p>
               </dd>
-              <dt>Max impulse (bit 1.4, float)</dt>
+              <dt>Max Impulse (bit 1.4, float)</dt>
               <dd>
                 <p>
                   The ship's maximum possible speed at impulse.
                 </p>
               </dd>
-              <dt>Max turn rate (bit 1.5, float)</dt>
+              <dt>Max Turn Rate (bit 1.5, float)</dt>
               <dd>
                 <p>
                   The ship's maximum possible turning speed.
                 </p>
               </dd>
-              <dt>Enemy? (bit 1.6, boolean, 4 bytes)</dt>
+              <dt>Enemy (bit 1.6, u32)</dt>
               <dd>
                 <p>
-                  In single-bridge games, as well as multi-bridge co-op games, this value will be
-                  true if the ship is hostile and false if it is friendly. In PvP and scripted
-                  games, this field is always true, regardless of whether the NPC is hostile or
-                  not.
+                  In single-bridge games, as well as multi-bridge co-op games
+                  this value will be true if the ship is hostile and false if it
+                  is friendly. In PvP and scripted games, this field is always
+                  true, regardless of whether the NPC is hostile or not.
                 </p>
               </dd>
-              <dt>Vessel type (bit 1.7, int)</dt>
+              <dt>Vessel Type Id (bit 1.7, u32)</dt>
               <dd>
                 <p>
-                  The ID corresponding to the <code>&lt;vessel&gt;</code> entry in
-                  <code>vesselData.xml</code> that describes the vessel type for this ship.
+                  The ID corresponding to the <vessel> entry in vesselData.xml that describes the vessel
+                  type for this ship.
                 </p>
               </dd>
-              <dt>X coordinate (bit 1.8, float)</dt>
-              <dt>Y coordinate (bit 2.1, float)</dt>
-              <dt>Z coordinate (bit 2.2, float)</dt>
+              <dt>X Coordinate (bit 1.8, float)</dt>
+              <dt>Y Coordinate (bit 2.1, float)</dt>
+              <dt>Z Coordinate (bit 2.2, float)</dt>
               <dt>Pitch (bit 2.3, float)</dt>
               <dt>Roll (bit 2.4, float)</dt>
               <dt>Heading (bit 2.5, float)</dt>
               <dt>Velocity (bit 2.6, float)</dt>
-              <dt>Surrendered (bit 2.7, boolean, 1 byte)</dt>
+              <dt>Surrendered (bit 2.7, bool8)</dt>
               <dd>
                 <p>
                   True if this ship has surrendered; false otherwise.
                 </p>
               </dd>
-              <dt>Unknown (bit 2.8, short)</dt>
-              <dt>Forward shields (bit 3.1, float)</dt>
-              <dt>Forward shields max (bit 3.2, float)</dt>
-              <dt>Aft shields (bit 3.3, float)</dt>
-              <dt>Aft shields (bit 3.4, float)</dt>
-              <dt>Unknown (bit 3.5, short)</dt>
-              <dt>Fleet number (bit 3.6, byte)</dt>
+              <dt>__unknown_1 (bit 2.8, u16)</dt>
+              <dt>Front Shields (bit 3.1, float)</dt>
+              <dt>Front Shields Max (bit 3.2, float)</dt>
+              <dt>Rear Shields (bit 3.3, float)</dt>
+              <dt>Rear Shields Max (bit 3.4, float)</dt>
+              <dt>__unknown_2 (bit 3.5, u16)</dt>
+              <dt>Fleet Number (bit 3.6, u8)</dt>
               <dd>
                 <p>
-                  The number of the fleet to which this ship belongs. For custom missions, this is
-                  specified in the mission file.
+                  The number of the fleet to which this ship belongs. For custom
+                  missions, this is specified in the mission file.
                 </p>
               </dd>
-              <dt><a href="#enum-special-ability">Special abilities</a> (bit 3.7, bit field, 4 bytes)</dt>
+              <dt>Elite Abilities (bit 3.7, EliteAbilities as u32)</dt>
               <dd>
                 <p>
-                  The special abilites posessed by this ship. The value in this field is only
-                  meaningful if the ship's faction has the &ldquo;special&rdquo; attribute, as
-                  specified in <code>vesselData.xml</code>. Other ships should ignore this value
-                  even if it is present, as they cannot have special abilities.
+                  The elite abilites posessed by this ship. The value in this
+                  field is only meaningful if the ship's faction has the “elite”
+                  attribute, as specified in vesselData.xml. Other ships should
+                  ignore this value even if it is present, as they cannot have
+                  elite abilities.
                 </p>
               </dd>
-              <dt>Active <a href="#enum-special-ability">speciall abilities</a> (bit 3.8, bit field, 4 bytes)</dt>
+              <dt>Active Elite Abilities (bit 3.8, EliteAbilities as u32)</dt>
               <dd>
                 <p>
-                  The special abilites posessed by this ship that are currently in use. As with the
-                  previous field, this field should be ignored if the ship can't have special
-                  abilities, even if it is present.
+                  The elite abilites posessed by this ship that are currently in
+                  use. As with the previous field, this field should be ignored
+                  if the ship can't have elite abilities, even if it is present.
                 </p>
               </dd>
-              <dt>Scan level? (bit 4.1, int)</dt>
-              <dt>Side? (bit 4.2, int)</dt>
+              <dt>Scan Level (bit 4.1, u32)</dt>
+              <dt>Side (bit 4.2, u32)</dt>
               <dd>
                 <p>
-                  This field appears to contain a different value for each side in the conflict.
-                  Ships with the same value will presumably be friendly to each other.
+                  This field appears to contain a different value for each side in
+                  the conflict. Ships with the same value will presumably be
+                  friendly to each other.
+                </p>
+              </dd>
+              <dt>__unknown_3 (bit 4.3, i32)</dt>
+              <dt>__unknown_4 (bit 4.4, u8)</dt>
+              <dt>__unknown_5 (bit 4.5, u8)</dt>
+              <dt>__unknown_6 (bit 4.6, u8)</dt>
+              <dt>__unknown_7 (bit 4.7, u8)</dt>
+              <dt>__unknown_8 (bit 4.8, float)</dt>
+              <dd>
+                <p>
+                  Values of 0.0 and -100000.0 have been observed.
+                </p>
+              </dd>
+              <dt>__unknown_9 (bit 5.1, u32)</dt>
+              <dt>__unknown_10 (bit 5.2, u32)</dt>
+              <dt>System Damage (float array (length 8))</dt>
+              <dd>
+                <p>
+                  Damage to various ship systems, in the order specified in the
+                  enumeration. A system with a damage value of 0.0 is undamaged;
+                  a higher value (up to 1.0) means the system is damaged. In the
+                  stock client, damaged systems on NPC vessels can be seen via
+                  the science console. Barring further damage or actions by a
+                  custom script, damage values gradually decrease as the ship is
+                  repaired, until they return to 0.0.
+                </p>
+              </dd>
+              <dt>Beam Resistance (float array (length 5))</dt>
+              <dd>
+                <p>
+                  The ship's resistance to the five beam frequencies. Higher
+                  values indicate greater resistance to beams tuned to the
+                  corresponding frequency.
                 </p>
               </dd>
             </dl>
-            <dt>Unknown (bit 4.3, int)</dt>
-            <dt>Unknown (bit 4.4, byte)</dt>
-            <dt>Unknown (bit 4.5, byte)</dt>
-            <dt>Unknown (bit 4.6, byte)</dt>
-            <dt>Unknown (bit 4.7, byte)</dt>
-            <dt>Unknown (bit 4.8, float)</dt>
-            <dd>
-              <p>
-                Values of 0.0 and -100000.0 have been observed.
-              </p>
-            </dd>
-            <dt>Unknown (bit 5.1, int)</dt>
-            <dt>Unknown (bit 5.2, int)</dt>
-            <dt><a href="#enum-ship-system">Ship system</a> damage (bit 5.3 - 6.2, float array)</dt>
-            <dd>
-              <p>
-                Damage to various ship systems, in the order specified in the enumeration. A
-                system with a damage value of 0.0 is undamaged; a higher value (up to 1.0) means
-                the system is damaged. In the stock client, damaged systems on NPC vessels can be
-                seen via the science console. Barring further damage or actions by a custom
-                script, damage values gradually decrease as the ship is repaired, until they
-                return to 0.0.
-              </p>
-            </dd>
-            <dt><a href="#enum-beam-frequency">Beam frequency</a> resistance (bit 6.3 - 6.7, float array)</dt>
-            <dd>
-              <p>
-                The ship's resistance to the five beam frequencies. Higher values indicate greater
-                resistance to beams tuned to the corresponding frequency.
-              </p>
-            </dd>
           </section>
 
           <section id="object-player-ship">
