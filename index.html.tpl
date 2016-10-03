@@ -1,3 +1,19 @@
+<%
+import re
+re_camel_case = re.compile(r'(((?<=[a-z])[A-Z])|([A-Z](?![A-Z]|$)))')
+
+def split_camelcase(value):
+    """Splits CamelCase and converts to lower case. Also strips leading
+    and trailing whitespace."""
+    return re_camel_case.sub(r' \1', value).strip().split()
+
+def camelcase_to_id(value):
+    return "-".join(split_camelcase(value)).lower()
+
+def camelcase_to_name(value):
+    return " ".join(split_camelcase(value))
+
+%>\
 <%def name="present_type(type)">\
 % if type.name == "enum":
 enum ${type[1].name} as ${type[0].name}\
@@ -7,6 +23,8 @@ ${type.name}\
 float\
 % elif type.name == "string":
 string\
+% elif type.name == "sizedarray":
+${present_type(type[0])} array (length ${type[1].name})\
 % else:
 ${type}\
 % endif
@@ -19,7 +37,11 @@ ${name.replace("_", " ").title()}\
 % endif
 </%def>\
 <%def name="present_property(field, index)">\
+% if field.type.name == "sizedarray":
+${present_name(field.name)} (${present_type(field.type)})\
+% else:
 ${present_name(field.name)} (bit ${index // 8 + 1}.${index % 8 + 1}, ${present_type(field.type)})\
+% endif
 </%def>\
 <!DOCTYPE html>
 <html>
@@ -3728,9 +3750,9 @@ ${present_name(field.name)} (bit ${index // 8 + 1}.${index % 8 + 1}, ${present_t
             by the Artemis server.
           </p>
 
-          % for obj in [objects.get(name) for name in ["Anomaly", "Base", "Creature", "Drone"]]:
-          <section id="object-${obj.name.lower()}">
-            <h3>${obj.name}</h3>
+          % for obj in [objects.get(name) for name in ["Anomaly", "Base", "Creature", "Drone", "EngineeringConsole"]]:
+          <section id="object-${camelcase_to_id(obj.name)}">
+            <h3>${camelcase_to_name(obj.name)}</h3>
             % if obj.comment:
             <p>
               % for line in util.format_comment(obj.comment, indent="", width=80):
@@ -3760,59 +3782,6 @@ ${present_name(field.name)} (bit ${index // 8 + 1}.${index % 8 + 1}, ${present_t
           </section>
 
           % endfor
-          <section id="object-engineering-console">
-            <h3>Engineering Console</h3>
-            <dl>
-              <dt>Bit fields (3 bytes)</dt>
-              <dd>
-                <p>
-                  Each byte of the field represents a category of values:
-                </p>
-                <ol>
-                  <li>Heat levels</li>
-                  <li>Energy allocations</li>
-                  <li>Coolant allocations</li>
-                </ol>
-                <p>
-                  The bits in each byte represent the ship systems, in the order specified in the
-                  <a href="#enum-ship-system">ship system enumeration</a>. So for example, if the
-                  first bit field is <code>0x01</code>, it means that this packet will contain a
-                  single heat level value (beams).
-                </p>
-              </dd>
-              <dt>Unknown (byte)</dt>
-              <dd>
-                <p>
-                  This value always seems to be <code>0x00</code>. This might be a reserved bit
-                  field byte for future engineering settings.
-                </p>
-              </dd>
-              <dt>Heat levels (bits 1.1-1.8, float array)</dt>
-              <dd>
-                <p>
-                  The heat level for each system, as a value between 0 (no heat) and 1 (maximum
-                  heat). Reaching maximum heat for a system will cause an explosion, which will
-                  damage a system node of that type and release some of the heat.
-                </p>
-              </dd>
-              <dt>Energy allocations (bits 2.1-2.8, float array)</dt>
-              <dd>
-                <p>
-                  The energy allocation for each system, as a value between 0 (no energy allocated)
-                  and 1 (maximum possible energy allocation). In the UI, this is expressed as a
-                  percentage between 0% and 300%, so the nominal allocation level (100%) is
-                  represented by a value of 0.3333....
-                </p>
-              </dd>
-              <dt>Coolant allocations (bits 3.1-3.8, byte array)</dt>
-              <dd>
-                <p>
-                  The units of coolant allocated to each system.
-                </p>
-              </dd>
-            </dl>
-          </section>
-
           <section id="object-generic-mesh">
             <h3>Generic Mesh</h3>
             <p>
