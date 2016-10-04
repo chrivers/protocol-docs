@@ -582,67 +582,9 @@ ${present_name(field.name)} (${present_type(field.type)})\
               </tbody>
             </table>
           </section>
-          <section id="enum-comm-target-type">
-            <h3>COMM Target Type</h3>
-            <table>
-              <tbody>
-                <tr>
-                  <td><code>0x00</code></td>
-                  <td>player</td>
-                </tr>
-                <tr>
-                  <td><code>0x01</code></td>
-                  <td>enemy</td>
-                </tr>
-                <tr>
-                  <td><code>0x02</code></td>
-                  <td>station</td>
-                </tr>
-                <tr>
-                  <td><code>0x03</code></td>
-                  <td>other</td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-          <section id="enum-connection-type">
-            <h3>Connection Type</h3>
-            <table>
-              <tbody>
-                <tr>
-                  <td><code>0x00</code></td>
-                  <td><em>unused</em></td>
-                </tr>
-                <tr>
-                  <td><code>0x01</code></td>
-                  <td>server</td>
-                </tr>
-                <tr>
-                  <td><code>0x02</code></td>
-                  <td>client</td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-          <section id="enum-console-status">
-            <h3>Console Status</h3>
-            <table>
-              <tbody>
-                <tr>
-                  <td><code>0x00</code></td>
-                  <td>available</td>
-                </tr>
-                <tr>
-                  <td><code>0x01</code></td>
-                  <td>yours</td>
-                </tr>
-                <tr>
-                  <td><code>0x02</code></td>
-                  <td>unavailable</td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
+          ${render_enum(enums.get("CommTargetType"))}\
+          ${render_enum(enums.get("ConnectionType"))}\
+          ${render_enum(enums.get("ConsoleStatus"))}\
           <section id="enum-console-type">
             <h3>Console Type</h3>
             <table>
@@ -724,63 +666,8 @@ ${present_name(field.name)} (${present_type(field.type)})\
               </tbody>
             </table>
           </section>
-          <section id="enum-creature-type">
-            <h3>Creature Type</h3>
-            <p>
-              New as of v2.1.5.
-            </p>
-            <table>
-              <tbody>
-                <tr>
-                  <td><code>0x00</code></td>
-                  <td>classic monster</td>
-                </tr>
-                <tr>
-                  <td><code>0x01</code></td>
-                  <td>whale</td>
-                </tr>
-                <tr>
-                  <td><code>0x02</code></td>
-                  <td>shark</td>
-                </tr>
-                <tr>
-                  <td><code>0x03</code></td>
-                  <td>dragon</td>
-                </tr>
-                <tr>
-                  <td><code>0x04</code></td>
-                  <td>piranha</td>
-                </tr>
-                <tr>
-                  <td><code>0x05</code></td>
-                  <td>charybdis</td>
-                </tr>
-                <tr>
-                  <td><code>0x06</code></td>
-                  <td>insect</td>
-                </tr>
-                <tr>
-                  <td><code>0x07</code></td>
-                  <td>wreck</td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-          <section id="enum-drive-type">
-            <h3>Drive Type</h3>
-            <table>
-              <tbody>
-                <tr>
-                  <td><code>0x00</code></td>
-                  <td>warp</td>
-                </tr>
-                <tr>
-                  <td><code>0x01</code></td>
-                  <td>jump</td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
+          ${render_enum(enums.get("CreatureType"))}\
+          ${render_enum(enums.get("DriveType"))}\
           <section id="enum-special-ability">
             <h3>Special Ability</h3>
             <p>
@@ -855,19 +742,7 @@ ${present_name(field.name)} (${present_type(field.type)})\
               </tbody>
             </table>
           </section>
-          <section id="enum-main-screen-view">
-            <h3>Main Screen View</h3>
-            <table>
-              <tbody>
-                % for enum in enums.get("MainScreenView").fields:
-                <tr>
-                  <td><code>${enum.aligned_hex_value}</code></td>
-                  <td>${enum.name}</td>
-                </tr>
-                % endfor
-              </tbody>
-            </table>
-          </section>
+          ${render_enum(enums.get("MainScreenView"))}\
           <section id="enum-object-type">
             <h3>Object Type</h3>
             <table>
