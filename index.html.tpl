@@ -138,7 +138,7 @@ ${present_name(field.name)} (${present_type(field.type)})\
                 % for item in enum.fields:
                 <tr>
                   <td><code>${item.aligned_hex_value}</code></td>
-                  <td>${item.name}</td>
+                  <td>${camelcase_to_name(item.name)}</td>
                 </tr>
                 % endfor
               </tbody>
@@ -1006,46 +1006,10 @@ ${present_name(field.name)} (${present_type(field.type)})\
               </tbody>
             </table>
           </section>
-          <section id="enum-perspective">
-            <h3>Perspective</h3>
-            <table>
-              <tbody>
-                <tr>
-                  <td><code>0x00</code></td>
-                  <td>first person</td>
-                </tr>
-                <tr>
-                  <td><code>0x01</code></td>
-                  <td>third person</td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
+          ${render_enum(enums.get("Perspective"))}\
           ${render_enum(enums.get("ShipSystem"))}\
           ${render_enum(enums.get("TargetingMode"))}\
-          <section id="enum-tube-status">
-            <h3>Tube Status</h3>
-            <table>
-              <tbody>
-                <tr>
-                  <td><code>0x00</code></td>
-                  <td>unloaded</td>
-                </tr>
-                <tr>
-                  <td><code>0x01</code></td>
-                  <td>loaded</td>
-                </tr>
-                <tr>
-                  <td><code>0x02</code></td>
-                  <td>loading</td>
-                </tr>
-                <tr>
-                  <td><code>0x03</code></td>
-                  <td>unloading</td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
+          ${render_enum(enums.get("TubeStatus"))}\
 
           <section id="enum-upgrade">
             <h3>Upgrades</h3>
