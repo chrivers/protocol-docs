@@ -2378,99 +2378,132 @@
               <h3>GameMasterButtonClickPacket</h3>
               <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x15</code> [from <span>client</span>]</div>
               <p>
-                New as of v2.4.0. Sent by the client when the game master clicks on a button
-                created by <a href="#gamemasterbuttonpacket">GameMasterButtonPacket</a>.
+                New as of v2.4.0. Sent by the client when the game master clicks on a button created by GameMasterButtonPacket.
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x15</code>.
                   </p>
                 </dd>
-                <dt>Unknown (int)</dt>
+                <dt>__unknown_1 (u32)</dt>
                 <dd>
                   <p>
-                    Appears to always be <code>0x0d</code>.
+                    Appears to always be 0x0d.
                   </p>
                 </dd>
-                <dt>Hash (int)</dt>
+                <dt>Hash (u32)</dt>
                 <dd>
                   <p>
-                    A hash value identifying the button. It has been determined that this is a hash
-                    of the button's label string, but it is currently unknown how this hash is
-                    computed.
+                    The JamCRC32 hash value of the button title. This is also used as an identifier for the button
                   </p>
                 </dd>
               </dl>
             </section>
-            <section id="gamemasterbuttonpacket">
-              <h3>GameMasterButtonPacket</h3>
-              <div class="pkt-props">Type: <code>0x26faacb9</code>:<code>0x00</code>-<code>02</code> [from <span>server</span>]</div>
+            <section id="gamemasterbuttoncreatepacket">
+              <h3>GameMasterButtonCreatePacket</h3>
+              <div class="pkt-props">Type: <code>0x26faacb9</code>:<code>0x01</code> [from <span>server</span>]</div>
               <p>
-                New as of v2.4.0. Sent by the server to indicate that a button should be added to
-                or removed from the game master console.
+                
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Action (byte)</dt>
+                <dt>Subtype (u8)</dt>
                 <dd>
                   <p>
-                    Indicates what action is desired:
-                    <table>
-                      <tbody>
-                        <tr>
-                          <td><code>0x00</code></td>
-                          <td>
-                            Create a button. Its position and size are up to the client.
-                          </td>
-                        </tr>
-                        <tr>
-                          <td><code>0x01</code></td>
-                          <td>
-                            Create a button with a specified position and size.
-                          </td>
-                        </tr>
-                        <tr>
-                          <td><code>0x02</code></td>
-                          <td>
-                            Remove a previously-created button.
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    Always <code>0x01</code>.
                   </p>
                 </dd>
                 <dt>Label (string)</dt>
                 <dd>
                   <p>
-                    The button's label. This doubles as an identifier for the button and must
-                    therefore be unique.
+                    
                   </p>
                 </dd>
-                <dt>width (int, subtype <code>0x02</code> only)</dt>
+              </dl>
+            </section>
+            <section id="gamemasterbuttoncreateplacepacket">
+              <h3>GameMasterButtonCreatePlacePacket</h3>
+              <div class="pkt-props">Type: <code>0x26faacb9</code>:<code>0x02</code> [from <span>server</span>]</div>
+              <p>
+                
+              </p>
+              <h4>Payload</h4>
+              <dl>
+                <dt>Subtype (u8)</dt>
                 <dd>
                   <p>
-                    The width of the button to create.
+                    Always <code>0x02</code>.
                   </p>
                 </dd>
-                <dt>height (int, subtype <code>0x02</code> only)</dt>
+                <dt>Label (string)</dt>
                 <dd>
                   <p>
-                    The height of the button to create.
+                    Button text
                   </p>
                 </dd>
-                <dt>x (int, subtype <code>0x02</code> only)</dt>
+                <dt>Width (u32)</dt>
                 <dd>
                   <p>
-                    The X-coordinate of the button's location.
+                    
                   </p>
                 </dd>
-                <dt>y (int, subtype <code>0x02</code> only)</dt>
+                <dt>Height (u32)</dt>
                 <dd>
                   <p>
-                    The Y-coordinate of the button's location.
+                    
+                  </p>
+                </dd>
+                <dt>X (u32)</dt>
+                <dd>
+                  <p>
+                    x coordinate from the top left corner
+                  </p>
+                </dd>
+                <dt>Y (u32)</dt>
+                <dd>
+                  <p>
+                    y coordinate from the top left corner
+                  </p>
+                </dd>
+              </dl>
+            </section>
+            <section id="gamemasterbuttondestroypacket">
+              <h3>GameMasterButtonDestroyPacket</h3>
+              <div class="pkt-props">Type: <code>0x26faacb9</code>:<code>0x00</code> [from <span>server</span>]</div>
+              <p>
+                
+              </p>
+              <h4>Payload</h4>
+              <dl>
+                <dt>Subtype (u8)</dt>
+                <dd>
+                  <p>
+                    Always <code>0x00</code>.
+                  </p>
+                </dd>
+                <dt>Label (string)</dt>
+                <dd>
+                  <p>
+                    
+                  </p>
+                </dd>
+              </dl>
+            </section>
+            <section id="gamemasterbuttonresetpacket">
+              <h3>GameMasterButtonResetPacket</h3>
+              <div class="pkt-props">Type: <code>0x26faacb9</code>:<code>0x64</code> [from <span>server</span>]</div>
+              <p>
+                
+              </p>
+              <h4>Payload</h4>
+              <dl>
+                <dt>Subtype (u8)</dt>
+                <dd>
+                  <p>
+                    Always <code>0x64</code>.
                   </p>
                 </dd>
               </dl>
@@ -2690,6 +2723,16 @@
           </section>
           <section id="pkt-h">
             <h3>H</h3>
+            <section id="heartbeatpacket">
+              <h3>HeartbeatPacket</h3>
+              <div class="pkt-props">Type: <code>0xf5821226</code> [from <span>server</span>]</div>
+              <p>
+                
+              </p>
+              <h4>Payload</h4>
+              <dl>
+              </dl>
+            </section>
             <section id="helmjumppacket">
               <h3>HelmJumpPacket</h3>
               <div class="pkt-props">Type: <code>0x0351a5ac</code>:<code>0x05</code> [from <span>client</span>]</div>
@@ -2850,16 +2893,6 @@
                 </dd>
               </dl>
             </section>
-            <section id="heartbeatpacket">
-              <h3>HeartbeatPacket</h3>
-              <div class="pkt-props">Type: <code>0xf5821226</code> [from <span>server</span>]</div>
-              <p>
-                
-              </p>
-              <h4>Payload</h4>
-              <dl>
-              </dl>
-            </section>
           </section>
           <section id="pkt-i">
             <h3>I</h3>
@@ -2963,28 +2996,6 @@
           </section>
           <section id="pkt-k">
             <h3>K</h3>
-            <section id="keystrokepacket">
-              <h3>KeystrokePacket</h3>
-              <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x14</code> [from <span>client</span>]</div>
-              <p>
-                Informs the server that the player at this console pressed a particular key. This is used for custom mission scripts to allow keystrokes to trigger events. This packet should only be sent when keystroke capture is enabled for the console in question. Keystroke capture is always enabled for the game master console; other consoles require the script to activate keystroke capture first.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (u32)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x14</code>.
-                  </p>
-                </dd>
-                <dt>Key Code (i32)</dt>
-                <dd>
-                  <p>
-                    The code identifying the key that was pressed. Microsoft has a good reference page that documents the key codes. Many languages have constants for these values. For example: in Java, they are defined in the KeyEvent class.
-                  </p>
-                </dd>
-              </dl>
-            </section>
             <section id="keycapturetogglepacket">
               <h3>KeyCaptureTogglePacket</h3>
               <div class="pkt-props">Type: <code>0xf754c8fe</code>:<code>0x11</code> [from <span>server</span>]</div>
@@ -3003,6 +3014,28 @@
                 <dd>
                   <p>
                     Whether this console should capture keystrokes or not. Note that because this packet is sent to all consoles when the capture status of any console is changed, a console may get a KeyCaptureTogglePacket telling it to do what it&#x27;s already doing; this is normal.
+                  </p>
+                </dd>
+              </dl>
+            </section>
+            <section id="keystrokepacket">
+              <h3>KeystrokePacket</h3>
+              <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x14</code> [from <span>client</span>]</div>
+              <p>
+                Informs the server that the player at this console pressed a particular key. This is used for custom mission scripts to allow keystrokes to trigger events. This packet should only be sent when keystroke capture is enabled for the console in question. Keystroke capture is always enabled for the game master console; other consoles require the script to activate keystroke capture first.
+              </p>
+              <h4>Payload</h4>
+              <dl>
+                <dt>Subtype (u32)</dt>
+                <dd>
+                  <p>
+                    Always <code>0x14</code>.
+                  </p>
+                </dd>
+                <dt>Key Code (i32)</dt>
+                <dd>
+                  <p>
+                    The code identifying the key that was pressed. Microsoft has a good reference page that documents the key codes. Many languages have constants for these values. For example: in Java, they are defined in the KeyEvent class.
                   </p>
                 </dd>
               </dl>

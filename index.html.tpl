@@ -4,20 +4,22 @@ import html
 
 re_camel_case = re.compile(r'(((?<=[a-z])[A-Z])|([A-Z](?![A-Z]|$)))')
 
-def visit(parser, res, origin):
+def visit(parser, packet, res, origin):
     frametypes = enums.get("FrameType")
     for field in parser.fields:
         type_id = frametypes.fields.get(field.name).aligned_hex_value
         if field.type.name == "struct":
-            res[field.type[0].name] = (field.type, type_id, None, None, origin)
+            name = field.type[0].name.split("::")[-1]
+            res[name] = (packet.fields.get(name), type_id, None, None, origin)
         elif field.type.name == "parser":
             prs = parsers.get(field.type[0].name)
             for fld in prs.fields:
-                res[fld.type[0].name] = (fld.type, type_id, fld.name, prs.arg, origin)
+                name = fld.type[0].name.split("::")[-1]
+                res[name] = (packet.fields.get(name), type_id, fld.name, prs.arg, origin)
 
 packet_ids = dict()
-visit(parsers.get("ClientParser"), packet_ids, "client")
-visit(parsers.get("ServerParser"), packet_ids, "server")
+visit(parsers.get("ClientParser"), packets.get("ClientPacket"), packet_ids, "client")
+visit(parsers.get("ServerParser"), packets.get("ServerPacket"), packet_ids, "server")
 
 def split_camelcase(value):
     """Splits CamelCase. Also strips leading and trailing whitespace."""
@@ -36,13 +38,10 @@ def format_comment(lines):
     return " ".join([html.escape(line) for line in util.format_comment(lines, indent="", width=80)])
 
 def packets_by_prefix(letter):
-    for pkt in sorted(packets, key=lambda x: x.name):
-        for case in sorted(pkt.fields, key=lambda x: x.name):
-            if case.name.startswith(letter):
-                yield case, get_packet(case.name)
-
-def get_packet(name):
-    return packet_ids.get("ServerPacket::%s" % name) or packet_ids.get("ClientPacket::%s" % name)
+    all_packets = sorted(packet_ids.keys())
+    for pkt in all_packets:
+        if pkt.startswith(letter):
+            yield pkt, packet_ids[pkt]
 
 def format_packet_id(packet_id):
     major, minor = packet_id[1], packet_id[2]
@@ -100,11 +99,11 @@ ${present_name(field.name)} (${present_type(field.type)})\
             <h3>${prefix[:1]}</h3>
 % endif
             % for packet, packet_id in packets_by_prefix(prefix):
-            <section id="${packet.name.lower()}packet">
-              <h3>${packet.name}Packet</h3>
+            <section id="${packet.lower()}packet">
+              <h3>${packet}Packet</h3>
               <div class="pkt-props">Type: ${format_packet_id(packet_id)} [from <span>${packet_id[4]}</span>]</div>
               <p>
-                ${format_comment(packet.comment)}
+                ${format_comment(packet_id[0].comment)}
               </p>
               <h4>Payload</h4>
               <dl>
@@ -116,7 +115,7 @@ ${present_name(field.name)} (${present_type(field.type)})\
                   </p>
                 </dd>
               % endif
-              % for field in packet.fields:
+              % for field in packet_id[0].fields:
                 <dt>${present_field(field)}</dt>
                 <dd>
                   <p>
@@ -2457,111 +2456,8 @@ ${present_name(field.name)} (${present_type(field.type)})\
               </dl>
             </section>
           </section>
-          <section id="pkt-g">
-            <h3>G</h3>
-            <section id="gamemasterbuttonclickpacket">
-              <h3>GameMasterButtonClickPacket</h3>
-              <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x15</code> [from <span>client</span>]</div>
-              <p>
-                New as of v2.4.0. Sent by the client when the game master clicks on a button
-                created by <a href="#gamemasterbuttonpacket">GameMasterButtonPacket</a>.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x15</code>.
-                  </p>
-                </dd>
-                <dt>Unknown (int)</dt>
-                <dd>
-                  <p>
-                    Appears to always be <code>0x0d</code>.
-                  </p>
-                </dd>
-                <dt>Hash (int)</dt>
-                <dd>
-                  <p>
-                    A hash value identifying the button. It has been determined that this is a hash
-                    of the button's label string, but it is currently unknown how this hash is
-                    computed.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-            <section id="gamemasterbuttonpacket">
-              <h3>GameMasterButtonPacket</h3>
-              <div class="pkt-props">Type: <code>0x26faacb9</code>:<code>0x00</code>-<code>02</code> [from <span>server</span>]</div>
-              <p>
-                New as of v2.4.0. Sent by the server to indicate that a button should be added to
-                or removed from the game master console.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Action (byte)</dt>
-                <dd>
-                  <p>
-                    Indicates what action is desired:
-                    <table>
-                      <tbody>
-                        <tr>
-                          <td><code>0x00</code></td>
-                          <td>
-                            Create a button. Its position and size are up to the client.
-                          </td>
-                        </tr>
-                        <tr>
-                          <td><code>0x01</code></td>
-                          <td>
-                            Create a button with a specified position and size.
-                          </td>
-                        </tr>
-                        <tr>
-                          <td><code>0x02</code></td>
-                          <td>
-                            Remove a previously-created button.
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </p>
-                </dd>
-                <dt>Label (string)</dt>
-                <dd>
-                  <p>
-                    The button's label. This doubles as an identifier for the button and must
-                    therefore be unique.
-                  </p>
-                </dd>
-                <dt>width (int, subtype <code>0x02</code> only)</dt>
-                <dd>
-                  <p>
-                    The width of the button to create.
-                  </p>
-                </dd>
-                <dt>height (int, subtype <code>0x02</code> only)</dt>
-                <dd>
-                  <p>
-                    The height of the button to create.
-                  </p>
-                </dd>
-                <dt>x (int, subtype <code>0x02</code> only)</dt>
-                <dd>
-                  <p>
-                    The X-coordinate of the button's location.
-                  </p>
-                </dd>
-                <dt>y (int, subtype <code>0x02</code> only)</dt>
-                <dd>
-                  <p>
-                    The Y-coordinate of the button's location.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-          % for prefix in ["GameMasterInstructions", "GameMasterMessage", "GameMasterSelect", "GameMessage", "GameOver", "H", "I", "J", "K", "L"]:
-${section(prefix, loop.index > 4, loop.index > 3)}\
+          % for prefix in ["G", "H", "I", "J", "K", "L"]:
+${section(prefix)}\
           % endfor
           <section id="pkt-o">
             <h3>O</h3>
