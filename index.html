@@ -1514,92 +1514,79 @@
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>ID (int)</dt>
+                <dt>Id (i32)</dt>
                 <dd>
                   <p>
                     A unique identifier for this beam. Each time a beam is fired, it gets its own ID.
                   </p>
                 </dd>
-                <dt>Unknown (int)</dt>
+                <dt>__unknown_1 (u32)</dt>
                 <dd>
                   <p>
-                    In single-bridge games, this value has been observed as 0 for beams fired by
-                    enemies and 1 for beams fired by the player's ship.
+                    In single-bridge games, this value has been observed as 0 for beams fired by enemies and 1 for beams fired by the player&#x27;s ship.
                   </p>
                 </dd>
-                <dt>Unknown (int)</dt>
+                <dt>__unknown_2 (u32)</dt>
                 <dd>
                   <p>
-                    Values of 1200 (for beams from the player's ship) and 100 (for enemy beams) have
-                    been observed.
+                    Values of 1200 (for beams from the player&#x27;s ship) and 100 (for enemy beams) have been observed.
                   </p>
                 </dd>
-                <dt>Beam port index (int)</dt>
+                <dt>Beam Port Index (i32)</dt>
                 <dd>
-                  All ships that can fire beams have beam ports. These are defined in
-                  <code>vesselData.xml</code> as <code>&lt;beam_port&gt;</code> entries. This value
-                  gives the index of the beam port on the originating ship that fired the beam. This
-                  value is zero-based; thus, vessels that only have one beam port will always give 0
-                  for this value.
+                  <p>
+                    All ships that can fire beams have beam ports. These are defined in vesselData.xml as &lt;beam_port&gt; entries. This value gives the index of the beam port on the originating ship that fired the beam. This value is zero-based; thus, vessels that only have one beam port will always give 0 for this value.
+                  </p>
                 </dd>
-                <dt><a href="#enum-object-type">Origin object type</a> (int)</dt>
+                <dt>Origin Object Type (i32)</dt>
                 <dd>
                   <p>
                     Indicates the type of object that fired the beam.
                   </p>
                 </dd>
-                <dt><a href="#enum-object-type">Target object type</a> (int)</dt>
+                <dt>Target Object Type (i32)</dt>
                 <dd>
                   <p>
                     Indicates the type of object that was struck by the beam.
                   </p>
                 </dd>
-                <dt>Unknown (int) (v2.3 or later)</dt>
+                <dt>__unknown_3 (u32)</dt>
                 <dd>
                   <p>
-                    This field is present in v2.3 and later.  A value of 0 has been observed.
+                    This field is present in v2.3 and later. A value of 0 has been observed.
                   </p>
                 </dd>
-                <dt>Origin object ID (int)</dt>
+                <dt>Origin Object Id (u32)</dt>
                 <dd>
                   <p>
                     The ID of the object that fired the beam.
                   </p>
                 </dd>
-                <dt>Target object ID (int)</dt>
+                <dt>Target Object Id (u32)</dt>
                 <dd>
                   <p>
                     The ID of the object that was struck by the beam.
                   </p>
                 </dd>
-                <dt>Target X coordinate (float)</dt>
+                <dt>Target X Coordinate (float)</dt>
                 <dd>
                   <p>
-                    The X coordinate (relative to the center of the target) of the impact point. This
-                    is used to determine the endpoint for the beam. A negative value means an impact
-                    on the target's starboard (right) side; a positive value means an impact on the
-                    target's port (left) side.
+                    The X coordinate (relative to the center of the target) of the impact point. This is used to determine the endpoint for the beam. A negative value means an impact on the target&#x27;s starboard (right) side; a positive value means an impact on the target&#x27;s port (left) side.
                   </p>
                 </dd>
-                <dt>Target Y coordinate (float)</dt>
+                <dt>Target Y Coordinate (float)</dt>
                 <dd>
                   <p>
-                    The Y coordinate (relative to the center of the target) of the impact point. This
-                    is used to determine the endpoint for the beam. A negative value means an impact
-                    on the target's ventral (bottom) side; a positive value means an impact on the
-                    target's dorsal (top) side.
+                    The Y coordinate (relative to the center of the target) of the impact point. This is used to determine the endpoint for the beam. A negative value means an impact on the target&#x27;s ventral (bottom) side; a positive value means an impact on the target&#x27;s dorsal (top) side.
                   </p>
                 </dd>
-                <dt>Target Z coordinate (float)</dt>
+                <dt>Target Z Coordinate (float)</dt>
                 <dd>
                   <p>
-                    The Z coordinate (relative to the center of the target) of the impact point. This
-                    is used to determine the endpoint for the beam. A negative value means an impact
-                    on the target's aft (rear) side; a positive value means an impact on the target's
-                    forward (front) side.
+                    The Z coordinate (relative to the center of the target) of the impact point. This is used to determine the endpoint for the beam. A negative value means an impact on the target&#x27;s aft (rear) side; a positive value means an impact on the target&#x27;s forward (front) side.
                   </p>
                 </dd>
-                <dt><a href="#enum-targeting-mode">Targeting mode</a> (float)</dt>
+                <dt>Targeting Mode (u32)</dt>
                 <dd>
                   <p>
                     Indicates whether the beam was auto- or manually-fired.
