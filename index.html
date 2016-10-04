@@ -2477,14 +2477,13 @@
             </section>
             <section id="gamemasterinstructionspacket">
               <h3>GameMasterInstructionsPacket</h3>
-              <div class="pkt-props">Type: <code>0x809305a7</code>:<code>0x63</code> [from <span>server</span>]</div>
+              <div class="pkt-props">Type: <code>0x26faacb9</code>:<code>0x63</code> [from <span>server</span>]</div>
               <p>
-                Sent by the server to the game master console to provide instructions to be displayed
-                on request.
+                Sent by the server to the game master console to provide instructions to be displayed on request.
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (byte)</dt>
+                <dt>Subtype (u8)</dt>
                 <dd>
                   <p>
                     Always <code>0x63</code>.
@@ -2506,28 +2505,34 @@
             </section>
             <section id="gamemastermessagepacket">
               <h3>GameMasterMessagePacket</h3>
-              <div class="pkt-props">Type: <code>0x809305a7</code> [from <span>client</span>]</div>
+              <div class="pkt-props">Type: <code>0x809305a7</code>:<code>0x01</code> [from <span>client</span>]</div>
               <p>
-                New as of v2.4.0. A packet sent by the game master console to the server which
-                causes a message to be displayed on a client.
+                New as of v2.4.0. A packet sent by the game master console to the server which causes a message to be displayed on a client.
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt><a href="#enum-console-type">Console type</a> (byte, enumeration)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
-                    If this value is <code>0x00</code>, the message is received by the
-                    communications officer as a normal COMM message. Otherwise, it is sent as a
-                    popup message at a particular console type. The console that receives the
-                    message is determined by subtracting 1 from the value; the result then matches
-                    the values for the console type enumeration.
+                    Always <code>0x01</code>.
+                  </p>
+                </dd>
+                <dt>__unknown_1 (u32)</dt>
+                <dd>
+                  <p>
+                    FIXME: perhaps ship_index?
+                  </p>
+                </dd>
+                <dt>Console Type (Type<option>)</dt>
+                <dd>
+                  <p>
+                    If this value is 0x00, the message is received by the communications officer as a normal COMM message. Otherwise, it is sent as a popup message at a particular console type. The console that receives the message is determined by subtracting 1 from the value; the result then matches the values for the console type enumeration.
                   </p>
                 </dd>
                 <dt>Sender (string)</dt>
                 <dd>
                   <p>
-                    The name of the message's sender. This can be any arbitrary string; it doesn't
-                    have to match the name of an existing object.
+                    The name of the message&#x27;s sender. This can be any arbitrary string; it doesn&#x27;t have to match the name of an existing object.
                   </p>
                 </dd>
                 <dt>Message (string)</dt>

@@ -2560,71 +2560,8 @@ ${present_name(field.name)} (${present_type(field.type)})\
                 </dd>
               </dl>
             </section>
-            <section id="gamemasterinstructionspacket">
-              <h3>GameMasterInstructionsPacket</h3>
-              <div class="pkt-props">Type: <code>0x809305a7</code>:<code>0x63</code> [from <span>server</span>]</div>
-              <p>
-                Sent by the server to the game master console to provide instructions to be displayed
-                on request.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (byte)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x63</code>.
-                  </p>
-                </dd>
-                <dt>Title (string)</dt>
-                <dd>
-                  <p>
-                    A title to display above the instructions.
-                  </p>
-                </dd>
-                <dt>Content (string)</dt>
-                <dd>
-                  <p>
-                    The body content for the help screen.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-            <section id="gamemastermessagepacket">
-              <h3>GameMasterMessagePacket</h3>
-              <div class="pkt-props">Type: <code>0x809305a7</code> [from <span>client</span>]</div>
-              <p>
-                New as of v2.4.0. A packet sent by the game master console to the server which
-                causes a message to be displayed on a client.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt><a href="#enum-console-type">Console type</a> (byte, enumeration)</dt>
-                <dd>
-                  <p>
-                    If this value is <code>0x00</code>, the message is received by the
-                    communications officer as a normal COMM message. Otherwise, it is sent as a
-                    popup message at a particular console type. The console that receives the
-                    message is determined by subtracting 1 from the value; the result then matches
-                    the values for the console type enumeration.
-                  </p>
-                </dd>
-                <dt>Sender (string)</dt>
-                <dd>
-                  <p>
-                    The name of the message's sender. This can be any arbitrary string; it doesn't
-                    have to match the name of an existing object.
-                  </p>
-                </dd>
-                <dt>Message (string)</dt>
-                <dd>
-                  <p>
-                    The message to send.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-          % for prefix in ["GameMasterSelect", "GameMessage", "GameOver", "H", "I", "J", "K", "L"]:
-${section(prefix, loop.index > 2, loop.index > 1)}\
+          % for prefix in ["GameMasterInstructions", "GameMasterMessage", "GameMasterSelect", "GameMessage", "GameOver", "H", "I", "J", "K", "L"]:
+${section(prefix, loop.index > 4, loop.index > 3)}\
           % endfor
           <section id="pkt-o">
             <h3>O</h3>
