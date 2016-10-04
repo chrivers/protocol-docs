@@ -2623,41 +2623,7 @@ ${present_name(field.name)} (${present_type(field.type)})\
                 </dd>
               </dl>
             </section>
-            <section id="gamemasterselectlocationpacket">
-              <h3>GameMasterSelectLocationPacket</h3>
-              <div class="pkt-props">Type: <code>0x0351a5ac</code>:<code>0x06</code> [from <span>client</span>]</div>
-              <p>
-                Notifies the server that a new location has been selected on the game master's map.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x06</code>.
-                  </p>
-                </dd>
-                <dt>Z-coordinate (float)</dt>
-                <dd>
-                  <p>
-                    The coordinate of the selected location on the Z axis.
-                  </p>
-                </dd>
-                <dt>Unknown (4 bytes)</dt>
-                <dd>
-                  <p>
-                    Seems to always be `0x00000000`.
-                  </p>
-                </dd>
-                <dt>X-coordinate (float)</dt>
-                <dd>
-                  <p>
-                    The coordinate of the selected location on the X axis.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-          % for prefix in ["GameMasterSelectObject", "GameMessage", "GameOver", "H", "I", "J", "K", "L"]:
+          % for prefix in ["GameMasterSelect", "GameMessage", "GameOver", "H", "I", "J", "K", "L"]:
 ${section(prefix, loop.index > 2, loop.index > 1)}\
           % endfor
           <section id="pkt-o">
