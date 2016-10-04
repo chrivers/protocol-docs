@@ -1428,23 +1428,20 @@
               <h3>ActivateUpgradePacket</h3>
               <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x1c</code> [from <span>client</span>]</div>
               <p>
-                This packet is sent whenever a client wishes to activate a ship upgrade from the "upgrades" menu.
+                This packet is sent whenever a client wishes to activate a ship upgrade from the &quot;upgrades&quot; menu.
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x1c</code>.
                   </p>
                 </dd>
-                <dt>Target (upgrade type, enum32)</dt>
+                <dt>Target (enum UpgradeActivation as u32)</dt>
                 <dd>
                   <p>
-                    The upgrades that can be activated seem to be
-                    the ones between <code>0x00</code>
-                    (InfusionPCoils) and <code>0x08</code>
-                    (DoubleAgent / Secret Code Case), both inclusive.
+                    The upgrade to activate. The game supports 28 different types of powerups, but only 8 are activated abilities. The others are all passive abilities, that are simple active on any ship that has them.
                   </p>
                 </dd>
               </dl>
@@ -1457,28 +1454,17 @@
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
-                    Always <code>0x0f</code> for this packet type.
+                    Always <code>0x0f</code>.
                   </p>
                 </dd>
-                <dt>Ships (array)</dt>
+                <dt>Ships (struct Ship array (length 8))</dt>
                 <dd>
                   <p>
-                    A list of the eight available player ships. Each ship is structured as follows:
+                    A list of the eight available player ships.
                   </p>
-                  <dl>
-                    <dt><a href="#enum-drive-type">Drive type</a> (int, enumeration)</dt>
-                    <dd>Whether the ship has warp or jump drive</dd>
-                    <dt>Ship type (int)</dt>
-                    <dd>ID from vesselData.xml</dd>
-                    <dt>Accent Color (int) (v2.4 or later)</dt>
-                    <dt>Unknown (int) (v2.0 or later)</dt>
-                    <dd>Only <code>0x01</code> has been observed thus far.</dd>
-                    <dt>Name (string)</dt>
-                    <dd>The name of the ship</dd>
-                  </dl>
                 </dd>
               </dl>
             </section>
@@ -1490,16 +1476,17 @@
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Audio ID (int)</dt>
+                <dt>Audio Id (i32)</dt>
                 <dd>
                   <p>
-                    The ID for the audio message. This is given by the
-                    <a href="#incomingaudiopacket">IncomingAudioPacket</a>.
+                    The ID for the audio message. This is given by the IncomingAudioPacket.
                   </p>
                 </dd>
-                <dt><a href="#enum-audio-command">Audio command</a> (int, enumeration)</dt>
+                <dt>Audio Command (enum AudioCommand as u32)</dt>
                 <dd>
-                  The desired action to perform.
+                  <p>
+                    The desired action to perform.
+                  </p>
                 </dd>
               </dl>
             </section>
