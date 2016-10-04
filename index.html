@@ -1959,18 +1959,17 @@
               <h3>EngAutoDamconUpdatePacket</h3>
               <div class="pkt-props">Type: <code>0xf754c8fe</code>:<code>0x0b</code> [from <span>server</span>]</div>
               <p>
-                Informs the client of changes to DAMCON team autonomy status. Triggered by the
-                &ldquo;Autonomous&rdquo; button in the engineering console.
+                Informs the client of changes to DAMCON team autonomy status. Triggered by the &quot;Autonomous&quot; button in the engineering console.
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x0b</code>.
                   </p>
                 </dd>
-                <dt>DAMCON autonomy (boolean, 4 bytes)</dt>
+                <dt>Damcon Autonomy (bool32)</dt>
                 <dd>
                   <p>
                     Whether DAMCON teams are directed autonomously or not.
@@ -1982,130 +1981,49 @@
               <h3>EngGridUpdatePacket</h3>
               <div class="pkt-props">Type: <code>0x077e9f3c</code> [from <span>server</span>]</div>
               <p>
-                Updates damage to the various system grids on the ship and DAMCON team locations and
-                status.
+                Updates damage to the various system grids on the ship and DAMCON team locations and status.
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Reqested</dt>
+                <dt>Requested (bool8)</dt>
                 <dd>
                   <p>
-                    This field is <code>0</code> on normal engineering
-                    update from the server, but will be set
-                    to <code>1</code> when in response to
-                    the <a href="#requestenggridupdate">RequestEngGridUpdate</a>
-                    packet.
+                    Requested: This field is false on normal engineering update from the server, but will be set to 1 when in response to the RequestEngGridUpdate packet.
                   </p>
                 </dd>
-                <dt>System grid status (array)</dt>
+                <dt>System Grid Status (array of struct SystemNodeStatus, terminated by 0xff)</dt>
                 <dd>
                   <p>
-                    This array contains a list of system nodes, terminated with <code>0xff</code>.
-                    Each system node contains the following fields:
+                    This array contains information on all system nodes
                   </p>
-                  <dl>
-                    <dt>X coordinate (byte)</dt>
-                    <dd>
-                      <p>
-                        The X coordinate of the node relative to the ship's center.
-                      </p>
-                    </dd>
-                    <dt>Y coordinate (byte)</dt>
-                    <dd>
-                      <p>
-                        The Y coordinate of the node relative to the ship's center.
-                      </p>
-                    </dd>
-                    <dt>Z coordinate (byte)</dt>
-                    <dd>
-                      <p>
-                        The Z coordinate of the node relative to the ship's center.
-                      </p>
-                    </dd>
-                    <dt>Damage (float)</dt>
-                    <dd>
-                      <p>
-                        The current damage level for this node. An undamaged node has a value of 0.0;
-                        any higher value indicates damage. (Is there an upper limit to this value?)
-                      </p>
-                    </dd>
-                  </dl>
                 </dd>
-                <dt>DAMCON team status (array)</dt>
+                <dt>Damcon Team Status (array of struct DamconTeamStatus, terminated by 0xfe)</dt>
                 <dd>
                   <p>
-                    This contains a list of DAMCON teams, terminated with <code>0xfe</code>. Each
-                    DAMCON team contains the following fields:
+                    This array contains information on all DAMCON teams
                   </p>
-                  <dl>
-                    <dt>Team ID (byte)</dt>
-                    <dd>
-                      <p>
-                        An ID assigned to this team. For some reason known only to Thom, this value
-                        always has <code>0x0a</code> added to it.
-                      </p>
-                    </dd>
-                    <dt>Goal X coordinate (int)</dt>
-                    <dd>
-                      <p>
-                        The X coordinate of the node to which this team is currently moving. If the
-                        team does not want to move elsewhere, this will be the same as their current
-                        X coordinate.
-                      </p>
-                    </dd>
-                    <dt>Current X coordinate (int)</dt>
-                    <dd>
-                      <p>
-                        The X coordinate of the team's current node. This value does not change while
-                        the team in in transit; it is only updated when they arrive at a new node.
-                      </p>
-                    </dd>
-                    <dt>Goal Y coordinate (int)</dt>
-                    <dd>
-                      <p>
-                        The Y coordinate of the node to which this team is currently moving. If the
-                        team does not want to move elsewhere, this will be the same as their current
-                        Y coordinate.
-                      </p>
-                    </dd>
-                    <dt>Current Y coordinate (int)</dt>
-                    <dd>
-                      <p>
-                        The Y coordinate of the team's current node. This value does not change while
-                        the team in in transit; it is only updated when they arrive at a new node.
-                      </p>
-                    </dd>
-                    <dt>Goal Z coordinate (int)</dt>
-                    <dd>
-                      <p>
-                        The Z coordinate of the node to which this team is currently moving. If the
-                        team does not want to move elsewhere, this will be the same as their current
-                        Z coordinate.
-                      </p>
-                    </dd>
-                    <dt>Current Z coordinate (int)</dt>
-                    <dd>
-                      <p>
-                        The Z coordinate of the team's current node. This value does not change while
-                        the team in in transit; it is only updated when they arrive at a new node.
-                      </p>
-                    </dd>
-                    <dt>Progress (float)</dt>
-                    <dd>
-                      <p>
-                        A value between 0.0 and 1.0 that expresses how close the team is in their
-                        progress towards the goal node. The value starts at 1.0 as the team begins
-                        moving towards the goal node, and gradually decreases until it reaches 0.0
-                        upon their arriving at the goal.
-                      </p>
-                    </dd>
-                    <dt>Number of team members (int)</dt>
-                    <dd>
-                      <p>
-                        The number of people on this DAMCON team.
-                      </p>
-                    </dd>
-                  </dl>
+                </dd>
+              </dl>
+            </section>
+            <section id="engrequestgridupdatepacket">
+              <h3>EngRequestGridUpdatePacket</h3>
+              <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x19</code> [from <span>client</span>]</div>
+              <p>
+                Sent from the engineering station, to request a full update for all values. This causes the server to send a full update, instead of the normal update type where only changes are sent.
+              </p>
+              <h4>Payload</h4>
+              <dl>
+                <dt>Subtype (u32)</dt>
+                <dd>
+                  <p>
+                    Always <code>0x19</code>.
+                  </p>
+                </dd>
+                <dt>__unused (u32)</dt>
+                <dd>
+                  <p>
+                    Always 0.
+                  </p>
                 </dd>
               </dl>
             </section>
@@ -2117,34 +2035,34 @@
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x04</code>.
                   </p>
                 </dd>
-                <dt>Team number (int)</dt>
+                <dt>Team Number (i32)</dt>
                 <dd>
                   <p>
                     The number assigned to the team (0 to 2 inclusive).
                   </p>
                 </dd>
-                <dt>X coordinate (int)</dt>
+                <dt>X Coordinate (i32)</dt>
                 <dd>
                   <p>
-                    The X coordinate of the grid location that is the team's destination.
+                    The X coordinate of the grid location that is the team&#x27;s destination.
                   </p>
                 </dd>
-                <dt>Y coordinate (int)</dt>
+                <dt>Y Coordinate (i32)</dt>
                 <dd>
                   <p>
-                    The Y coordinate of the grid location that is the team's destination.
+                    The Y coordinate of the grid location that is the team&#x27;s destination.
                   </p>
                 </dd>
-                <dt>Z coordinate (int)</dt>
+                <dt>Z Coordinate (i32)</dt>
                 <dd>
                   <p>
-                    The Z coordinate of the grid location that is the team's destination.
+                    The Z coordinate of the grid location that is the team&#x27;s destination.
                   </p>
                 </dd>
               </dl>
@@ -2157,13 +2075,13 @@
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x0c</code>.
                   </p>
                 </dd>
-                <dt>Autonomous (int, boolean)</dt>
+                <dt>Autonomous (bool32)</dt>
                 <dd>
                   <p>
                     Indicates whether DAMCON team autonomy is on or off.
@@ -2179,34 +2097,34 @@
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x00</code>.
                   </p>
                 </dd>
-                <dt><a href="#enum-ship-system">Ship system</a> (int, enumeration)</dt>
+                <dt>Ship System (enum ShipSystem as u32)</dt>
                 <dd>
                   <p>
                     The system whose coolant level is being adjusted.
                   </p>
                 </dd>
-                <dt>Value (int)</dt>
+                <dt>Value (i32)</dt>
                 <dd>
                   <p>
                     The number of coolant units to allocate to the system (0 to 8 inclusive).
                   </p>
                 </dd>
-                <dt>Unknown (int)</dt>
+                <dt>__unused_1 (u32)</dt>
                 <dd>
                   <p>
-                    Only observed value is 0.
+                    padding, because this packet is of type &quot;valueFourInts&quot;
                   </p>
                 </dd>
-                <dt>Unknown (int)</dt>
+                <dt>__unused_2 (u32)</dt>
                 <dd>
                   <p>
-                    Only observed value is 0.
+                    padding, because this packet is of type &quot;valueFourInts&quot;
                   </p>
                 </dd>
               </dl>
@@ -2219,7 +2137,7 @@
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x04</code>.
@@ -2228,12 +2146,10 @@
                 <dt>Value (float)</dt>
                 <dd>
                   <p>
-                    The amount of energy to allocate to the system. This value can range from 0.0 to
-                    1.0 inclusive, which in the stock UI corresponds to 0% to 300%. Therefore, the
-                    default energy allocation of 100% would be represented as 0.333....
+                    The amount of energy to allocate to the system. This value can range from 0.0 to 1.0 inclusive, which in the stock UI corresponds to 0% to 300%. Therefore, the default energy allocation of 100% would be represented as 0.333....
                   </p>
                 </dd>
-                <dt><a href="#enum-ship-system">Ship system</a> (int, enumeration)</dt>
+                <dt>Ship System (enum ShipSystem as u32)</dt>
                 <dd>
                   <p>
                     The system whose coolant level is being adjusted.
