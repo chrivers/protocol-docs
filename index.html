@@ -1424,6 +1424,31 @@
 
           <section id="pkt-a">
             <h3>A</h3>
+            <section id="activateupgradepacket">
+              <h3>ActivateUpgradePacket</h3>
+              <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x1c</code> [from <span>client</span>]</div>
+              <p>
+                This packet is sent whenever a client wishes to activate a ship upgrade from the "upgrades" menu.
+              </p>
+              <h4>Payload</h4>
+              <dl>
+                <dt>Subtype (int)</dt>
+                <dd>
+                  <p>
+                    Always <code>0x1c</code>.
+                  </p>
+                </dd>
+                <dt>Target (upgrade type, enum32)</dt>
+                <dd>
+                  <p>
+                    The upgrades that can be activated seem to be
+                    the ones between <code>0x00</code>
+                    (InfusionPCoils) and <code>0x08</code>
+                    (DoubleAgent / Secret Code Case), both inclusive.
+                  </p>
+                </dd>
+              </dl>
+            </section>
             <section id="allshipsettingspacket">
               <h3>AllShipSettingsPacket</h3>
               <div class="pkt-props">Type: <code>0xf754c8fe</code>:<code>0x0f</code> [from <span>server</span>]</div>
@@ -1632,32 +1657,6 @@
                     down, <code>0xffffffff</code> (-1) for up. For example, if the ship is diving when
                     the instruction to go up is received, the ship will level out. If a second up
                     command is received, the ship will start climbing.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-
-            <section id="activateupgradepacket">
-              <h3>ActivateUpgradePacket</h3>
-              <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x1c</code> [from <span>client</span>]</div>
-              <p>
-                This packet is sent whenever a client wishes to activate a ship upgrade from the "upgrades" menu.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x1c</code>.
-                  </p>
-                </dd>
-                <dt>Target (upgrade type, enum32)</dt>
-                <dd>
-                  <p>
-                    The upgrades that can be activated seem to be
-                    the ones between <code>0x00</code>
-                    (InfusionPCoils) and <code>0x08</code>
-                    (DoubleAgent / Secret Code Case), both inclusive.
                   </p>
                 </dd>
               </dl>
