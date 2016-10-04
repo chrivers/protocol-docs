@@ -1508,6 +1508,31 @@ ${present_name(field.name)} (${present_type(field.type)})\
 
           <section id="pkt-a">
             <h3>A</h3>
+            <section id="activateupgradepacket">
+              <h3>ActivateUpgradePacket</h3>
+              <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x1c</code> [from <span>client</span>]</div>
+              <p>
+                This packet is sent whenever a client wishes to activate a ship upgrade from the "upgrades" menu.
+              </p>
+              <h4>Payload</h4>
+              <dl>
+                <dt>Subtype (int)</dt>
+                <dd>
+                  <p>
+                    Always <code>0x1c</code>.
+                  </p>
+                </dd>
+                <dt>Target (upgrade type, enum32)</dt>
+                <dd>
+                  <p>
+                    The upgrades that can be activated seem to be
+                    the ones between <code>0x00</code>
+                    (InfusionPCoils) and <code>0x08</code>
+                    (DoubleAgent / Secret Code Case), both inclusive.
+                  </p>
+                </dd>
+              </dl>
+            </section>
             <section id="allshipsettingspacket">
               <h3>AllShipSettingsPacket</h3>
               <div class="pkt-props">Type: <code>0xf754c8fe</code>:<code>0x0f</code> [from <span>server</span>]</div>
@@ -1667,271 +1692,7 @@ ${present_name(field.name)} (${present_type(field.type)})\
               </dl>
             </section>
           </section>
-          <section id="pkt-c">
-            <h3>C</h3>
-            <section id="captainselectpacket">
-              <h3>CaptainSelectPacket</h3>
-              <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x11</code> [from <span>client</span>]</div>
-              <p>
-                Notifies the server that a new target has been selected on the captain's map.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x11</code>.
-                  </p>
-                </dd>
-                <dt>Target ID (int)</dt>
-                <dd>
-                  <p>
-                    The object ID for the new target, or 1 if the target has been cleared.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-            <section id="climbdivepacket">
-              <h3>ClimbDivePacket</h3>
-              <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x1b</code> [from <span>client</span>]</div>
-              <p>
-                Causes the ship to climb or dive. This differs from
-                <a href="#helmsetpitchpacket">HelmSetPitchPacket</a> in that it indicates a
-                direction in which to change the ship's current pitch, rather than setting a precise
-                pitch value. The circumstances in which one type of packet might be sent versus the
-                other are not fully understood at this time.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x1b</code>.
-                  </p>
-                </dd>
-                <dt>Direction (int)</dt>
-                <dd>
-                  <p>
-                    Indicates the change in the ship's direction: <code>0x00000001</code> (1) for
-                    down, <code>0xffffffff</code> (-1) for up. For example, if the ship is diving when
-                    the instruction to go up is received, the ship will level out. If a second up
-                    command is received, the ship will start climbing.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-
-            <section id="activateupgradepacket">
-              <h3>ActivateUpgradePacket</h3>
-              <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x1c</code> [from <span>client</span>]</div>
-              <p>
-                This packet is sent whenever a client wishes to activate a ship upgrade from the "upgrades" menu.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x1c</code>.
-                  </p>
-                </dd>
-                <dt>Target (upgrade type, enum32)</dt>
-                <dd>
-                  <p>
-                    The upgrades that can be activated seem to be
-                    the ones between <code>0x00</code>
-                    (InfusionPCoils) and <code>0x08</code>
-                    (DoubleAgent / Secret Code Case), both inclusive.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-
-            <section id="commsincomingpacket">
-              <h3>CommsIncomingPacket</h3>
-              <div class="pkt-props">Type: <code>0xd672c35f</code> [from <span>server</span>]</div>
-              <p>
-                  Contains a single incoming text message to display at the COMMS station.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Channel (int)</dt>
-                <dd>
-                  <p>
-                    Indicates the channel on which the message was received. Values range from
-                    <code>0x00</code> to <code>0x08</code>. In the stock client, this affects the
-                    message's background color; the lower the channel number, the more red the
-                    background color. While this would seem to indicate priority, in practice, the
-                    channel number doesn't seem to correlate with message importance. Below is a
-                    list of message types received on each channel; note that this list may be
-                    incomplete and custom scenarios may send messages on any channel:
-                  </p>
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td><code>0x00</code></td>
-                        <td>Enemy taunts</td>
-                      </tr>
-                      <tr>
-                        <td><code>0x01</code></td>
-                        <td>?</td>
-                      </tr>
-                      <tr>
-                        <td><code>0x02</code></td>
-                        <td>?</td>
-                      </tr>
-                      <tr>
-                        <td><code>0x03</code></td>
-                        <td>Base destroyed</td>
-                      </tr>
-                      <tr>
-                        <td><code>0x04</code></td>
-                        <td>Base is under attack, docking complete, ship refuses orders</td>
-                      </tr>
-                      <tr>
-                        <td><code>0x05</code></td>
-                        <td>Base acknowledges build order or docking request</td>
-                      </tr>
-                      <tr>
-                        <td><code>0x06</code></td>
-                        <td>Ship accepts orders, base status response, ordnance built notice, GM message</td>
-                      </tr>
-                      <tr>
-                        <td><code>0x07</code></td>
-                        <td>Mission notification, mission transfer complete</td>
-                      </tr>
-                      <tr>
-                        <td><code>0x08</code></td>
-                        <td>Messages sent from player ships</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </dd>
-                <dt>Sender (string)</dt>
-                <dd>
-                  <p>
-                    The name of the entity that sent the message. Note that this does not necessarily
-                    correspond to the exact name of that entity. This field appears to always at least
-                    start with the name of the originating ship or station in non-scripted missions,
-                    but may have additional text afterward (e.g. &ldquo;DS3 TSN Base&rdquo;). Custom
-                    missions could have any string in this field.
-                  </p>
-                </dd>
-                <dt>Message (string)</dt>
-                <dd>
-                  <p>
-                    The contents of the incoming message. The carat symbol (<code>^</code>) in the
-                    message indicates a line break.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-            <section id="commsoutgoingpacket">
-              <h3>CommsOutgoingPacket</h3>
-              <div class="pkt-props">Type: <code>0x574c4c4b</code> [from <span>client</span>]</div>
-              <p>
-                Sends a COMMs message to the server.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt><a href="#enum-comm-target-type">COMM target type</a> (int)</dt>
-                <dd>
-                  <p>
-                    The type of target for the message.
-                  </p>
-                </dd>
-                <dt>Recipient ID (int)</dt>
-                <dd>
-                  <p>
-                    ID of the object that is to receive the message.
-                  </p>
-                </dd>
-                <dt><a href="#enum-comm-message">Message</a> (int)</dt>
-                <dd>
-                  <p>
-                    A value that indicates what message is to be transmitted. The interpretation of
-                    the value depends on the COMM target type.
-                  </p>
-                </dd>
-                <dt>Target object ID (int)</dt>
-                <dd>
-                  <p>
-                    The ID of the object to be targeted by the message. Currently, the only message
-                    that accepts a target is &ldquo;Other ship: Go defend [target].&rdquo; This value
-                    will be ignored if the message cannot support a target, but must still be
-                    provided; the value <code>0x00730078</code> has been observed in this case, but it
-                    is unknown why.
-                  </p>
-                </dd>
-                <dt>Unknown (int)</dt>
-                <dd>
-                  <p>
-                    Possibly reserved for a second message argument. It is always ignored but must
-                    still be provided. The value of <code>0x004f005e</code> has been observed for this
-                    field, but it is unknown why.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-            <section id="consolestatuspacket">
-              <h3>ConsoleStatusPacket</h3>
-              <div class="pkt-props">Type: <code>0x19c6e2d4</code> [from <span>server</span>]</div>
-              <p>
-                Indicates that a change has occurred in the availability status of one or more bridge
-                consoles.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Ship number (int)</dt>
-                <dd>
-                  <p>
-                    The number of the ship whose consoles are being described. Before v2.3.0, this
-                    value was one-based, so by default the ship identified by <code>0x01</code> was
-                    <em>Artemis</em>. As of v2.3.0 it is now zero-based.
-                  </p>
-                </dd>
-                <dt><a href="#enum-console-status">Console status</a> (array)</dt>
-                <dd>
-                  <p>
-                    This array contains one element for each possible console, with the availability
-                    status of each console represented with a single byte. The consoles are iterated
-                    in the order given by the <a href="#enum-console-type">console type</a>
-                    enumeration. Note that the helm, weapons, engineering, and game master stations
-                    permit only one client to claim them. Once they've been claimed, their status will
-                    be reported as unavailable to other clients. All other stations will remain
-                    available to other clients when claimed.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-            <section id="converttorpedopacket">
-              <h3>ConvertTorpedoPacket</h3>
-              <div class="pkt-props">Type: <code>0x69cc01d9</code>:<code>0x03</code> [from <span>client</span>]</div>
-              <p>
-                Converts a homing torpedo to energy or vice versa.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x03</code>.
-                  </p>
-                </dd>
-                <dt>Direction (float)</dt>
-                <dd>
-                  <p>
-                    Indicates whether we are converting a torpedo to energy (0.0,
-                    <code>0x00000000</code>) or energy to a torpedo (1.0, <code>0x3f800000</code>).
-                    Why this is expressed as a float when a byte seems like it would be more
-                    appropriate is unknown.
-                  </p>
-                </dd>
-                <dt>Unknown (12 bytes)</dt>
-              </dl>
-            </section>
-          </section>
-          % for prefix in ["D", "E", "F", "G", "H", "I", "J", "K", "L"]:
+          % for prefix in ["C", "D", "E", "F", "G", "H", "I", "J", "K", "L"]:
 ${section(prefix)}\
           % endfor
           <section id="pkt-o">
