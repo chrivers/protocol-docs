@@ -2664,41 +2664,22 @@
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x15</code>.
                   </p>
                 </dd>
-                <dt>Column index (byte)</dt>
+                <dt>Column Index (u8)</dt>
                 <dd>
                   <p>
-                    Stats are presented in vertical columns; each packet contains one column of
-                    stats data. This fields is the index for this column of data. In practice,
-                    there are only two possible values: 0 and 1.
+                    Stats are presented in vertical columns; each packet contains one column of stats data. This fields is the index for this column of data. In practice, there are only two possible values: 0 and 1.
                   </p>
                 </dd>
-                <dt>Statistics (array)</dt>
+                <dt>Statistics (array of struct Statistic, terminated by 0xce)</dt>
                 <dd>
                   <p>
-                    The remaining bytes in the packet are an array, where each element constitutes a
-                    row in the stats column. Each element is prefaced with <code>0x00</code>, and
-                    the last element is followed by <code>0xce</code>. Each element contains the
-                    following fields:
-                    <dl>
-                      <dt>Value (int)</dt>
-                      <dd>
-                        <p>
-                          The numeric value for this statistic.
-                        </p>
-                      </dd>
-                      <dt>Label (string)</dt>
-                      <dd>
-                        <p>
-                          The description for this statistic.
-                        </p>
-                      </dd>
-                    </dl>
+                    The remaining bytes in the packet are an array, where each element constitutes a row in the stats column. The last element is followed by 0xce.
                   </p>
                 </dd>
               </dl>
@@ -3404,7 +3385,7 @@
                     Always <code>0x16</code>.
                   </p>
                 </dd>
-                <dt>Ship (Type<struct>)</dt>
+                <dt>Ship (struct ShipV211)</dt>
                 <dd>
                   <p>
                     
@@ -3426,7 +3407,7 @@
                     Always <code>0x17</code>.
                   </p>
                 </dd>
-                <dt>Ship (Type<struct>)</dt>
+                <dt>Ship (struct Ship)</dt>
                 <dd>
                   <p>
                     

@@ -61,8 +61,14 @@ ${type.name}\
 float\
 % elif type.name == "string":
 string\
+% elif type.name == "struct":
+struct ${type[0].name}\
 % elif type.name == "ascii_string":
 ascii string\
+% elif type.name == "array" and type[1]:
+array of ${present_type(type[0])}, terminated by ${type[1].name}\
+% elif type.name == "array":
+array of ${present_type(type[0])}\
 % elif type.name == "sizedarray":
 ${present_type(type[0])} array (length ${type[1].name})\
 % elif type.name == "bitflags":
@@ -88,9 +94,11 @@ ${present_name(field.name)} (bit ${index_to_bit(index)}, ${present_type(field.ty
 <%def name="present_field(field)">\
 ${present_name(field.name)} (${present_type(field.type)})\
 </%def>\
-<%def name="section(prefix)">\
+<%def name="section(prefix, start=True, end=True)">\
+% if start:
           <section id="pkt-${prefix[:1].lower()}">
             <h3>${prefix[:1]}</h3>
+% endif
             % for packet, packet_id in packets_by_prefix(prefix):
             <section id="${packet.name.lower()}packet">
               <h3>${packet.name}Packet</h3>
@@ -119,7 +127,9 @@ ${present_name(field.name)} (${present_type(field.type)})\
               </dl>
             </section>
             % endfor
+% if end:
           </section>
+% endif
 </%def>\
 <!DOCTYPE html>
 <html>
@@ -2731,56 +2741,8 @@ ${present_name(field.name)} (${present_type(field.type)})\
                 </dd>
               </dl>
             </section>
-            <section id="gameoverstatspacket">
-              <h3>GameOverStatsPacket</h3>
-              <div class="pkt-props">Type: <code>0xf754c8fe</code>:<code>0x15</code> [from <span>server</span>]</div>
-              <p>
-                Provides endgame statistics.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x15</code>.
-                  </p>
-                </dd>
-                <dt>Column index (byte)</dt>
-                <dd>
-                  <p>
-                    Stats are presented in vertical columns; each packet contains one column of
-                    stats data. This fields is the index for this column of data. In practice,
-                    there are only two possible values: 0 and 1.
-                  </p>
-                </dd>
-                <dt>Statistics (array)</dt>
-                <dd>
-                  <p>
-                    The remaining bytes in the packet are an array, where each element constitutes a
-                    row in the stats column. Each element is prefaced with <code>0x00</code>, and
-                    the last element is followed by <code>0xce</code>. Each element contains the
-                    following fields:
-                    <dl>
-                      <dt>Value (int)</dt>
-                      <dd>
-                        <p>
-                          The numeric value for this statistic.
-                        </p>
-                      </dd>
-                      <dt>Label (string)</dt>
-                      <dd>
-                        <p>
-                          The description for this statistic.
-                        </p>
-                      </dd>
-                    </dl>
-                  </p>
-                </dd>
-              </dl>
-            </section>
-          </section>
-          % for prefix in ["H", "I", "J", "K", "L"]:
-${section(prefix)}\
+          % for prefix in ["GameOverStats", "H", "I", "J", "K", "L"]:
+${section(prefix, loop.index > 0)}\
           % endfor
           <section id="pkt-o">
             <h3>O</h3>
