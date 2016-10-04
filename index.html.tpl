@@ -130,6 +130,23 @@ ${present_name(field.name)} (${present_type(field.type)})\
           </section>
 % endif
 </%def>\
+<%def name="render_enum(enum)">
+          <section id="enum-ship-system">
+            <h3>${camelcase_to_name(enum.name)}</h3>
+            <table>
+              <tbody>
+                % for item in enum.fields:
+                <tr>
+                  <td><code>${item.aligned_hex_value}</code></td>
+                  <td>${item.name}</td>
+                </tr>
+                % endfor
+              </tbody>
+            </table>
+          </section>
+</%def>\
+\
+\
 <!DOCTYPE html>
 <html>
   <head>
@@ -1004,19 +1021,7 @@ ${present_name(field.name)} (${present_type(field.type)})\
               </tbody>
             </table>
           </section>
-          <section id="enum-ship-system">
-            <h3>Ship System</h3>
-            <table>
-              <tbody>
-                % for item in enums.get("ShipSystem").fields:
-                <tr>
-                  <td><code>${item.aligned_hex_value}</code></td>
-                  <td>${item.name}</td>
-                </tr>
-                % endfor
-              </tbody>
-            </table>
-          </section>
+          ${render_enum(enums.get("ShipSystem"))}\
           <section id="enum-targeting-mode">
             <h3>Targeting Mode</h3>
             <table>
