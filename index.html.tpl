@@ -131,7 +131,7 @@ ${present_name(field.name)} (${present_type(field.type)})\
 % endif
 </%def>\
 <%def name="render_enum(enum)">
-          <section id="enum-ship-system">
+          <section id="enum-${camelcase_to_id(enum.name)}">
             <h3>${camelcase_to_name(enum.name)}</h3>
             <table>
               <tbody>
@@ -1022,22 +1022,7 @@ ${present_name(field.name)} (${present_type(field.type)})\
             </table>
           </section>
           ${render_enum(enums.get("ShipSystem"))}\
-          <section id="enum-targeting-mode">
-            <h3>Targeting Mode</h3>
-            <table>
-              <tbody>
-                <tr>
-                  <td><code>0x00</code></td>
-                  <td>auto</td>
-                </tr>
-                <tr>
-                  <td><code>0x01</code></td>
-                  <td>manual</td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-
+          ${render_enum(enums.get("TargetingMode"))}\
           <section id="enum-tube-status">
             <h3>Tube Status</h3>
             <table>
