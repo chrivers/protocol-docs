@@ -315,36 +315,8 @@ ${present_name(field.name)} (${present_type(field.type)})\
             will use a predefined numeric value to represent it. This section documents these
             enumerations.
           </p>
-          <section id="enum-alert-status">
-            <h3>Alert Status</h3>
-            <table>
-              <tbody>
-                <tr>
-                  <td><code>0x00</code></td>
-                  <td>normal</td>
-                </tr>
-                <tr>
-                  <td><code>0x01</code></td>
-                  <td>red alert</td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-          <section id="enum-audio-command">
-            <h3>Audio Command</h3>
-            <table>
-              <tbody>
-                <tr>
-                  <td><code>0x00</code></td>
-                  <td>play</td>
-                </tr>
-                <tr>
-                  <td><code>0x01</code></td>
-                  <td>dismiss</td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
+          ${render_enum(enums.get("AlertStatus"))}\
+          ${render_enum(enums.get("AudioCommand"))}\
           <section id="enum-audio-mode">
             <h3>Audio Mode</h3>
             <table>
@@ -364,33 +336,7 @@ ${present_name(field.name)} (${present_type(field.type)})\
               </tbody>
             </table>
           </section>
-          <section id="enum-beam-frequency">
-            <h3>Beam Frequency</h3>
-            <table>
-              <tbody>
-                <tr>
-                  <td><code>0x00</code></td>
-                  <td>A</td>
-                </tr>
-                <tr>
-                  <td><code>0x01</code></td>
-                  <td>B</td>
-                </tr>
-                <tr>
-                  <td><code>0x02</code></td>
-                  <td>C</td>
-                </tr>
-                <tr>
-                  <td><code>0x03</code></td>
-                  <td>D</td>
-                </tr>
-                <tr>
-                  <td><code>0x04</code></td>
-                  <td>E</td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
+          ${render_enum(enums.get("BeamFrequency"))}\
           <section id="enum-comm-message">
             <h3>COMM Message</h3>
             <p>
@@ -471,41 +417,7 @@ ${present_name(field.name)} (${present_type(field.type)})\
                 </tr>
               </tbody>
             </table>
-            <p>
-              To stations:
-            </p>
-            <table>
-              <tbody>
-                <tr>
-                  <td><code>0x00</code></td>
-                  <td>Stand by for docking.</td>
-                </tr>
-                <tr>
-                  <td><code>0x01</code></td>
-                  <td>Please report status.</td>
-                </tr>
-                <tr>
-                  <td><code>0x02</code></td>
-                  <td>Build homing missiles</td>
-                </tr>
-                <tr>
-                  <td><code>0x03</code></td>
-                  <td>Build nukes</td>
-                </tr>
-                <tr>
-                  <td><code>0x04</code></td>
-                  <td>Build mines</td>
-                </tr>
-                <tr>
-                  <td><code>0x05</code></td>
-                  <td>Build EMPs</td>
-                </tr>
-                <tr>
-                  <td><code>0x06</code></td>
-                  <td>Build PShocks</td>
-                </tr>
-              </tbody>
-            </table>
+            ${render_enum(enums.get("CommStationMessage"))}\
             <p>
               To other ships:
             </p>
