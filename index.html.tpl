@@ -78,6 +78,9 @@ def packet_html_id(packet_id):
     else:
         return "%spacket" % name
 
+def all_prefixes():
+    return sorted(set([x[0][0] for x in packet_ids]) - set(["_"]))
+
 %>\
 <%def name="present_type(type)">\
 % if type.name == "enum":
@@ -1076,9 +1079,8 @@ ${section(prefix, False, False)}\
             % endfor
           </section>
 
-          % for prefix in ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"]:
-${section(prefix)}\
-          % endfor
+          % for prefix in all_prefixes():
+          % if prefix == "O":
           <section id="pkt-o">
             <h3>O</h3>
             <section id="objectupdatepacket">
@@ -1162,9 +1164,10 @@ ${section(prefix)}\
               </p>
             </section>
           </section>
-          % for prefix in ["P", "R", "S", "T", "U", "V", "W"]:
+          % else:
 ${section(prefix)}\
-          % endfor
+          % endif
+        % endfor
         </section>
 
         <section id="object-properties">
