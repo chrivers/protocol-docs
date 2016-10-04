@@ -2598,12 +2598,11 @@
               <h3>GameMessagePacket</h3>
               <div class="pkt-props">Type: <code>0xf754c8fe</code>:<code>0x0a</code> [from <span>server</span>]</div>
               <p>
-                Contains a message to be displayed on the screen. The stock client displays the
-                message in a &ldquo;popup&rdquo; box in the lower-right corner.
+                Contains a message to be displayed on the screen. The stock client displays the message in a &amp;ldquo;popup&amp;rdquo; box in the lower-right corner.
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x0a</code>.
@@ -2621,12 +2620,11 @@
               <h3>GameOverPacket</h3>
               <div class="pkt-props">Type: <code>0xf754c8fe</code>:<code>0x06</code> [from <span>server</span>]</div>
               <p>
-                Informs the client that the game is over. Transmitted when the &ldquo;End
-                Game&rdquo; button on the statistics page is clicked.
+                Informs the client that the game is over. Transmitted when the &quot;End Game&quot; button on the statistics page is clicked.
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x06</code>.
@@ -2642,13 +2640,13 @@
               </p>
               <h4>Payload</h4>
               <dl>
-                <dt>Subtype (int)</dt>
+                <dt>Subtype (u32)</dt>
                 <dd>
                   <p>
                     Always <code>0x14</code>.
                   </p>
                 </dd>
-                <dt>Reason (string array)</dt>
+                <dt>Reason (array of string)</dt>
                 <dd>
                   <p>
                     Text describing why the game ended. Each string is one line.

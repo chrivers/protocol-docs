@@ -2679,70 +2679,8 @@ ${present_name(field.name)} (${present_type(field.type)})\
                 </dd>
               </dl>
             </section>
-            <section id="gamemessagepacket">
-              <h3>GameMessagePacket</h3>
-              <div class="pkt-props">Type: <code>0xf754c8fe</code>:<code>0x0a</code> [from <span>server</span>]</div>
-              <p>
-                Contains a message to be displayed on the screen. The stock client displays the
-                message in a &ldquo;popup&rdquo; box in the lower-right corner.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x0a</code>.
-                  </p>
-                </dd>
-                <dt>Message (string)</dt>
-                <dd>
-                  <p>
-                    The message to display.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-            <section id="gameoverpacket">
-              <h3>GameOverPacket</h3>
-              <div class="pkt-props">Type: <code>0xf754c8fe</code>:<code>0x06</code> [from <span>server</span>]</div>
-              <p>
-                Informs the client that the game is over. Transmitted when the &ldquo;End
-                Game&rdquo; button on the statistics page is clicked.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x06</code>.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-            <section id="gameoverreasonpacket">
-              <h3>GameOverReasonPacket</h3>
-              <div class="pkt-props">Type: <code>0xf754c8fe</code>:<code>0x14</code> [from <span>server</span>]</div>
-              <p>
-                Provides the reason why the game ended.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x14</code>.
-                  </p>
-                </dd>
-                <dt>Reason (string array)</dt>
-                <dd>
-                  <p>
-                    Text describing why the game ended. Each string is one line.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-          % for prefix in ["GameOverStats", "H", "I", "J", "K", "L"]:
-${section(prefix, loop.index > 0)}\
+          % for prefix in ["GameMessage", "GameOver", "H", "I", "J", "K", "L"]:
+${section(prefix, loop.index > 1, loop.index > 0)}\
           % endfor
           <section id="pkt-o">
             <h3>O</h3>
