@@ -2657,30 +2657,8 @@ ${present_name(field.name)} (${present_type(field.type)})\
                 </dd>
               </dl>
             </section>
-            <section id="gamemasterselectobjectpacket">
-              <h3>GameMasterSelectObjectPacket</h3>
-              <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x12</code> [from <span>client</span>]</div>
-              <p>
-                Notifies the server that a new target has been selected on the game master's map.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x12</code>.
-                  </p>
-                </dd>
-                <dt>Target ID (int)</dt>
-                <dd>
-                  <p>
-                    ID of the selected object.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-          % for prefix in ["GameMessage", "GameOver", "H", "I", "J", "K", "L"]:
-${section(prefix, loop.index > 1, loop.index > 0)}\
+          % for prefix in ["GameMasterSelectObject", "GameMessage", "GameOver", "H", "I", "J", "K", "L"]:
+${section(prefix, loop.index > 2, loop.index > 1)}\
           % endfor
           <section id="pkt-o">
             <h3>O</h3>
