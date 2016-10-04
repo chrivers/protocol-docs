@@ -9,13 +9,15 @@ def visit(parser, packet, res, origin):
     for field in parser.fields:
         type_id = frametypes.fields.get(field.name).aligned_hex_value
         if field.type.name == "struct":
-            name = field.type[0].name.split("::")[-1]
-            res[name] = (packet.fields.get(name), type_id, None, None, origin)
+            nm = field.type[0].name.split("::")[-1]
+            name = (nm, origin)
+            res[name] = (packet.fields.get(nm), type_id, None, None, origin)
         elif field.type.name == "parser":
             prs = parsers.get(field.type[0].name)
             for fld in prs.fields:
-                name = fld.type[0].name.split("::")[-1]
-                res[name] = (packet.fields.get(name), type_id, fld.name, prs.arg, origin)
+                nm = fld.type[0].name.split("::")[-1]
+                name = (nm, origin)
+                res[name] = (packet.fields.get(nm), type_id, fld.name, prs.arg, origin)
 
 packet_ids = dict()
 visit(parsers.get("ClientParser"), packets.get("ClientPacket"), packet_ids, "client")
@@ -38,10 +40,19 @@ def format_comment(lines):
     return " ".join([html.escape(line) for line in util.format_comment(lines, indent="", width=80)])
 
 def packets_by_prefix(letter):
-    all_packets = sorted(packet_ids.keys())
-    for pkt in all_packets:
-        if pkt.startswith(letter):
-            yield pkt, packet_ids[pkt]
+    if letter.startswith("_"):
+        res = []
+        for name, packet_id in packet_ids.items():
+            if name[0].startswith("__unknown"):
+                res.append((name, packet_id))
+        all_packets = sorted(res, key=lambda x: x[1][1:3])
+        for name, packet_id in all_packets:
+            yield name, packet_id
+    else:
+        all_packets = sorted(packet_ids.keys())
+        for pkt in all_packets:
+            if pkt[0].startswith(letter):
+                yield pkt[0], packet_ids[pkt]
 
 def format_packet_id(packet_id):
     major, minor = packet_id[1], packet_id[2]
@@ -49,6 +60,23 @@ def format_packet_id(packet_id):
         return "<code>%s</code>:<code>%s</code>" % (major, minor)
     else:
         return "<code>%s</code>" % major
+
+def packet_html_name(packet_id):
+    name = packet_id[0].name
+    if name.startswith("__unknown"):
+        return "__%s%s" % (packet_id[4], name[1:].replace("unknown_", "unknown__"))
+    else:
+        return "%sPacket" % name
+
+def packet_html_id(packet_id):
+    name = packet_id[0].name.lower()
+    if name.startswith("__unknown"):
+        if packet_id[2]:
+            return "__unknown__%s_%s" % (packet_id[1], packet_id[2])
+        else:
+            return "__unknown__%s" % (packet_id[1])
+    else:
+        return "%spacket" % name
 
 %>\
 <%def name="present_type(type)">\
@@ -99,8 +127,8 @@ ${present_name(field.name)} (${present_type(field.type)})\
             <h3>${prefix[:1]}</h3>
 % endif
             % for packet, packet_id in packets_by_prefix(prefix):
-            <section id="${packet.lower()}packet">
-              <h3>${packet}Packet</h3>
+            <section id="${packet_html_id(packet_id)}">
+              <h3>${packet_html_name(packet_id)}</h3>
               <div class="pkt-props">Type: ${format_packet_id(packet_id)} [from <span>${packet_id[4]}</span>]</div>
               <p>
                 ${format_comment(packet_id[0].comment)}
@@ -981,26 +1009,6 @@ ${present_name(field.name)} (${present_type(field.type)})\
               </dl>
             </section>
 
-            <section id="__hypothetical__0xf754c8fe_0x01">
-              <h3>__server_hypothetical__1</h3>
-              <div class="pkt-props">Type: <code>0xf754c8fe</code>:<code>0x01</code> [from <span>server</span>]</div>
-              <p>
-                This packet has not been observed, but has been
-                hypothesized to exist based on the numeric range of
-                the subtype. Nothing concrete is known about this
-                packet type at this point, or even if it exists.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x01</code>.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-
             <section id="__hypothetical__0xf754c8fe_0x02">
               <h3>__server_hypothetical__2</h3>
               <div class="pkt-props">Type: <code>0xf754c8fe</code>:<code>0x02</code> [from <span>server</span>]</div>
@@ -1060,191 +1068,12 @@ ${present_name(field.name)} (${present_type(field.type)})\
                 </dd>
               </dl>
             </section>
-
           </section>
-
           <section id="pkg-unknown">
             <h3>Unknown</h3>
-
-            <section id="__unknown__0x4c821d3c_0x05">
-              <h3>__client_unknown__1</h3>
-              <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x05</code> [from <span>client</span>]</div>
-              <p>
-                This packet type has been observed, and is known to
-                exist, but its function is as of yet completely
-                unknown. All examples so far have seen was sent from
-                Helm to Server.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x05</code>.
-                  </p>
-                </dd>
-              </dl>
-            </section>
-
-            <section id="__unknown__0x4c821d3c_0x06">
-              <h3>__client_unknown__2</h3>
-              <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x06</code> [from <span>client</span>]</div>
-              <p>
-                This packet type has been observed, and is known to
-                exist, but its function is as of yet completely
-                unknown. All examples so far have seen was sent from
-                Helm to Server.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x06</code>.
-                  </p>
-                </dd>
-                <dt>Observed payload</dt>
-                <dd>
-                  So far, only 0x00000000 (4 bytes) has been observed.
-                </dd>
-              </dl>
-            </section>
-
-
-            <section id="__unknown__0x4c821d3c_0x17">
-              <h3>__client_unknown__3</h3>
-              <div class="pkt-props">Type: <code>0x4c821d3c</code>:<code>0x17</code> [from <span>client</span>]</div>
-              <p>
-                This packet type has been observed, and is known to
-                exist, but its function is as of yet completely
-                unknown.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x17</code>.
-                  </p>
-                </dd>
-                <dt>Observed payload</dt>
-                <dd>
-                  So far, no payload apart from subtype has been observed.
-                </dd>
-              </dl>
-            </section>
-
-
-            <section id="__unknown__0xf5821226">
-              <h3>__server_unknown__1</h3>
-              <div class="pkt-props">Type: <code>0xf5821226</code> [from <span>server</span>]</div>
-              <p>
-                This packet is seen regularly from the server, in
-                every game type. It is speculated to be a heartbeat
-                packet, that simply serves to ensure the clients that
-                the server is still alive and well-connected.
-              </p>
-              <h4>Payload</h4>
-              <p>This packet has no payload.</p>
-            </section>
-
-            <section id="__unknown__0xf754c8fe_0x07">
-              <h3>__server_unknown__2</h3>
-              <div class="pkt-props">Type: <code>0xf754c8fe</code>:<code>0x07</code> [from <span>server</span>]</div>
-              <p>
-                This packet type has been observed, and its payload
-                structure is believed to be understood. However, its
-                function has not determined with certainty.
-
-                Contains three floats which seem to correspond to map
-                coordinates of ships with special abilities. Could
-                relate to cloak/decloak graphical effects.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x07</code>.
-                  </p>
-                </dd>
-                <dt>x_coordinate (float)</dt>
-                <dd>
-                  Unknown
-                </dd>
-                <dt>y_coordinate (float)</dt>
-                <dd>
-                  Unknown
-                </dd>
-                <dt>z_coordinate (float)</dt>
-                <dd>
-                  Unknown
-                </dd>
-              </dl>
-            </section>
-
-            <section id="__unknown__0xf754c8fe_0x08">
-              <h3>__server_unknown__3</h3>
-              <div class="pkt-props">Type: <code>0xf754c8fe</code>:<code>0x08</code> [from <span>server</span>]</div>
-              <p>
-                This packet type has been observed, and its payload
-                structure is believed to be understood. However, its
-                function is as of yet completely unknown. Has been
-                hypothesized as having some relation
-                to <a href="#soundeffectpacket">SoundEffectPacket</a>.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x08</code>.
-                  </p>
-                </dd>
-                <dt>Unknown (float)</dt>
-                <dd>
-                  Values of 0.0, 50.0 and 100.0 has been observed. It
-                  is unclear if other values have been observed.
-                </dd>
-              </dl>
-            </section>
-
-            <section id="__unknown__0xf754c8fe_0x13">
-              <h3>__server_unknown__4</h3>
-              <div class="pkt-props">Type: <code>0xf754c8fe</code>:<code>0x13</code> [from <span>server</span>]</div>
-              <p>
-                This packet type has been observed, and its payload
-                structure is believed to be understood. However, its
-                function is as of yet completely unknown.
-
-                Seems to happen immediately before DestroyObject(Mine,
-                objID) or DestroyObject(Torpedo, objID).
-
-                Speculated to have some relation to
-                detonations.
-              </p>
-              <h4>Payload</h4>
-              <dl>
-                <dt>Subtype (int)</dt>
-                <dd>
-                  <p>
-                    Always <code>0x13</code>.
-                  </p>
-                </dd>
-                <dt>Unknown (int)</dt>
-                <dd>
-                  Only the value 7 has been observed so far. Unknown
-                  function or significance.
-                </dd>
-                <dt>object_id (int)</dt>
-                <dd>
-                  In the observed packets, the object ids correspond
-                  to a mixture of torpedos and mines, destroyed in the
-                  very next packet.
-                </dd>
-              </dl>
-            </section>
-
+            % for prefix in ["__unknown"]:
+${section(prefix, False, False)}\
+            % endfor
           </section>
 
           % for prefix in ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"]:
